@@ -1,0 +1,90 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Http\Requests\UserRequest;
+use App\Models\Role;
+use App\Services\Notifications\NotificationPusher;
+use App\Services\UserService;
+use Illuminate\Http\Request;
+
+class UserController extends Controller
+{
+    protected $userService;
+    protected $notificationPusher;
+
+    public function __construct(UserService $userService, NotificationPusher $notificationPusher)
+    {
+        $this->userService = $userService;
+        $this->notificationPusher = $notificationPusher;
+    }
+
+    public function index()
+    {
+        $role = Role::all();
+        $users = $this->userService->getAll();
+        response()->json($users);
+        return view('pages.user.index', compact('users', 'role'));
+    }
+
+    public function create()
+    {
+        $roles = Role::all();
+        return view('pages.user.create', ['roles' => $roles]);
+    }
+
+    public function show(string $id){
+        $user = $this->userService->getById($id);
+        if (!$user) {
+            return $this->notificationPusher->warning('User Not Found', ['user' => $user]);
+        }
+        response()->json($user);
+        return view('pages.user.show', ['user' => $user]);  
+    }
+
+    public function store(UserRequest $request)
+    {
+        $data = $request->validated();
+
+        $user = $this->userService->create($data);
+
+        // Send success notification
+        $this->notificationPusher->success('User created successfully', ['user' => $user]);
+        return redirect()->route('users.index');
+    }
+
+    public function edit($id)
+    {
+        $roles = Role::all();
+        $user = $this->userService->getById($id);
+        if (!$user) {
+            return redirect()->route('users.index');
+        }
+
+        return view('pages.user.edit', compact('user', 'roles'));
+    }
+
+    public function update(UserRequest $request, string $id)
+    {
+        $data = $request->validated();
+
+        $user = $this->userService->update($id, $data);
+
+        $this->notificationPusher->success('User updated successfully', ['user' => $user]);
+        return redirect()->route('users.index');
+    }
+
+    public function destroy(string $id)
+    {
+        $user = $this->userService->delete($id);
+
+        $this->notificationPusher->success('User deleted successfully', ['user' => $user]);
+        return redirect()->route('users.index');
+    }
+
+    public function profile()
+    {
+        $user = auth()->user();
+        return view('pages.user.profile', ['user' => $user]);
+    }
+}
