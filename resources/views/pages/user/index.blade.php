@@ -8,7 +8,6 @@
         <table class="min-w-full bg-white">
             <thead>
                 <tr>
-                    <th class="py-2 px-4 border-b text-center">ID</th>
                     <th class="py-2 px-4 border-b text-center">Username</th>
                     <th class="py-2 px-4 border-b text-center">Email</th>
                     <th class="py-2 px-4 border-b text-center">Role ID</th>
@@ -18,7 +17,6 @@
             <tbody>
                 @foreach($users as $user)
                 <tr>
-                    <td class="py-2 px-4 border-b text-center">{{ $user->user_id }}</td>
                     <td class="py-2 px-4 border-b text-center">{{ $user->username }}</td>
                     <td class="py-2 px-4 border-b text-center">{{ $user->email }}</td>
                     <td class="py-2 px-4 border-b text-center">{{ $user->role ? $user->role->name : 'N/A' }}</td>
@@ -28,7 +26,7 @@
                         <form action="{{ route('users.destroy', $user->user_id) }}" method="POST" style="display:inline-block;">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-700 ml-2" style="width: 60px; display: inline-block; text-align: center;">Delete</button>
+                            <button type="submit" class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-700" style="width: 60px; display: inline-block; text-align: center;">Delete</button>
                         </form>
                     </td>
                 </tr>

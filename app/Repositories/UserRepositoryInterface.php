@@ -12,4 +12,5 @@ interface UserRepositoryInterface
     public function update(string $id, array $data): bool;
     public function delete(string $id): bool;
     public function count();
+    public function getAllRoles(): \Illuminate\Database\Eloquent\Collection;
 }

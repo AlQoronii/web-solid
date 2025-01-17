@@ -9,7 +9,6 @@
         <table class="min-w-full bg-white">
             <thead>
                 <tr>
-                    <th class="py-2 px-4 border-b text-center">ID</th>
                     <th class="py-2 px-4 border-b text-center">Title</th>
                     <th class="py-2 px-4 border-b text-center">Content</th>
                     <th class="py-2 px-4 border-b text-center">Actions</th>
@@ -18,7 +17,6 @@
             <tbody>
                 @foreach($articles as $article)
                 <tr>
-                    <td class="py-2 px-4 border-b text-center">{{ $article->article_id }}</td>
                     <td class="py-2 px-4 border-b text-center">{{ $article->article_title }}</td>
                     <td class="py-2 px-4 border-b text-center">{{ $article->article_content }}</td>
                     <td class="py-2 px-4 border-b text-center">

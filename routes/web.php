@@ -9,6 +9,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoanController;
+use App\Http\Controllers\StorageFileController;
 use App\Http\Controllers\UserController;
 use App\Models\Book;
 use Illuminate\Support\Facades\Route;
@@ -24,7 +25,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [HomeController::class, 'index'])->name('home')->middleware('guest');
+Route::get('/', [HomeController::class, 'index']);
 
 
 
@@ -46,6 +47,7 @@ Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEm
 Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
 Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
 
+Route::get('public/book/{filename}', [StorageFileController::class, 'StorageBook'])->name('book.file');
 
 // filepath: /d:/Project/web-solid/routes/web.php
 Route::middleware(['auth'])->group(function () {

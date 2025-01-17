@@ -43,4 +43,9 @@ class UserService
     {
         return $this->userRepository->count();
     }
+
+    public function getAllRoles()
+    {
+        return $this->userRepository->getAllRoles();
+    }
 }

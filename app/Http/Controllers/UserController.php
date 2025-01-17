@@ -21,7 +21,7 @@ class UserController extends Controller
 
     public function index()
     {
-        $role = Role::all();
+        $role = $this->userService->getAllRoles();
         $users = $this->userService->getAll();
         response()->json($users);
         return view('pages.user.index', compact('users', 'role'));
@@ -29,7 +29,7 @@ class UserController extends Controller
 
     public function create()
     {
-        $roles = Role::all();
+        $roles = $this->userService->getAllRoles();
         return view('pages.user.create', ['roles' => $roles]);
     }
 
@@ -55,7 +55,7 @@ class UserController extends Controller
 
     public function edit($id)
     {
-        $roles = Role::all();
+        $roles = $this->userService->getAllRoles();
         $user = $this->userService->getById($id);
         if (!$user) {
             return redirect()->route('users.index');

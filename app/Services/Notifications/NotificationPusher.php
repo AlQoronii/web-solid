@@ -7,26 +7,33 @@ use Illuminate\Http\JsonResponse;
 
 class NotificationPusher implements NotificationInterface
 {
-    public function warning(string $message, array $data = []): JsonResponse
+    public static function success(string $message): void
     {
-        return response()->json([
-            'message' => $message,
-            'data' => $data,
-        ], 200);
+        session()->flash('message',
+            [
+                'type' => 'success',
+                'message' => $message
+            ]
+        );
     }
 
-    public function success(string $message, array $data = []): JsonResponse
+    public static function error(string $message): void
     {
-        return response()->json([
-            'message' => $message,
-            'data' => $data,
-        ], 201);
+        session()->flash('message',
+            [
+                'type' => 'error',
+                'message' => $message
+            ]
+        );
     }
 
-    public function error(string $message, int $statusCode = 400): JsonResponse
+    public static function warning(string $message): void
     {
-        return response()->json([
-            'message' => $message,
-        ], $statusCode);
+        session()->flash('message',
+            [
+                'type' => 'warning',
+                'message' => $message
+            ]
+        );
     }
 }

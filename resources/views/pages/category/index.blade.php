@@ -8,7 +8,6 @@
         <table class="min-w-full bg-white">
             <thead>
                 <tr>
-                    <th class="py-2 px-4 border-b text-center">ID</th>
                     <th class="py-2 px-4 border-b text-center">Name</th>
                     <th class="py-2 px-4 border-b text-center">Description</th>
                     <th class="py-2 px-4 border-b text-center">Actions</th>
@@ -17,7 +16,6 @@
             <tbody>
                 @foreach($category as $category)
                 <tr>
-                    <td class="py-2 px-4 border-b text-center">{{ $category->category_id }}</td>
                     <td class="py-2 px-4 border-b text-center">{{ $category->category_name }}</td>
                     <td class="py-2 px-4 border-b text-center">{{ $category->category_description }}</td>
                     <td class="py-2 px-4 border-b text-center">

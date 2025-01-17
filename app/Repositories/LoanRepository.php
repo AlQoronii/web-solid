@@ -2,7 +2,9 @@
 
 namespace App\Repositories;
 
+use App\Models\Book;
 use App\Models\Loan;
+use App\Models\User;
 
 class LoanRepository implements LoanRepositoryInterface
 {
@@ -34,5 +36,15 @@ class LoanRepository implements LoanRepositoryInterface
     public function count()
     {
         return Loan::count();
+    }
+
+    public function getAllUsers(): \Illuminate\Database\Eloquent\Collection
+    {
+        return User::all();
+    }
+
+    public function getAllBooks(): \Illuminate\Database\Eloquent\Collection
+    {
+        return Book::all();
     }
 }

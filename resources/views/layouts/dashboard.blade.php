@@ -5,12 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Library Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            overflow-x: hidden;
+        }
+    </style>
 </head>
 <body class="bg-gray-100">
-
     <div class="flex h-screen">
         <!-- Sidebar -->
-        <div class="bg-blue-800 text-white w-64 space-y-6 py-7 px-2">
+        <div class="bg-blue-800 text-white w-64 space-y-6 py-7 px-2 fixed h-full">
             <!-- Logo -->
             <div class="text-white flex items-center space-x-2 px-4">
                 <svg class="h-8 w-8 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -40,7 +44,7 @@
                     Books
                 </a>
                 <a href="{{ route('categories.index') }}" class="flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-blue-700 hover:text-white">
-                    <svg class="h-6 w-6 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg class="h-6 w-6 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7h18M3 12h18M3 17h18" />
                     </svg>
                     Categories
@@ -60,7 +64,7 @@
             </nav>
         </div>
         <!-- Main Content -->
-        <div class="flex-1 p-10">
+        <div class="flex-1 p-10 ml-64">
             @yield('content')
         </div>
     </div>

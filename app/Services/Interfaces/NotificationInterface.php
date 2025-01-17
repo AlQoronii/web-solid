@@ -6,9 +6,9 @@ use Illuminate\Http\JsonResponse;
 
 interface NotificationInterface
 {
-    public function success(string $message, array $data = []): JsonResponse;
+    public static function success(string $message): void;
 
-    public function error(string $message, int $statusCode = 400): JsonResponse;
+    public static function error(string $message): void;
 
-    public function warning(string $message, array $data = []): JsonResponse;
+    public static function warning(string $message): void;
 }

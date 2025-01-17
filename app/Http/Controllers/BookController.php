@@ -9,18 +9,23 @@ use App\Models\Book;
 use App\Models\Category;
 use App\Repositories\BookRepository;
 use App\Services\BookService;
+use App\Services\Contracts\FileUploadServiceInterface;
 use App\Services\Notifications\NotificationPusher;
+use Faker\Core\File;
 
 class BookController extends Controller
 {
     private $bookService;
     private $notificationPusher;
+    private $fileUploadService;
 
-    public function __construct(BookService $bookService, NotificationPusher $notificationPusher)
+    public function __construct(BookService $bookService, NotificationPusher $notificationPusher, FileUploadServiceInterface $fileUploadService)
     {
         $this->bookService = $bookService;
         $this->notificationPusher = $notificationPusher;
+        $this->fileUploadService = $fileUploadService;
     }
+
 
     public function index()
     {
@@ -40,10 +45,12 @@ class BookController extends Controller
     {
         $data = $request->validated();
 
+
+
         $book = $this->bookService->createBook($data);
 
         $this->notificationPusher->success('Book created successfully', ['book' => $book]);
-        return redirect()->route('books.index');
+        return redirect()->route('books.index')->with('success', 'Book created successfully');
     }
 
     public function edit($id)

@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Models\Role;
 use App\Models\User;
 
 class UserRepository implements UserRepositoryInterface
@@ -44,5 +45,10 @@ class UserRepository implements UserRepositoryInterface
     public function count()
     {
         return User::count();
+    }
+
+    public function getAllRoles(): \Illuminate\Database\Eloquent\Collection
+    {
+        return Role::all();
     }
 }

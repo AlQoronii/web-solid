@@ -7,7 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="bg-gray-100">
-
+<x-notification />
     <!-- Navigation Bar -->
     <nav class="bg-white shadow-lg">
         <div class="max-w-7xl mx-auto px-4">
@@ -48,7 +48,7 @@
             <a href="#" class="block py-2 px-4 text-sm hover:bg-gray-200">Home</a>
             <a href="#features" class="block py-2 px-4 text-sm hover:bg-gray-200">Features</a>
             <a href="#contact" class="block py-2 px-4 text-sm hover:bg-gray-200">Contact</a>
-            <a href="{{ route('login') }}" class="block py-2 px-4 text-sm bg-blue-500 text-white rounded hover:bg-blue-600">Login</a>
+            {{-- <a href="{{ route('login') }}" class="block py-2 px-4 text-sm bg-blue-500 text-white rounded hover:bg-blue-600">Login</a> --}}
         </div>
     </nav>
 
@@ -82,7 +82,7 @@
                 </div>
                 <div class="w-full md:w-1/3 px-4 mb-8">
                     <div class="bg-white rounded-lg shadow-lg p-6">
-                        <img src="{{ asset('assets/images/library-digital.jpg') }}" alt="Digital Resources" class="w-full h-48 object-cover rounded-lg mb-4">
+                        <img src="{{ asset('assets/images/library-digital.png') }}" alt="Digital Resources" class="w-full h-48 object-cover rounded-lg mb-4">
                         <h3 class="text-xl font-bold mb-2">Digital Resources</h3>
                         <p class="text-gray-600">Access a wide range of digital resources, including e-books, audiobooks, and online databases.</p>
                     </div>

@@ -1,50 +1,34 @@
 <?php
+// filepath: /d:/Project/web-solid/app/Services/AuthService.php
+namespace App\Services;
 
-namespace App\Services\Authentication;
-
-use Illuminate\Auth\AuthenticationException;
-use Illuminate\Http\Request;
+use App\Repositories\AuthRepositoryInterface;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
 
 class AuthService
 {
-    public static function login(string $username, string $password) : bool
+    protected $authRepository;
+
+    public function __construct(AuthRepositoryInterface $authRepository)
     {
-        try {
-            $validator = Validator::make([
-                'username' => $username,
-                'password' => $password
-            ], [
-                'username' => 'required|string|exists:users,username',
-                'password' => 'required|string|min:8'
-            ], [
-                'username.exists' => 'The username does not exist'
-            ]);
-
-            if ($validator->fails()) {
-                throw new \Illuminate\Validation\ValidationException($validator);
-            }
-
-            if (!Auth::guard('web')->attempt(['username' => $username, 'password' => $password])) {
-                throw new AuthenticationException('Invalid credentials');
-            }
-
-            return Auth::guard('web')->attempt(['username' => $username, 'password' => $password]);
-        } catch (\Exception $e) {
-            throw $e;
-        }
+        $this->authRepository = $authRepository;
     }
 
-    public static function logout(Request $request): bool
+    public function login(array $credentials)
     {
-        try {
-            Auth::guard('web')->logout();
-            $request->session()->invalidate();
-            $request->session()->regenerateToken();
-            return true;
-        } catch (\Exception $e) {
-            throw $e;
+        $user = $this->authRepository->findUserByEmail($credentials['email']);
+
+        if (!$user) {
+            return ['error' => 'Email not found'];
         }
+
+        if (!Hash::check($credentials['password'], $user->password)) {
+            return ['error' => 'Password is incorrect'];
+        }
+
+        $token = $user->createToken('auth_token')->plainTextToken;
+
+        return ['token' => $token, 'user' => $user];
     }
 }
