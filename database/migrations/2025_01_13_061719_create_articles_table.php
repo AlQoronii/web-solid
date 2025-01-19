@@ -15,7 +15,7 @@ return new class extends Migration
             $table->uuid('article_id')->primary();
             $table->string('article_title');
             $table->text('article_content');
-            $table->string('article_image');
+            $table->string('article_image')->nullable();
             $table->timestamps();
         });
     }

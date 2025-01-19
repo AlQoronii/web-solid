@@ -13,7 +13,7 @@
             <form action="{{ route('books.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="mb-4">
-                    <label for="category_id" class="block text-gray-700 font-bold mb-2">Category</label>
+                    <label for="category_id" class="block text-gray-700 font-bold mb-2">Category <span class="text-red-500">*</span></label>
                     <select id="category_id" name="category_id" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
                         @foreach($categories as $category)
                             <option value="{{ $category->category_id }}">{{ $category->category_name }}</option>
@@ -25,19 +25,19 @@
                     ?>
                 </div>
                 <div class="mb-4">
-                    <label for="book_title" class="block text-gray-700 font-bold mb-2">Title</label>
+                    <label for="book_title" class="block text-gray-700 font-bold mb-2">Title <span class="text-red-500">*</span></label>
                     <input type="text" id="book_title" name="book_title" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
                 </div>
                 <div class="mb-4">
-                    <label for="book_author" class="block text-gray-700 font-bold mb-2">Author</label>
+                    <label for="book_author" class="block text-gray-700 font-bold mb-2">Author <span class="text-red-500">*</span></label>
                     <input type="text" id="book_author" name="book_author" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
                 </div>
                 <div class="mb-4">
-                    <label for="book_publisher" class="block text-gray-700 font-bold mb-2">Publisher</label>
+                    <label for="book_publisher" class="block text-gray-700 font-bold mb-2">Publisher <span class="text-red-500">*</span></label>
                     <input type="text" id="book_publisher" name="book_publisher" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
                 </div>
                 <div class="mb-4">
-                    <label for="book_year" class="block text-gray-700 font-bold mb-2">Year</label>
+                    <label for="book_year" class="block text-gray-700 font-bold mb-2">Year <span class="text-red-500">*</span></label>
                     <input type="number" id="book_year" name="book_year" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
                 </div>
                 <x-input-file 
@@ -47,9 +47,17 @@
                 placeholderText="SVG, PNG, JPG or GIF (MAX. 800x400px)" 
                 />
                 <div class="flex justify-end">
-                    <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 flex items-center">
-                        Submit
-                    </button>
+                    <x-validation
+                    buttonClass="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600"
+                    :action="route('books.store')" 
+                    :method="'POST'" 
+                    title="Tambah Buku" 
+                    message="Apakah Anda yakin ingin menambahkan buku ini?" 
+                    button-text="Submit"
+                    cancel-text="Batal"
+                    confirm-text="Ya, Tambahkan"
+                    confirmButtonClass="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600"
+                />  
                 </div>
             </form>
         </div>

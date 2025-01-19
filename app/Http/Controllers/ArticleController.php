@@ -52,7 +52,10 @@ class ArticleController extends Controller
     public function store(ArticleRequest $request)
     {
         $data = $request->validated();
-        $data['article_image'] = $this->fileUploadService->uploadFile($request->file('article_image'), 'articles/images');
+        if($request->hasFile('article_image')) {
+            $data['article_image'] = $this->fileUploadService->uploadFile($request->file('article_image'), 'articles/images');
+        }
+        
         $article = $this->articleService->createArticle($data);
 
         // Send success notification

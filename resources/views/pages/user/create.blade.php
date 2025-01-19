@@ -13,7 +13,7 @@
             <form action="{{ route('users.store') }}" method="POST">
                 @csrf
                 <div class="mb-4">
-                    <label for="role_id" class="block text-gray-700 mb-2">Role</label>
+                    <label for="role_id" class="block text-gray-700 font-bold mb-2">Role</label>
                     <select id="role_id" name="role_id" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
                         @foreach($roles as $role)
                             <option value="{{ $role->role_id }}" {{ $role->name == 'user' ? 'selected' : '' }}>{{ $role->name }}</option>
@@ -21,21 +21,21 @@
                     </select>
                 </div>
                 <div class="mb-4">
-                    <label for="username" class="block text-gray-700 ">Username<span class="text-red-500">*</span></label>
+                    <label for="username" class="block text-gray-700 font-bold ">Username<span class="text-red-500">*</span></label>
                     <input type="text" name="username" id="username" class="w-full p-2 border border-gray-300 rounded mt-1">
                     @if ($errors->has('username'))
                         <span class="text-red-500 text-sm">{{ $errors->first('username') }}</span>
                     @endif
                 </div>
                 <div class="mb-4">
-                    <label for="email" class="block text-gray-700">Email<span class="text-red-500">*</span></label>
+                    <label for="email" class="block text-gray-700 font-bold">Email<span class="text-red-500">*</span></label>
                     <input type="email" name="email" id="email" class="w-full p-2 border border-gray-300 rounded mt-1">
                     @if ($errors->has('email'))
                         <span class="text-red-500 text-sm">{{ $errors->first('email') }}</span>
                     @endif
                 </div>
                 <div x-data="{ showPassword: false }" class="mb-4">
-                    <label for="password" class="block text-gray-700">Password <span class="text-red-500">*</span></label>
+                    <label for="password" class="block text-gray-700 font-bold">Password <span class="text-red-500">*</span></label>
                     <div class="relative">
                         <input :type="showPassword ? 'text' : 'password'" name="password" id="password" class="w-full p-2 border border-gray-300 rounded mt-1">
                         <button type="button" @click="showPassword = !showPassword" class="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5">
@@ -54,7 +54,7 @@
                     @endif
                 </div>
                 <div x-data="{ showPassword: false }" class="mb-4">
-                    <label for="password_confirmation" class="block text-gray-700">Confirm Password <span class="text-red-500">*</span></label>
+                    <label for="password_confirmation" class="block text-gray-700 font-bold">Confirm Password <span class="text-red-500">*</span></label>
                     <div class="relative">
                         <input :type="showPassword ? 'text' : 'password'" name="password_confirmation" id="password_confirmation" class="w-full p-2 border border-gray-300 rounded mt-1">
                         <button type="button" @click="showPassword = !showPassword" class="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5">
@@ -72,7 +72,19 @@
                         <span class="text-red-500 text-sm">{{ $errors->first('password_confirmation') }}</span>
                     @endif
                 </div>
-                <button type="submit" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded">Create</button>
+                <div class="flex justify-end">
+                    <x-validation
+                    buttonClass="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600"
+                    :action="route('users.store')" 
+                    :method="'POST'" 
+                    title="Tambah User" 
+                    message="Apakah Anda yakin ingin menambah user ini?" 
+                    button-text="Submit"
+                    cancel-text="Batal"
+                    confirm-text="Ya, Tambahkan"
+                    confirmButtonClass="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600"
+                />  
+                </div>
             </form>
         </div>
     </div>

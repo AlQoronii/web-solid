@@ -38,7 +38,7 @@ class CategoryController extends Controller
         $category = $this->categoryService->createCategory($data);
 
         $this->notificationPusher->success('Category created successfully', ['category' => $category]);
-        return redirect()->route('categories.index');
+        return redirect()->route('categories.index')->with('success', 'Category created successfully');;
     }
 
     public function show($id)
@@ -65,7 +65,7 @@ class CategoryController extends Controller
         $category = $this->categoryService->updateCategory($id, $data);
 
         $this->notificationPusher->success('Category updated successfully', ['category' => $category]);
-        return redirect()->route('categories.index');
+        return redirect()->route('categories.index')->with('success', 'Category updated successfully');;
     }
 
     public function destroy(string $id)
@@ -73,6 +73,6 @@ class CategoryController extends Controller
         $category = $this->categoryService->deleteCategory($id);
 
         $this->notificationPusher->success('Category deleted successfully', ['category' => $category]);
-        return redirect()->route('categories.index');
+        return redirect()->route('categories.index')->with('success', 'Category deleted successfully');;
     }
 }

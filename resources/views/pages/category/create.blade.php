@@ -13,7 +13,7 @@
             <form action="{{ route('categories.store') }}" method="POST">
                 @csrf
                 <div class="mb-4">
-                    <label for="name" class="block text-gray-700 font-bold mb-2">Name</label>
+                    <label for="name" class="block text-gray-700 font-bold mb-2">Name <span class="text-red-500">*</span></label>
                     <input type="text" id="category_name" name="category_name" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
                 </div>
                 <div class="mb-4">
@@ -21,7 +21,17 @@
                     <textarea id="category_description" name="category_description" rows="5" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required></textarea>
                 </div>
                 <div class="flex justify-end">
-                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">Submit</button>
+                    <x-validation
+                    buttonClass="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600"
+                    :action="route('categories.store')" 
+                    :method="'POST'" 
+                    title="Tambah Category" 
+                    message="Apakah Anda yakin ingin menambah category ini?" 
+                    button-text="Submit"
+                    cancel-text="Batal"
+                    confirm-text="Ya, Tambahkan"
+                    confirmButtonClass="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600"
+                />  
                 </div>
             </form>
         </div>

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('book_publisher');
             $table->enum('book_status', ['available', 'unavailable'])->default('available');
             $table->integer('book_year');
-            $table->string('book_image');
+            $table->string('book_image')->nullable();
             $table->timestamps();
         });
     }

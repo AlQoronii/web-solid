@@ -48,6 +48,7 @@ class BookController extends Controller
         $book = $this->bookService->createBook($data);
 
         $this->notificationPusher->success('Book created successfully', ['book' => $book]);
+        session()->flash('success', 'Data berhasil disimpan!');
         return redirect()->route('books.index')->with('success', 'Book created successfully');
     }
 
@@ -97,7 +98,7 @@ class BookController extends Controller
         $book = $this->bookService->deleteBook($id);
 
         $this->notificationPusher->success('Book deleted successfully', ['book' => $book]);
-        return redirect()->route('books.index')-with('success', 'Book deleted successfully');
+        return redirect()->route('books.index')->with('success', 'Book deleted successfully');
     }
 
 }

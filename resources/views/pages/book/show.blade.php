@@ -10,9 +10,9 @@
         </a>
         <div class="bg-white shadow-md rounded-lg p-6">
             <div class="flex items-center">
-                <img src="{{ $book->book_image }}" alt="Book Image" class="w-32 h-48 object-cover rounded-lg mr-6">
+                <img src="{{ asset('storage/books/images/' . $book->book_image) }}" alt="Book Image" class="w-50 h-80 object-cover rounded-lg mr-6">
                 <div>
-                    <h1 class="text-2xl font-bold mb-2">{{ $book->book_title }}</h1>
+                    <h1 class="text-2xl font-bold mb-2">Book Title: {{ $book->book_title }}</h1>
                     <p class="text-gray-700 mb-1"><strong>Author:</strong> {{ $book->book_author }}</p>
                     <p class="text-gray-700 mb-1"><strong>Publisher:</strong> {{ $book->book_publisher }}</p>
                     <p class="text-gray-700 mb-1"><strong>Year:</strong> {{ $book->book_year }}</p>

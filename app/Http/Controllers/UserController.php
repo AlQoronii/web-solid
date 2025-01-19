@@ -50,7 +50,7 @@ class UserController extends Controller
 
         // Send success notification
         $this->notificationPusher->success('User created successfully', ['user' => $user]);
-        return redirect()->route('users.index');
+        return redirect()->route('users.index')->with('success', 'User created successfully');
     }
 
     public function edit($id)
@@ -70,7 +70,7 @@ class UserController extends Controller
         $user = $this->userService->update($id, $data);
 
         $this->notificationPusher->success('User updated successfully', ['user' => $user]);
-        return redirect()->route('users.index');
+        return redirect()->route('users.index')->with('success', 'User updated successfully');
     }
 
     public function destroy(string $id)
@@ -78,12 +78,6 @@ class UserController extends Controller
         $user = $this->userService->delete($id);
 
         $this->notificationPusher->success('User deleted successfully', ['user' => $user]);
-        return redirect()->route('users.index');
-    }
-
-    public function profile()
-    {
-        $user = auth()->user();
-        return view('pages.user.profile', ['user' => $user]);
+        return redirect()->route('users.index')->with('success', 'User deleted successfully');
     }
 }

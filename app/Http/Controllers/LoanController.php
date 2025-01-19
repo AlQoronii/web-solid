@@ -53,7 +53,7 @@ class LoanController extends Controller
 
         // Send success notification
         $this->notificationPusher->success('Loan created successfully', ['loan' => $loan]);
-        return redirect()->route('loans.index');
+        return redirect()->route('loans.index')->with('success', 'Loan created successfully');;
     }
 
     public function edit($id)
@@ -76,7 +76,7 @@ class LoanController extends Controller
         $loan = $this->loanService->update($id, $data);
 
         $this->notificationPusher->success('Loan updated successfully', ['loan' => $loan]);
-        return redirect()->route('loans.index');
+        return redirect()->route('loans.index')->with('success', 'Loan updated successfully');;
     }
 
     public function destroy(string $id)
@@ -84,6 +84,6 @@ class LoanController extends Controller
         $loan = $this->loanService->delete($id);
 
         $this->notificationPusher->success('Loan deleted successfully', ['loan' => $loan]);
-        return redirect()->route('loans.index');
+        return redirect()->route('loans.index')->with('success', 'Loan deleted successfully');;
     }
 }

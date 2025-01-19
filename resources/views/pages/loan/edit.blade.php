@@ -14,7 +14,7 @@
                 @csrf
                 @method('PUT')
                 <div class="mb-4">
-                    <label for="user_id" class="block text-gray-700 font-bold mb-2">User</label>
+                    <label for="user_id" class="block text-gray-700 font-bold mb-2">User <span class="text-red-500">*</span></label>
                     <select id="user_id" name="user_id" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
                         @foreach($users as $user)
                             <option value="{{ $user->user_id }}" {{ $loan->user_id == $user->user_id ? 'selected' : '' }}>{{ $user->username }}</option>
@@ -22,7 +22,7 @@
                     </select>
                 </div>
                 <div class="mb-4">
-                    <label for="book_id" class="block text-gray-700 font-bold mb-2">Book</label>
+                    <label for="book_id" class="block text-gray-700 font-bold mb-2">Book <span class="text-red-500">*</span></label>
                     <select id="book_id" name="book_id" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
                         @foreach($books as $book)
                             <option value="{{ $book->book_id }}" {{ $loan->book_id == $book->book_id ? 'selected' : '' }}>{{ $book->book_title }}</option>
@@ -30,22 +30,32 @@
                     </select>
                 </div>
                 <div class="mb-4">
-                    <label for="borrow_date" class="block text-gray-700 font-bold mb-2">Borrow Date</label>
+                    <label for="borrow_date" class="block text-gray-700 font-bold mb-2">Borrow Date <span class="text-red-500">*</span></label>
                     <input type="date" id="borrow_date" name="borrow_date" value="{{ $loan->borrow_date }}" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
                 </div>
                 <div class="mb-4">
-                    <label for="return_date" class="block text-gray-700 font-bold mb-2">Return Date</label>
+                    <label for="return_date" class="block text-gray-700 font-bold mb-2">Return Date <span class="text-red-500">*</span></label>
                     <input type="date" id="return_date" name="return_date" value="{{ $loan->return_date }}" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
                 </div>
                 <div class="mb-4">
-                    <label for="loan_status" class="block text-gray-700 font-bold mb-2">Loan Status</label>
+                    <label for="loan_status" class="block text-gray-700 font-bold mb-2">Loan Status <span class="text-red-500">*</span></label>
                     <select id="loan_status" name="loan_status" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
                         <option value="borrowed" {{ $loan->loan_status == 'borrowed' ? 'selected' : '' }}>Borrowed</option>
                         <option value="returned" {{ $loan->loan_status == 'returned' ? 'selected' : '' }}>Returned</option>
                     </select>
                 </div>
                 <div class="flex justify-end">
-                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">Update</button>
+                    <x-validation
+                    buttonClass="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600"
+                    :action="route('loans.update', $loan->loan_id)" 
+                    :method="'PUT'" 
+                    title="Update Loann" 
+                    message="Apakah Anda yakin ingin mengupdate data peminjaman ini?" 
+                    button-text="Update"
+                    cancel-text="Batal"
+                    confirm-text="Ya, Update"
+                    confirmButtonClass="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600"
+                />  
                 </div>
             </form>
         </div>

@@ -3,15 +3,13 @@
     <div class="container mx-auto mt-10">
         <h1 class="text-2xl font-bold mb-5">Category</h1>
         @if(session('success'))
-            <div id="success-message" class="bg-green-500 text-white px-4 py-2 rounded mb-5">
-            {{ session('success') }}
-            </div>
-            <script>
-            setTimeout(function() {
-                document.getElementById('success-message').style.display = 'none';
-            }, 2000);
-            </script>
+            <x-alert-popup type="success" :message="session('success')" />
         @endif
+
+        @if(session('error'))
+            <x-alert-popup type="error" :message="session('error')" />
+        @endif
+        
         <div class="mb-5">
             <a href="{{ route('categories.create') }}" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-700">Add New Category</a>
         </div>
@@ -29,13 +27,18 @@
                     <td class="py-2 px-4 border-b text-center">{{ $category->category_name }}</td>
                     <td class="py-2 px-4 border-b text-center">{{ $category->category_description }}</td>
                     <td class="py-2 px-4 border-b text-center">
-                        <a href="{{ route('categories.edit', $category->category_id) }}" class="bg-yellow-500 text-white px-2 py-1 rounded hover:bg-yellow-700" style="width: 60px; display: inline-block; text-align: center;">Edit</a>
-                        <a href="{{ route('categories.show', $category->category_id) }}" class="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-700" style="width: 60px; display: inline-block; text-align: center;">Detail</a>
-                        <form action="{{ route('categories.destroy', $category->category_id) }}" method="POST" style="display:inline-block;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-700 " style="width: 60px; display: inline-block; text-align: center;">Delete</button>
-                        </form>
+                        <a href="{{ route('categories.edit', $category->category_id) }}" class="bg-yellow-400 text-yellow-900 px-2 py-1 rounded hover:bg-yellow-500" style="width: 60px; display: inline-block; text-align: center;">Edit</a>
+                        <a href="{{ route('categories.show', $category->category_id) }}" class="bg-blue-400 text-blue-900 px-2 py-1 rounded hover:bg-blue-500" style="width: 60px; display: inline-block; text-align: center;">Detail</a>
+                        <x-validation
+                            :action="route('categories.destroy', $category->category_id)" 
+                            :method="'DELETE'" 
+                            title="Delete Category" 
+                            message="Apakah Anda yakin ingin menghapus category ini?" 
+                            button-text="Delete"
+                            cancel-text="Batal"
+                            confirm-text="Ya, Hapus"
+                            confirmButtonClass="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600"
+                        />
                     </td>
                 </tr>
                 @endforeach

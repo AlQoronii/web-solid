@@ -22,7 +22,17 @@
                     <textarea id="category_description" name="category_description" rows="5" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>{{ old('category_description', $category->category_description) }}</textarea>
                 </div>
                 <div class="flex justify-end">
-                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">Submit</button>
+                    <x-validation
+                    buttonClass="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600"
+                    :action="route('categories.update', $category->category_id)" 
+                    :method="'PUT'" 
+                    title="Update Category" 
+                    message="Apakah Anda yakin ingin mengupdate category ini?" 
+                    button-text="Update"
+                    cancel-text="Batal"
+                    confirm-text="Ya, Update"
+                    confirmButtonClass="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600"
+                />  
                 </div>
             </form>
         </div>

@@ -13,7 +13,7 @@
             <form action="{{ route('loans.store') }}" method="POST">
                 @csrf
                 <div class="mb-4">
-                    <label for="user_id" class="block text-gray-700 font-bold mb-2">User</label>
+                    <label for="user_id" class="block text-gray-700 font-bold mb-2">User <span class="text-red-500">*</span></label>
                     <select id="user_id" name="user_id" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
                         @foreach($users as $user)
                             <option value="{{ $user->user_id }}">{{ $user->username }}</option>
@@ -21,7 +21,7 @@
                     </select>
                 </div>
                 <div class="mb-4">
-                    <label for="book_id" class="block text-gray-700 font-bold mb-2">Book</label>
+                    <label for="book_id" class="block text-gray-700 font-bold mb-2">Book <span class="text-red-500">*</span></label>
                     <select id="book_id" name="book_id" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
                         @foreach($books as $book)
                             <option value="{{ $book->book_id }}">{{ $book->book_title }}</option>
@@ -29,21 +29,33 @@
                     </select>
                 </div>
                 <div class="mb-4">
-                    <label for="borrow_date" class="block text-gray-700">Borrow Date</label>
+                    <label for="borrow_date" class="block text-gray-700">Borrow Date <span class="text-red-500">*</span></label>
                     <input type="date" name="borrow_date" id="borrow_date" class="w-full p-2 border border-gray-300 rounded mt-1" required>
                 </div>
                 <div class="mb-4">
-                    <label for="return_date" class="block text-gray-700">Return Date</label>
+                    <label for="return_date" class="block text-gray-700">Return Date <span class="text-red-500">*</span></label>
                     <input type="date" name="return_date" id="return_date" class="w-full p-2 border border-gray-300 rounded mt-1" required>
                 </div>
                 <div class="mb-4">
-                    <label for="loan_status" class="block text-gray-700">Loan Status</label>
+                    <label for="loan_status" class="block text-gray-700">Loan Status <span class="text-red-500">*</span></label>
                     <select id="loan_status" name="loan_status" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
                         <option value="borrowed">Borrowed</option>
                         <option value="returned">Returned</option>
                     </select>
                 </div>
-                <button type="submit" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded">Create</button>
+                <div class="flex justify-end">
+                    <x-validation
+                    buttonClass="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600"
+                    :action="route('loans.store')" 
+                    :method="'POST'" 
+                    title="Tambah Loan" 
+                    message="Apakah Anda yakin ingin menambah peminjaman ini?" 
+                    button-text="Submit"
+                    cancel-text="Batal"
+                    confirm-text="Ya, Tambahkan"
+                    confirmButtonClass="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600"
+                />  
+                </div>
             </form>
         </div>
     </div>

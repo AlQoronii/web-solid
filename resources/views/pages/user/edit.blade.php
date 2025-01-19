@@ -22,21 +22,21 @@
                     </select>
                 </div>
                 <div class="mb-4">
-                    <label for="username" class="block text-gray-700">Username<span class="text-red-500">*</span></label>
+                    <label for="username" class="block text-gray-700 font-bold">Username <span class="text-red-500">*</span></label>
                     <input type="text" name="username" id="username" value="{{ $user->username }}" class="w-full p-2 border border-gray-300 rounded mt-1">
                     @if ($errors->has('username'))
                         <span class="text-red-500 text-sm">{{ $errors->first('username') }}</span>
                     @endif
                 </div>
                 <div class="mb-4">
-                    <label for="email" class="block text-gray-700">Email<span class="text-red-500">*</span></label>
+                    <label for="email" class="block text-gray-700 font-bold">Email <span class="text-red-500">*</span></label>
                     <input type="email" name="email" id="email" value="{{ $user->email }}" class="w-full p-2 border border-gray-300 rounded mt-1">
                     @if ($errors->has('email'))
                         <span class="text-red-500 text-sm">{{ $errors->first('email') }}</span>
                     @endif
                 </div>
                 <div x-data="{ showPassword: false }" class="mb-4">
-                    <label for="password" class="block text-gray-700">Password <span class="text-red-500">*</span></label>
+                    <label for="password" class="block text-gray-700 font-bold">Password</label>
                     <div class="relative">
                         <input :type="showPassword ? 'text' : 'password'" name="password" id="password" class="w-full p-2 border border-gray-300 rounded mt-1">
                         <button type="button" @click="showPassword = !showPassword" class="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5">
@@ -55,7 +55,7 @@
                     @endif
                 </div>
                 <div x-data="{ showPassword: false }" class="mb-4">
-                    <label for="password_confirmation" class="block text-gray-700">Confirm Password <span class="text-red-500">*</span></label>
+                    <label for="password_confirmation" class="block text-gray-700 font-bold">Confirm Password</label>
                     <div class="relative">
                         <input :type="showPassword ? 'text' : 'password'" name="password_confirmation" id="password_confirmation" class="w-full p-2 border border-gray-300 rounded mt-1">
                         <button type="button" @click="showPassword = !showPassword" class="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5">
@@ -74,7 +74,17 @@
                     @endif
                 </div>
                 <div class="flex justify-end">
-                    <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600">Update</button>
+                    <x-validation
+                    buttonClass="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600"
+                    :action="route('users.update', $user->user_id)" 
+                    :method="'PUT'" 
+                    title="Update User" 
+                    message="Apakah Anda yakin ingin mengupdate user ini?" 
+                    button-text="Update"
+                    cancel-text="Batal"
+                    confirm-text="Ya, Update"
+                    confirmButtonClass="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600"
+                />  
                 </div>
             </form>
         </div>
