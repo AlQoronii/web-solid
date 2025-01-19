@@ -19,7 +19,8 @@ class BookRequest extends FormRequest
             'book_publisher' => 'required|string',
             'book_status' => 'string',
             'book_year' => 'required|int',
-            'book_image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'book_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            // 'book_image' => 'required|string',
         ];        
     }
 }

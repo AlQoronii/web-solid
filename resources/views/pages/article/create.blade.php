@@ -4,7 +4,7 @@
     <div class="container mx-auto mt-10">
         <div class="w-full bg-white p-8 rounded-lg shadow-lg">
             <h1 class="text-2xl font-bold mb-6">Create New Article</h1>
-            <form action="{{ route('articles.store') }}" method="POST">
+            <form action="{{ route('articles.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="mb-4">
                     <label for="title" class="block text-gray-700 font-bold mb-2">Title</label>
@@ -14,10 +14,12 @@
                     <label for="content" class="block text-gray-700 font-bold mb-2">Content</label>
                     <textarea id="article_content" name="article_content" rows="5" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required></textarea>
                 </div>
-                <div class="mb-4">
-                    <label for="tags" class="block text-gray-700 font-bold mb-2">Image</label>
-                    <input type="text" id="article_image" name="article_image" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                </div>
+                <x-input-file 
+                label="Article Image"
+                name="article_image"
+                src="{{ isset($article->article_image) ? 'storage/articles/images/' . $article->article_image : null }}"
+                placeholderText="SVG, PNG, JPG or GIF (MAX. 800x400px)"
+                />
                 <div class="flex justify-end">
                     <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">Submit</button>
                 </div>

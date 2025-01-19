@@ -6,6 +6,7 @@ use App\Models\Book;
 use App\Repositories\LoanRepositoryInterface;
 use App\Models\Loan;
 use App\Models\User;
+use Exception;
 
 class LoanService
 {
@@ -18,41 +19,81 @@ class LoanService
 
     public function create(array $data): Loan
     {
-        return $this->loanRepository->create($data);
+        try {
+            return $this->loanRepository->create($data);
+        } catch (Exception $e) {
+            // Handle exception
+            throw $e;
+        }
     }
 
     public function getAll(): \Illuminate\Database\Eloquent\Collection
     {
-        return $this->loanRepository->getAll();
+        try {
+            return $this->loanRepository->getAll();
+        } catch (Exception $e) {
+            // Handle exception
+            throw $e;
+        }
     }
 
     public function getById(string $id): ?Loan
     {
-        return $this->loanRepository->getById($id);
+        try {
+            return $this->loanRepository->getById($id);
+        } catch (Exception $e) {
+            // Handle exception
+            throw $e;
+        }
     }
 
     public function update(string $id, array $data): bool
     {
-        return $this->loanRepository->update($id, $data);
+        try {
+            return $this->loanRepository->update($id, $data);
+        } catch (Exception $e) {
+            // Handle exception
+            throw $e;
+        }
     }
 
     public function delete(string $id): bool
     {
-        return $this->loanRepository->delete($id);
+        try {
+            return $this->loanRepository->delete($id);
+        } catch (Exception $e) {
+            // Handle exception
+            throw $e;
+        }
     }
 
     public function count()
     {
-        return $this->loanRepository->count();
+        try {
+            return $this->loanRepository->count();
+        } catch (Exception $e) {
+            // Handle exception
+            throw $e;
+        }
     }
 
     public function getAllUsers()
     {
-        return $this->loanRepository->getAllUsers();
+        try {
+            return $this->loanRepository->getAllUsers();
+        } catch (Exception $e) {
+            // Handle exception
+            throw $e;
+        }
     }
 
     public function getAllBooks()
     {
-        return $this->loanRepository->getAllBooks();
+        try {
+            return $this->loanRepository->getAllBooks();
+        } catch (Exception $e) {
+            // Handle exception
+            throw $e;
+        }
     }
 }

@@ -1,5 +1,5 @@
 <?php
-
+// filepath: /d:/Project/web-solid/app/Services/FileUploadService.php
 namespace App\Services;
 
 use App\Services\Contracts\FileUploadServiceInterface;
@@ -9,11 +9,12 @@ class FileUploadService implements FileUploadServiceInterface
 {
     public function uploadFile($file, $path, $disk = 'public')
     {
-        return Storage::disk($disk)->put($path, $file);
+        $filePath = $file->store($path, $disk);
+        return basename($filePath);
     }
 
     public function deleteFile($path, $disk = 'public')
     {
-        return Storage::disk('public')->delete($path);
+        return Storage::disk($disk)->delete($path);
     }
 }

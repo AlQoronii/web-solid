@@ -11,10 +11,9 @@
         <div class="bg-white shadow-md rounded-lg p-6">
             <div class="flex items-center">
                 <div>
-                    <h1 class="text-2xl font-bold mb-2">{{ $user->username }}</h1>
-                    <p class="text-gray-700 mb-1"><strong>Role ID:</strong> {{ $user->role_id }}</p>
-                    <p class="text-gray-700 mb-1"><strong>Email:</strong> {{ $user->email }}</p>
-                    <p class="text-gray-700 mb-1"><strong>Password:</strong> {{ $user->password }}</p>
+                    <h1 class="text-gray-700 font-bold mb-1"><strong>Username: </strong>{{ $user->username }}</h1>
+                    <p class="text-gray-700 mb-1"><strong>Role ID: </strong>{{$user->role->name}}</p>
+                    <p class="text-gray-700 mb-1"><strong>Email: </strong> {{ $user->email }}</p>
                 </div>
             </div>
         </div>

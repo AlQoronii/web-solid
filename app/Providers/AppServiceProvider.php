@@ -15,6 +15,7 @@ use App\Repositories\LoanRepositoryInterface;
 use App\Repositories\UserRepository;
 use App\Repositories\UserRepositoryInterface;
 use App\Services\ArticleService;
+use App\Services\AuthService;
 use App\Services\BookService;
 use App\Services\CategoryService;
 use App\Services\Contracts\FileUploadServiceInterface;
@@ -40,6 +41,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(CategoryRepositoryInterface::class, CategoryRepository::class);
         $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
         $this->app->bind(LoanRepositoryInterface::class, LoanRepository::class);
+        $this->app->bind(AuthRepositoryInterface::class, AuthRepository::class);
+
+        $this->app->bind(AuthService::class, function ($app) {
+            return new AuthService($app->make(AuthRepositoryInterface::class));
+        });
 
         // Binding untuk Services
         $this->app->bind(ArticleService::class, function ($app) {

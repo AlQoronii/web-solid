@@ -7,8 +7,8 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="bg-gray-100">
-<x-notification />
-    <!-- Navigation Bar -->
+{{-- <x-notification /> --}}
+    {{-- <!-- Navigation Bar --> --}}
     <nav class="bg-white shadow-lg">
         <div class="max-w-7xl mx-auto px-4">
             <div class="flex justify-between">

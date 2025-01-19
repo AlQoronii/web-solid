@@ -40,16 +40,15 @@
                     <label for="book_year" class="block text-gray-700 font-bold mb-2">Year</label>
                     <input type="number" id="book_year" name="book_year" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
                 </div>
-                <div class="mb-4">
-                    <label for="book_image" class="block text-gray-700 font-bold mb-2">Image</label>
-                    <input type="file" id="book_image" name="book_image" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
-                </div>
+                <x-input-file 
+                label="Book Image" 
+                name="book_image" 
+                src="{{ isset($book->book_image) ? 'storage/books/images/' . $book->book_image : null }}" 
+                placeholderText="SVG, PNG, JPG or GIF (MAX. 800x400px)" 
+                />
                 <div class="flex justify-end">
-                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 flex items-center">
+                    <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 flex items-center">
                         Submit
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                        </svg>
                     </button>
                 </div>
             </form>

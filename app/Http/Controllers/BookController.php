@@ -38,15 +38,13 @@ class BookController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return view('pages.book.create', ['categories' => $categories]);
+        return view('pages.book.create', ['categories' => $categories, 'extension' => 'jpg, jpeg, png, gif']);
     }
 
     public function store(BookRequest $request)
     {
         $data = $request->validated();
-
-
-
+        $data['book_image'] = $this->fileUploadService->uploadFile($request->file('book_image'), 'books/images');
         $book = $this->bookService->createBook($data);
 
         $this->notificationPusher->success('Book created successfully', ['book' => $book]);
@@ -72,20 +70,34 @@ class BookController extends Controller
 
     public function update(BookRequest $request, string $id)
     {
-        $data = $request->validated();
+        try {
+            $book = $this->bookService->getBookById($id);
+            $data = $request->validated();
 
-        $book = $this->bookService->updateBook($id, $data);
+            if ($request->hasFile('book_image')) {
+                if (!empty($book->book_image)) {
+                    $this->fileUploadService->deleteFile('books/images/' . $book->book_image);
+                }
+                $data['book_image'] = $this->fileUploadService->uploadFile($request->file('book_image'), 'books/images');
+            }
 
-        $this->notificationPusher->success('Book updated successfully', ['book' => $book]);
-        return redirect()->route('books.index');
+            $book = $this->bookService->updateBook($id, $data);
+
+            $this->notificationPusher->success('Book updated successfully', ['book' => $book]);
+            return redirect()->route('books.index')->with('success', 'Book updated successfully');
+        } catch (\Exception $e) {
+            $this->notificationPusher->error('Failed to update book', ['error' => $e->getMessage()]);
+            return redirect()->back()->withErrors(['error' => 'Failed to update book: ' . $e->getMessage()]);
+        }
     }
+
 
     public function destroy(string $id)
     {
         $book = $this->bookService->deleteBook($id);
 
         $this->notificationPusher->success('Book deleted successfully', ['book' => $book]);
-        return redirect()->route('books.index');
+        return redirect()->route('books.index')-with('success', 'Book deleted successfully');
     }
 
 }

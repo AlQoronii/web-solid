@@ -4,6 +4,8 @@ namespace App\Services;
 
 use App\Repositories\UserRepositoryInterface;
 use App\Models\User;
+use Exception;
+use Illuminate\Support\Facades\Hash;
 
 class UserService
 {
@@ -16,36 +18,78 @@ class UserService
 
     public function create(array $data): User
     {
-        return $this->userRepository->create($data);
+        try {
+            return $this->userRepository->create($data);
+        } catch (Exception $e) {
+            // Handle exception
+            throw $e;
+        }
     }
 
     public function getAll()
     {
-        return $this->userRepository->getAll();
+        try {
+            return $this->userRepository->getAll();
+        } catch (Exception $e) {
+            // Handle exception
+            throw $e;
+        }
     }
 
     public function getById(string $id): ?User
     {
-        return $this->userRepository->getById($id);
+        try {
+            return $this->userRepository->getById($id);
+        } catch (Exception $e) {
+            // Handle exception
+            throw $e;
+        }
     }
 
     public function update(string $id, array $data): bool
     {
-        return $this->userRepository->update($id, $data);
+        try {
+            $user = $this->getById($id);
+            if (!empty($data['password'])) {
+                $data['password'] = Hash::make($data['password']);
+            } else {
+                $data['password'] = $user->password;
+            }
+
+            return $this->userRepository->update($id, $data);
+        } catch (Exception $e) {
+            // Handle exception
+            throw $e;
+        }
     }
 
     public function delete(string $id): bool
     {
-        return $this->userRepository->delete($id);
+        try {
+            return $this->userRepository->delete($id);
+        } catch (Exception $e) {
+            // Handle exception
+            throw $e;
+        }
     }
 
     public function count()
     {
-        return $this->userRepository->count();
+        try {
+            return $this->userRepository->count();
+        } catch (Exception $e) {
+            // Handle exception
+            throw $e;
+        }
     }
 
     public function getAllRoles()
     {
-        return $this->userRepository->getAllRoles();
+        try {
+            return $this->userRepository->getAllRoles();
+        } catch (Exception $e) {
+            // Handle exception
+            throw $e;
+        }
     }
 }

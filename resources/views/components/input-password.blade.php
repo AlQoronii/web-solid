@@ -8,8 +8,13 @@
     <div class="absolute inset-y-0 right-0 flex items-center pr-3 text-sm leading-5">
         <button type="button" x-on:click="show = !show"
             class="text-gray-500 focus:outline-none focus:ring focus:ring-blue-500 focus:ring-opacity-50">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                <path d="M10 2C5.58 2 1.73 5.11.29 9.5c1.44 4.39 5.29 7.5 9.71 7.5s8.27-3.11 9.71-7.5C18.27 5.11 14.42 2 10 2zm0 13c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
+            <svg :class="{'hidden': show, 'block': !show }" class="h-5 w-5 text-gray-500" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-.274 1.057-.737 2.057-1.358 2.958M15 12a3 3 0 01-6 0m6 0a3 3 0 01-6 0m6 0a3 3 0 01-6 0" />
+            </svg>
+            <svg :class="{'block': show, 'hidden': !show }" class="h-5 w-5 text-gray-500" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.477 0-8.268-2.943-9.542-7a10.05 10.05 0 011.358-2.958m1.358-2.958A10.05 10.05 0 0112 5c4.477 0 8.268 2.943 9.542 7-.274 1.057-.737 2.057-1.358 2.958M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3l18 18" />
             </svg>
         </button>
     </div>

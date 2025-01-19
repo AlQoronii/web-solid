@@ -43,7 +43,7 @@
                         <option value="returned">Returned</option>
                     </select>
                 </div>
-                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Create</button>
+                <button type="submit" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded">Create</button>
             </form>
         </div>
     </div>

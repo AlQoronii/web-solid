@@ -67,7 +67,6 @@ class UserController extends Controller
     public function update(UserRequest $request, string $id)
     {
         $data = $request->validated();
-
         $user = $this->userService->update($id, $data);
 
         $this->notificationPusher->success('User updated successfully', ['user' => $user]);

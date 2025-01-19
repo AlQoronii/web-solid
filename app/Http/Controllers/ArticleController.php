@@ -7,17 +7,20 @@ use App\Http\Requests\StoreArticleRequest;
 use App\Services\ArticleService;
 use Illuminate\Http\Request;
 use App\Models\Article;
+use App\Services\Contracts\FileUploadServiceInterface;
 use App\Services\Notifications\NotificationPusher;
 
 class ArticleController extends Controller
 {
     protected $articleService;
     protected $notificationPusher;
+    protected $fileUploadService;
 
-    public function __construct(ArticleService $articleService, NotificationPusher $notificationPusher)
+    public function __construct(ArticleService $articleService, NotificationPusher $notificationPusher, FileUploadServiceInterface $fileUploadService)
     {
         $this->articleService = $articleService;
         $this->notificationPusher = $notificationPusher;
+        $this->fileUploadService = $fileUploadService;
     }
 
     public function index()
@@ -49,12 +52,12 @@ class ArticleController extends Controller
     public function store(ArticleRequest $request)
     {
         $data = $request->validated();
-
+        $data['article_image'] = $this->fileUploadService->uploadFile($request->file('article_image'), 'articles/images');
         $article = $this->articleService->createArticle($data);
 
         // Send success notification
         $this->notificationPusher->success('Article created successfully', ['article' => $article]);
-        return redirect()->route('articles.index');
+        return redirect()->route('articles.index')->with('success', 'Article created successfully');
     }
 
     public function edit($id)
@@ -69,11 +72,21 @@ class ArticleController extends Controller
 
     public function update(ArticleRequest $request, $id)
     {
+        $article = $this->articleService->getArticleById($id);
         $data = $request->validated();
+
+        if($request->hasFile('article_image')) {
+            if(!empty($article->article_image)) {
+                $this->fileUploadService->deleteFile('articles/images/' . $article->article_image);
+            }
+            $data['article_image'] = $this->fileUploadService->uploadFile($request->file('article_image'), 'articles/images');
+
+        }
 
         $article = $this->articleService->updateArticle($id, $data);
 
-        return $this->notificationPusher->success('Article updated successfully', ['article' => $article]);
+        $this->notificationPusher->success('Article updated successfully', ['article' => $article]);
+        return redirect()->route('articles.index')->with('success', 'Article updated successfully');
     }
 
     public function destroy($id)
@@ -81,6 +94,6 @@ class ArticleController extends Controller
         $this->articleService->deleteArticle($id);
 
         $this->notificationPusher->success('Article deleted successfully');
-        return redirect()->route('articles.index');
+        return redirect()->route('articles.index')->with('success', 'Article deleted successfully');
     }
 }

@@ -10,7 +10,7 @@
     <div class="container mx-auto p-4">
         <div class="w-full bg-white p-8 rounded-lg shadow-lg">
             <h1 class="text-2xl font-bold mb-6">Edit Book</h1>
-            <form action="{{ route('books.update', $book->book_id) }}" method="POST">
+            <form action="{{ route('books.update', $book->book_id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <div class="mb-4">
@@ -37,15 +37,19 @@
                     <label for="book_year" class="block text-gray-700 font-bold mb-2">Year</label>
                     <input type="number" id="book_year" name="book_year" value="{{ $book->book_year }}" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
                 </div>
-                <div class="mb-4">
-                    <label for="book_image" class="block text-gray-700 font-bold mb-2">Image</label>
-                    <textarea id="book_image" name="book_image" rows="5" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>{{ $book->book_image }}</textarea>
-                </div>
+                <x-input-file label="Book Image" 
+                name="book_image" 
+                src="{{ isset($book->book_image) ? 'storage/books/images/' . $book->book_image : null }}" 
+                placeholderText="SVG, PNG, JPG or GIF (MAX. 800x400px)" 
+                />
                 <div class="flex justify-end">
                     <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">Update</button>
                 </div>
+                
             </form>
         </div>
     </div>
 </div>
+{{-- // filepath: /d:/Project/web-solid/resources/views/pages/book/edit.blade.php --}}
+
 @endsection

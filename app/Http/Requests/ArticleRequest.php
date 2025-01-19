@@ -16,7 +16,7 @@ class ArticleRequest extends FormRequest
         return [
             'article_title' => 'required|string|max:255',
             'article_content' => 'required|string',
-            'article_image' => 'required|string',
+            'article_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
     }
 }

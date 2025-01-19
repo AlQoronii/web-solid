@@ -20,14 +20,23 @@ class UserRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(): array
+    public function rules()
     {
-        return [
+        $rules = [
             'role_id' => 'required|string',
             'username' => 'required|string|max:255',
             'email' => 'required|email',
-            'password' => 'required|string|min:6',
-            'profile' => 'string',
+            // 'profile' => 'string',
         ];
+
+        if($this->isMethod('put')) {
+            $rules['password'] = 'nullable|string|min:6|confirmed';
+        }
+
+        if($this->isMethod('post')) {
+            $rules['password'] = 'required|string|min:6|confirmed';
+        }
+
+        return $rules;
     }
 }
