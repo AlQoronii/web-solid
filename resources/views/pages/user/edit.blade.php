@@ -10,6 +10,13 @@
     <div class="container mx-auto p-4">
         <div class="w-full bg-white p-8 rounded-lg shadow-lg">
             <h1 class="text-2xl font-bold mb-6">Edit User</h1>
+            @if(session('success'))
+            <x-alert-popup type="success" :message="session('success')" />
+        @endif
+
+        @if(session('error'))
+            <x-alert-popup type="error" :message="session('error')" />
+        @endif
             <form action="{{ route('users.update', $user->user_id) }}" method="POST">
                 @csrf
                 @method('PUT')

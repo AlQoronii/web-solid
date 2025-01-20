@@ -18,15 +18,15 @@ class Datatables extends Component
      *
      * @return void
      */
-    public function __construct($layoutTop2Start, $id, $url, $columns, $aksi, $filter)
-    {
-        $this->layoutTop2Start = $layoutTop2Start;
-        $this->id = $id;
-        $this->url = $url;
-        $this->columns = $columns;
-        $this->aksi = $aksi;
-        $this->filter = $filter;
-    }
+    // public function __construct($layoutTop2Start, $id, $url, $columns, $aksi, $filter)
+    // {
+    //     $this->layoutTop2Start = $layoutTop2Start;
+    //     $this->id = $id;
+    //     $this->url = $url;
+    //     $this->columns = $columns;
+    //     $this->aksi = $aksi;
+    //     $this->filter = $filter;
+    // }
 
     /**
      * Get the view / contents that represent the component.

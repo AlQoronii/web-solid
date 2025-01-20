@@ -25,9 +25,9 @@
                 </div>
                 <!-- Primary Nav -->
                 <div class="hidden md:flex items-center space-x-1">
-                    <a href="#" class="py-5 px-3 text-gray-700 hover:text-gray-900">Home</a>
-                    <a href="#features" class="py-5 px-3 text-gray-700 hover:text-gray-900">Features</a>
-                    <a href="#contact" class="py-5 px-3 text-gray-700 hover:text-gray-900">Contact</a>
+                    <a href="#" class="py-5 px-3 text-gray-700 hover:text-blue-900">Home</a>
+                    <a href="#features" class="py-5 px-3 text-gray-700 hover:text-blue-900">Features</a>
+                    <a href="#contact" class="py-5 px-3 text-gray-700 hover:text-blue-900">Contact</a>
                 </div>
                 <!-- Login Button -->
                 <div class="hidden md:flex items-center space-x-1">

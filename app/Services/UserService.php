@@ -49,11 +49,10 @@ class UserService
     public function update(string $id, array $data): bool
     {
         try {
-            $user = $this->getById($id);
             if (!empty($data['password'])) {
                 $data['password'] = Hash::make($data['password']);
             } else {
-                $data['password'] = $user->password;
+                unset($data['password']);
             }
 
             return $this->userRepository->update($id, $data);

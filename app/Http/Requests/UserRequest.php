@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Role;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UserRequest extends FormRequest
 {
@@ -22,11 +22,13 @@ class UserRequest extends FormRequest
      */
     public function rules()
     {
-        $rules = [
+
+        $userId = $this->route('user');
+        // dd($userId);
+        $rules =  [
             'role_id' => 'required|string',
             'username' => 'required|string|max:255',
-            'email' => 'required|email',
-            // 'profile' => 'string',
+            'email' => 'required|email|', Rule::unique('users')->ignore($userId, 'user_id'),
         ];
 
         if($this->isMethod('put')) {
