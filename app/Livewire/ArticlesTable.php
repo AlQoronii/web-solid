@@ -7,10 +7,12 @@ use Livewire\Component;
 
 class ArticlesTable extends Component
 {
+    public $perPage = 5;
+
     public function render()
     {
-        $articles = Article::paginate(10);
-
-    return view('livewire.articles-table', ['articles' => $articles]);
+        return view('livewire.articles-table', [
+            'articles' => Article::paginate($this->perPage),
+        ]);
     }
 }

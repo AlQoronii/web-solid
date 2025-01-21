@@ -61,7 +61,10 @@ class AppServiceProvider extends ServiceProvider
         });
 
         $this->app->bind(UserService::class, function ($app) {
-            return new UserService($app->make(UserRepositoryInterface::class));
+            return new UserService(
+                $app->make(UserRepositoryInterface::class),
+                $app->make(NotificationPusher::class)
+            );
         });
 
         $this->app->bind(LoanService::class, function ($app) {

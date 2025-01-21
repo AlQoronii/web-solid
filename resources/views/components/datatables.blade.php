@@ -1,43 +1,30 @@
-@props(['id' => 'datatable', 'columns' => [], 'data' => [], 'options' => '{}'])
-
-@push('styles')
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
-@endpush
-
-<table id="{{ $id }}" class="min-w-full bg-white border">
+<table class="min-w-full bg-white">
     <thead>
         <tr>
             @foreach($columns as $column)
-                <th class="py-2 px-4 border-b text-center">{{ $column }}</th>
+                <th class="py-2 px-4 border-b text-center">{{ $column['label'] }}</th>
             @endforeach
+            @if($actions)
+                <th class="py-2 px-4 border-b text-center">Actions</th>
+            @endif
         </tr>
     </thead>
     <tbody>
-        @foreach($data as $row)
-            <tr>
-                @foreach($row as $cell)
-                    <td class="py-2 px-4 border-b text-center">{!! $cell !!}</td>
-                @endforeach
-            </tr>
-        @endforeach
-    </tbody>
-    <tfoot>
+        @foreach($data as $item)
         <tr>
             @foreach($columns as $column)
-                <th class="py-2 px-4 border-b text-center">{{ $column }}</th>
+                <td class="py-2 px-4 border-b text-center">
+                    {{ $item[$column['field']] ?? 'N/A' }}
+                </td>
             @endforeach
+            @if($actions)
+                <td class="py-2 px-4 border-b text-center">
+                    @foreach($actions as $action)
+                        {!! $action($item) !!}
+                    @endforeach
+                </td>
+            @endif
         </tr>
-    </tfoot>
+        @endforeach
+    </tbody>
 </table>
-
-@push('scripts')
-    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('#{{ $id }}').DataTable({!! $options !!});
-        });
-    </script>
-@endpush

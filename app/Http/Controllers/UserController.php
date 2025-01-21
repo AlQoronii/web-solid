@@ -69,7 +69,7 @@ class UserController extends Controller
         $data = $request->validated();
         $user = $this->userService->update($id, $data);
         if(!$user){
-            return $this->notificationPusher->warning('User Not Found', ['user' => $user]);
+            return redirect()->route('users.edit', $id)->with('error', 'Email already exists');
         }
         $this->notificationPusher->success('User updated successfully', ['user' => $user]);
         return redirect()->route('users.index')->with('success', 'User updated successfully');

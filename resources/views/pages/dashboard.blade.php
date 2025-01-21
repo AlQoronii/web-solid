@@ -95,7 +95,7 @@
                                 borderColor: 'rgba(54, 162, 235, 1)',
                                 borderWidth: 1,
                                 fill: true,
-                                tension: 1
+                                tension: 0.4 // Disarankan untuk smoothing garis
                             }]
                         },
                         options: {
@@ -106,7 +106,10 @@
                                         display: true,
                                         text: 'Date'
                                     },
-                                    
+                                    ticks: {
+                                        autoSkip: false, // Memastikan semua label terlihat
+                                        stepSize: 5 // Menentukan jarak antar label
+                                    }
                                 },
                                 y: {
                                     title: {
@@ -115,14 +118,14 @@
                                     },
                                     beginAtZero: true,
                                     ticks: {
-                                        autoSkip: true,
-                                        maxTicksLimit: 10// Adjust this value as needed
+                                        stepSize: 1 // Menentukan jarak antar angka di sumbu y
                                     }
                                 }
                             }
                         }
                     });
                 </script>
+                
             </section>
             <!-- End Cards Section -->
             <!-- Line Chart Section -->

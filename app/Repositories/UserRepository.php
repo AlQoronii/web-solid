@@ -29,7 +29,11 @@ class UserRepository implements UserRepositoryInterface
             return false;
         }
         
-        return $user->update($data);
+        try {
+            return $user->update($data);
+        } catch (\Exception $e) {
+            return false;
+        }
     }
 
     public function delete(string $id): bool
