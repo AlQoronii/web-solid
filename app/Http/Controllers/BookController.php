@@ -9,6 +9,7 @@ use App\Models\Book;
 use App\Models\Category;
 use App\Repositories\BookRepository;
 use App\Services\BookService;
+use App\Services\CategoryService;
 use App\Services\Contracts\FileUploadServiceInterface;
 use App\Services\Notifications\NotificationPusher;
 use Faker\Core\File;
@@ -18,21 +19,26 @@ class BookController extends Controller
     private $bookService;
     private $notificationPusher;
     private $fileUploadService;
-
-    public function __construct(BookService $bookService, NotificationPusher $notificationPusher, FileUploadServiceInterface $fileUploadService)
+    private $categoryService;
+    public function __construct(BookService $bookService, NotificationPusher $notificationPusher, FileUploadServiceInterface $fileUploadService, CategoryService $categoryService)
     {
         $this->bookService = $bookService;
         $this->notificationPusher = $notificationPusher;
         $this->fileUploadService = $fileUploadService;
+        $this->categoryService = $categoryService;
     }
 
 
-    public function index()
+    public function index(Request $request)
     {
-        $category = Category::all();
-        $book = $this->bookService->getAllBooks();
-        response()->json($book);
-        return view('pages.book.index', compact('book', 'category'));
+
+        $perPage = $request->get('perPage', 5);
+        $search = $request->get('search');
+        // $category = Category::all();
+        $category = $this->categoryService->getAllCategories();
+        $books = $this->bookService->getPaginatedBooks($perPage, $search);
+        response()->json($books);
+        return view('pages.book.index', compact('books', 'category', 'perPage', 'search'));
     }
 
     public function create()

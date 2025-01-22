@@ -7,14 +7,19 @@
     <link rel="icon" href="{{ asset('assets/images/favicon.ico') }}" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     
-    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
-    <script src="//unpkg.com/alpinejs" defer></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <script src="//unpkg.com/alpinejs" defer></script> --}}
+    {{-- <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script> --}}
+
+
+
 
     <style>
         body {
             overflow-x: hidden;
         }
     </style>
+        @livewireStyles
 </head>
 <body class="bg-gray-100">
     <div class="flex h-screen">
@@ -69,9 +74,12 @@
             </nav>
         </div>
         <!-- Main Content -->
-        <div class="flex-1 p-10 ml-64">
+        <div class="flex-1 p-10 ml-64 overflow-auto">
             @yield('content')
         </div>
     </div>
+    <livewire:scripts />
+    {{-- <script src="{{ asset('livewire/livewire.js') }}"></script> --}}
+
 </body>
 </html>

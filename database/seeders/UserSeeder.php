@@ -19,7 +19,8 @@ class UserSeeder extends Seeder
             'role_id' => $roleAdmin->role_id, // Admin
             'password' => Hash::make('password'), // Password default
         ]);
-        
+        // run userFactory
+        User::factory(10)->create();
     }
 }
 

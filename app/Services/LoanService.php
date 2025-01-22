@@ -96,4 +96,22 @@ class LoanService
             throw $e;
         }
     }
+
+    public function getPaginateLoan($perPage, $search = null)
+    {
+        $query = Loan::query();
+
+        if($search) {
+            $query->where('loan_status', 'like', '%' . $search . '%')
+            ->orWhereHas('user', function($query) use ($search) {
+                $query->where('username', 'like', '%' . $search . '%');
+            })
+            ->orWhereHas('book', function($query) use ($search) {
+                $query->where('book_title', 'like', '%' . $search . '%');
+            });
+        }
+
+        return $query->paginate($perPage);
+
+    }
 }

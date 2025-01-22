@@ -18,12 +18,13 @@ class LoanController extends Controller
         $this->notificationPusher = $notificationPusher;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-
-        $loans = $this->loanService->getAll();
+        $perPage = $request->get('perPage', 5);
+        $search = $request->get('search');
+        $loans = $this->loanService->getPaginateLoan($perPage, $search);
         response()->json($loans);
-        return view('pages.loan.index', compact('loans'));
+        return view('pages.loan.index', compact('loans', 'perPage', 'search'));
     }
 
     public function create()

@@ -19,11 +19,13 @@ class CategoryController extends Controller
         $this->notificationPusher = $notificationPusher;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $category = $this->categoryService->getAllCategories();
-        response()->json($category);
-        return view('pages.category.index', compact('category'));
+        $perPage = $request->get('perPage', 5);
+        $search = $request->get('search');
+        $categories = $this->categoryService->getPaginateCategories($perPage, $search);
+        response()->json($categories);
+        return view('pages.category.index', compact('categories', 'perPage', 'search'));
     }
 
     public function create()

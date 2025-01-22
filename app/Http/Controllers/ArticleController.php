@@ -23,16 +23,18 @@ class ArticleController extends Controller
         $this->fileUploadService = $fileUploadService;
     }
 
-    public function index()
+    public function index(Request $request)
     {
         $breadcrumb = [
             'list' => ['Home', 'Articles'],
             'url' => ['/', '/articles']
         ];
+        $perPage = $request->get('perPage', 5); // Default 5 articles per page
+        $search = $request->get('search');
 
-        $articles = $this->articleService->getAllArticles();
-        response()->json($articles);
-        return view('pages.article.index', compact('articles'));
+        $articles = $this->articleService->getPaginatedArticles($perPage, $search);
+
+        return view('pages.article.index', compact('articles', 'perPage', 'search'));
     }
 
     public function create()

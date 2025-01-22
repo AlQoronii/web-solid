@@ -78,4 +78,15 @@ class CategoryService
             throw new Exception("Failed to count categories: " . $e->getMessage());
         }
     }
+
+    public function getPaginateCategories($perPage, $search = null)
+    {
+        $query = Category::query();
+
+        if($search) {
+            $query->where('category_name', 'like', '%' . $search . '%');
+        }
+
+        return $query->paginate($perPage);
+    }
 }

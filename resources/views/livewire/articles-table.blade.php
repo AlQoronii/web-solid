@@ -1,5 +1,3 @@
-@extends('layouts.dashboard')
-@section('content')
 <div class="container mx-auto mt-10">
     <h1 class="text-2xl font-bold mb-5">Article</h1>
     @if(session('success'))
@@ -78,7 +76,7 @@
     <div class="flex">
         <div class="flex justify-end mt-4">
             <label for="perPage" class="mr-2">Per Page:</label>
-            <select id="perPage" name="perPage" class="border rounded px-2 py-1">
+            <select id="perPage" name="perPage" class="border rounded px-2 py-1" wire:model.live="perPage">
                 <option value="5">5</option>
                 <option value="10">10</option>
                 <option value="15">15</option>
@@ -86,6 +84,8 @@
             </select>
         </div>
     </div>
+    <table>
+        <!-- Table rows -->
+    </table>
     {{$articles->links()}}
 </div>
-@endsection

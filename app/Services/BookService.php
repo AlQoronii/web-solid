@@ -68,4 +68,20 @@ class BookService
             throw $e;
         }
     }
+
+    public function getPaginatedBooks($perPage, $search = null)
+    {
+        $query = Book::query();
+
+        if ($search) {
+            $query->where('book_title', 'like', '%' . $search . '%')
+                  ->orWhere('book_author', 'like', '%' . $search . '%')
+                  ->orWhereHas('category', function ($q) use ($search) {
+                      $q->where('category_name', 'like', '%' . $search . '%');
+                  });
+        }
+        
+
+        return $query->paginate($perPage);
+    }
 }

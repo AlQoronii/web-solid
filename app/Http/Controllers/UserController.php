@@ -19,12 +19,14 @@ class UserController extends Controller
         $this->notificationPusher = $notificationPusher;
     }
 
-    public function index()
+    public function index(Request $request)
     {
+        $perPage = $request->get('perPage', 5);
+        $search = $request->get('search');
         $role = $this->userService->getAllRoles();
-        $users = $this->userService->getAll();
+        $users = $this->userService->getPaginateUsers($perPage, $search);
         response()->json($users);
-        return view('pages.user.index', compact('users', 'role'));
+        return view('pages.user.index', compact('users', 'role', 'perPage', 'search'));
     }
 
     public function create()

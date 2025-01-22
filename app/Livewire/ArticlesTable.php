@@ -4,15 +4,23 @@ namespace App\Livewire;
 
 use App\Models\Article;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class ArticlesTable extends Component
 {
-    public $perPage = 5;
+    use WithPagination;
+
+    public $perPage = 5; // Default jumlah item per halaman
 
     public function render()
     {
-        return view('livewire.articles-table', [
-            'articles' => Article::paginate($this->perPage),
-        ]);
+        $articles = Article::paginate($this->perPage); // Pastikan model Article sudah diimpor
+        // dd($this->perPage);
+        return view('livewire.articles-table', compact('articles'));
+    }
+
+    public function updatingPerPage()
+    {
+        $this->resetPage();
     }
 }

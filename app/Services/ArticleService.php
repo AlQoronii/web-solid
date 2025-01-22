@@ -75,4 +75,16 @@ class ArticleService
             throw new Exception("Error counting articles: " . $e->getMessage());
         }
     }
+
+    public function getPaginatedArticles($perPage, $search = null)
+    {
+        $query = Article::query();
+
+        if ($search) {
+            $query->where('article_title', 'like', '%' . $search . '%')
+                  ->orWhere('article_content', 'like', '%' . $search . '%');
+        }
+
+        return $query->paginate($perPage);
+    }
 }

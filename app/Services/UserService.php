@@ -91,4 +91,19 @@ class UserService
             throw $e;
         }
     }
+
+    public function getPaginateUsers($perPage, $search = null)
+    {
+        $query = User::query();
+
+        if ($search) {
+            $query->where('username', 'like', '%' . $search . '%')
+                  ->orWhere('email', 'like', '%' . $search . '%')
+                  ->orWhereHas('role', function ($q) use ($search) {
+                      $q->where('name', 'like', '%' . $search . '%');
+                  });
+        }
+
+        return $query->paginate($perPage);
+    }
 }
