@@ -12,5 +12,6 @@ interface BookRepositoryInterface
     public function update(string $id, array $data): bool;
     public function delete(string $id): bool;
     public function getLatestBooks(): \Illuminate\Database\Eloquent\Collection;
+    public function getBookbyCategory(string $category): \Illuminate\Database\Eloquent\Collection;
     public function count();
 }

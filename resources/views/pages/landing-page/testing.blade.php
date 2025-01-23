@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Library Landing Page</title>
+    <title>Library</title>
     <link rel="icon" href="{{ asset('assets/images/favicon.ico') }}" type="image/x-icon">
     {{-- <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"> --}}
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -12,27 +12,29 @@
 {{-- <x-notification /> --}}
     {{-- <!-- Navigation Bar --> --}}
     <nav class="bg-white shadow-lg">
-        <div class="w-full px-4 justify-between">
+        <div class="max-w-7xl mx-auto px-4">
             <div class="flex justify-between">
-                <div class="space-x-4">
+                <div class="flex space-x-4">
                     <!-- Logo -->
-                    <div class="flex">  
+                    <div>
                         <a href="#" class="flex items-center py-5 px-2 text-gray-700">
-                            <img class="h-10 w-10 mr-1" src="{{asset('assets/images/library-removebg-preview.png')}}" alt="">
+                            <svg class="h-6 w-6 mr-1 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 1.343-3 3s1.343 3 3 3 3-1.343 3-3-1.343-3-3-3zM12 2a10 10 0 100 20 10 10 0 000-20z" />
+                            </svg>
                             <span class="font-bold">Library</span>
                         </a>
                     </div>
                 </div>
                 <!-- Primary Nav -->
                 <div class="hidden md:flex items-center space-x-1">
-                    <a href="#" class="py-5 px-3 text-gray-500 font-bold hover:text-blue-900">Home</a>
-                    <a href="#features" class="py-5 px-3 text-gray-500 font-bold hover:text-blue-900">Features</a>
-                    <a href="#contact" class="py-5 px-3 text-gray-500 font-bold hover:text-blue-900">Contact</a>
+                    <a href="#" class="py-5 px-3 text-gray-700 hover:text-blue-900">Home</a>
+                    <a href="#features" class="py-5 px-3 text-gray-700 hover:text-blue-900">Features</a>
+                    <a href="#contact" class="py-5 px-3 text-gray-700 hover:text-blue-900">Contact</a>
                 </div>
-                <!-- Login Button -->
                 <div class="hidden md:flex items-center space-x-1">
                     <a href="{{ route('login') }}" class="py-2 px-3 bg-blue-500 text-white rounded hover:bg-blue-600">Login</a>
                 </div>
+                <!-- Login Button -->
                 <!-- Mobile Button -->
                 <div class="md:hidden flex items-center">
                     <button class="mobile-menu-button">
@@ -53,85 +55,13 @@
     </nav>
 
     <!-- Hero Section -->
-    <section style="background-image: url({{ asset('assets/images/background-mountain.jpg') }}); background-position: center; background-size: cover;" class="py-20">
-        <div class="container mx-auto pt-[350px] px-6 flex justify-between items-center h-[400px] bg-cover bg-center">
-            <div class="text-left">
-                <h2 class="text-4xl font-bold mb-2 text-white-snow">Welcome to Our Library</h2>
-                <h3 class="text-2xl mb-8 text-gray-300">Explore a World of Knowledge</h3>
-                <a href="#features" class="bg-blue-500 text-white py-2 px-4 rounded-full hover:bg-blue-600">Start Exploring</a>
-            </div>
-            <div class="flex space-x-4">
-                @foreach($books as $book)
-                    <img src="{{ asset('storage/books/images/' . $book->book_image) }}" alt="{{ $book->book_title }}" class="w-24 h-32 object-cover rounded-lg">
-                @endforeach
-            </div>
+    <section class="bg-white py-20">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-4xl font-bold mb-2 text-gray-800">Welcome to Our Library</h2>
+            <h3 class="text-2xl mb-8 text-gray-600">Explore a World of Knowledge</h3>
+            <a href="#features" class="bg-blue-500 text-white py-2 px-4 rounded-full hover:bg-blue-600">Start Exploring</a>
         </div>
     </section>
-<!-- Blade Template -->
-<section>
-    <div class="flex justify-center">
-        <ul class="flex flex-wrap -mb-px text-sm font-medium text-center text-gray-500 dark:text-gray-400">
-            <li class="me-2">
-                <a href="#" 
-                   class="inline-flex items-center justify-center p-4 border-b-2 border-transparent rounded-t-lg hover:border-blue-300 dark:hover:text-blue-600 group" 
-                   data-category="all">
-                    New Arrivals
-                </a>
-            </li>
-            @foreach($categories as $category)
-                <li class="me-2">
-                    <a href="#" 
-                       class="inline-flex items-center justify-center p-4 border-b-2 border-transparent rounded-t-lg hover:border-blue-300 dark:hover:text-blue-600 group" 
-                       data-category="{{ $category->category_name }}">
-                        {{ $category->category_name }}
-                    </a>
-                </li>
-            @endforeach
-            <!-- Tambahkan opsi "Show All" -->
-            <li class="me-2">
-                <a href="#" 
-                   class="inline-flex items-center justify-center p-4 border-b-2 border-transparent rounded-t-lg hover:border-blue-300 dark:hover:text-blue-600 group" 
-                   data-category="all">
-                    Show All
-                </a>
-            </li>
-        </ul>
-    </div>
-</section>
-
-<section id="books-section">
-    <h1 class="ml-24 text-2xl font-bold mb-5">Books</h1>
-    <div class="grid grid-cols-6 gap-10 ml-24 mt-8">
-        @foreach($allBooks as $b)
-            <img src="{{ asset('storage/books/images/' . $b->book_image) }}" 
-                 alt="{{ $b->book_title }}" 
-                 class="w-48 h-64 object-cover rounded-lg book-item" 
-                 data-category="{{ $b->category->category_name }}">
-        @endforeach
-    </div>
-</section>
-
-<script>
-    document.querySelectorAll('a[data-category]').forEach(link => {
-        link.addEventListener('click', function(event) {
-            event.preventDefault();
-
-            // Dapatkan kategori yang dipilih
-            const categoryId = this.getAttribute('data-category');
-
-            // Loop semua buku
-            document.querySelectorAll('.book-item').forEach(book => {
-                if (categoryId === 'all' || book.getAttribute('data-category') === categoryId) {
-                    book.style.display = 'block'; // Tampilkan buku
-                } else {
-                    book.style.display = 'none'; // Sembunyikan buku
-                }
-            });
-        });
-    });
-</script>
-
-    
 
     <!-- Features Section -->
     <section id="features" class="py-20 bg-gray-100">

@@ -31,6 +31,10 @@ class BookController extends Controller
 
     public function index(Request $request)
     {
+        $breadcrumb = [
+            'list' => ['Home', 'Books'],
+            'url' => ['/', '/books']
+        ];
 
         $perPage = $request->get('perPage', 5);
         $search = $request->get('search');
@@ -38,7 +42,7 @@ class BookController extends Controller
         $category = $this->categoryService->getAllCategories();
         $books = $this->bookService->getPaginatedBooks($perPage, $search);
         response()->json($books);
-        return view('pages.book.index', compact('books', 'category', 'perPage', 'search'));
+        return view('pages.book.index', compact('books', 'category', 'perPage', 'search', 'breadcrumb'));
     }
 
     public function create()

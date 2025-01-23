@@ -37,6 +37,12 @@ class DashboardController extends Controller
 
     public function index()
     {
+
+        $breadcrumb = [
+            'list' => ['Home', 'Dashboard'],
+            'url' => ['/', '/dashboard']
+        ];
+
         $usersCount = $this->userService->count();
         $booksCount = $this->bookService->count();
         $categoriesCount = $this->categoryService->count();
@@ -67,7 +73,8 @@ class DashboardController extends Controller
             'articlesCount' => $articlesCount,
             'loanDates' => $loanDates,
             'loanCounts' => $loanCounts,
-            'loanDetails' => $loanDetails
+            'loanDetails' => $loanDetails,
+            'breadcrumb' => $breadcrumb,
         ]);
     }
 }

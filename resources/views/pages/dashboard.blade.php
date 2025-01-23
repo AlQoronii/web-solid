@@ -7,14 +7,7 @@
                     <li><span class="mx-2">/</span></li>
                     <li class="text-blue-600">Dashboard</li>
                 </ol>
-                <div class="flex items-center space-x-4">
-                    <span class="text-gray-600">{{ Auth::user()->username }}</span>
-                    {{-- <img class="w-10 h-10 rounded-full" src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}"> --}}
-                    <form method="POST" action="{{ route('logout') }}" onsubmit="event.preventDefault(); this.submit();">
-                        @csrf
-                        <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded">Logout</button>
-                    </form>
-                </div>
+                
             </nav>  
             <h1>Welcome, {{ Auth::user()->username }}!</h1>
             <p class="mt-4 text-lg">Use the sidebar to navigate through different management sections.</p>
@@ -24,9 +17,10 @@
                     <div class="flex flex-col px-5 py-7 gap-y-5 bg-white rounded-xl text-navy-night">
                         <div>
                             <div class="bg-blue-500 rounded-full p-3 w-12 h-12 flex justify-center items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 1.343-3 3s1.343 3 3 3 3-1.343 3-3-1.343-3-3-3zM12 2a10 10 0 100 20 10 10 0 000-20z" />
+                                <svg class="h-6 w-6 text-white " xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" />
                                 </svg>
+            
                             </div>
                         </div>
                         <div>
@@ -37,8 +31,8 @@
                     <div class="flex flex-col px-5 py-7 gap-y-5 bg-white rounded-xl">
                         <div>
                             <div class="bg-green-500 rounded-full p-3 w-12 h-12 flex justify-center items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 19.121A3 3 0 007 20h10a3 3 0 001.879-.879l3-3A3 3 0 0022 14V7a3 3 0 00-.879-2.121l-3-3A3 3 0 0017 1H7a3 3 0 00-2.121.879l-3 3A3 3 0 001 7v7a3 3 0 00.879 2.121l3 3z" />
+                                <svg class="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
                                 </svg>
                             </div>
                         </div>
@@ -50,8 +44,8 @@
                     <div class="flex flex-col px-5 py-7 gap-y-5 bg-white rounded-xl">
                         <div>
                             <div class="bg-yellow-500 rounded-full p-3 w-12 h-12 flex justify-center items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                <svg class="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5m8.25 3v6.75m0 0-3-3m3 3 3-3M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" />
                                 </svg>
                             </div>
                         </div>
@@ -63,8 +57,8 @@
                     <div class="flex flex-col px-5 py-7 gap-y-5 bg-white rounded-xl">
                         <div>
                             <div class="bg-red-500 rounded-full p-3 w-12 h-12 flex justify-center items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 1.343-3 3s1.343 3 3 3 3-1.343 3-3-1.343-3-3-3zM12 2a10 10 0 100 20 10 10 0 000-20z" />
+                                <svg class="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 0 1-2.25 2.25M16.5 7.5V18a2.25 2.25 0 0 0 2.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 0 0 2.25 2.25h13.5M6 7.5h3v3H6v-3Z" />
                                 </svg>
                             </div>
                         </div>

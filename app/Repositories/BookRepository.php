@@ -42,9 +42,34 @@ class BookRepository implements BookRepositoryInterface
         return $book->delete();
     }
 
-    public function getLatestBooks(): Collection
+    public function getLatestBooks(int $limit = 4): Collection
     {
-        return Book::latest()->take(5)->get();
+        return Book::latest()->take($limit)->get();
+    }
+    public function getPaginatedBooks($perPage, $search = null)
+    {
+        $query = Book::query();
+
+        if ($search) {
+            $query->where('book_title', 'like', '%' . $search . '%')
+                  ->orWhere('book_author', 'like', '%' . $search . '%')
+                  ->orWhereHas('category', function ($q) use ($search) {
+                      $q->where('category_name', 'like', '%' . $search . '%');
+                  });
+        }
+        
+
+        return $query->paginate($perPage);
+    }
+    public function getBookbyCategory(string $category): Collection
+    {
+        $query = Book::query();
+
+        $query->where('category', function($q) use ($category){
+            $q->where('category_name', 'like', '%' . $category . '%');
+        });
+
+        return $query->get();
     }
 
     public function count()

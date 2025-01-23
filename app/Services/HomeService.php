@@ -26,5 +26,15 @@ class HomeService
     {
         return $this->articleRepository->getLatestArticles();
     }
+
+    public function getAllBooks(): Collection
+    {
+        return $this->bookRepository->getAll();
+    }
+
+    public function getBookbyCategory(string $category): Collection{
+        return $this->bookRepository->getBookbyCategory($category);
+    }
 }
+
 ?>

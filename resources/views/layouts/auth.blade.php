@@ -29,7 +29,7 @@
 <body class="font-sans text-gray-900 antialiased">
     <x-notification />
     <div class="relative min-h-screen flex flex-col justify-center items-center pt-6 sm:pt-0 bg-cover bg-no-repeat"
-        style="background-image: url({{ asset('assets/images/background.jpg') }})">
+        style="background-image: url({{ asset('assets/images/background-mountain.jpg') }})">
         <div class="w-full max-w-80 sm:max-w-sm mt-6 px-8 py-10 bg-white shadow-md overflow-hidden rounded-lg">
             {{ $slot }}
         </div>

@@ -84,4 +84,13 @@ class BookService
 
         return $query->paginate($perPage);
     }
+
+    public function getLatestBooks(int $limit = 4): \Illuminate\Database\Eloquent\Collection
+    {
+        try {
+            return $this->bookRepository->getLatestBooks($limit);
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
 }
