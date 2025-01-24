@@ -18,7 +18,10 @@
                     <!-- Logo -->
                     <div class="flex">  
                         <a href="#" class="flex items-center py-5 px-2 text-gray-700">
-                            <img class="h-10 w-10 mr-1" src="{{asset('assets/images/library-removebg-preview.png')}}" alt="">
+                            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0 0 12 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75Z" />
+                              </svg>
+                              
                             <span class="font-bold">Library</span>
                         </a>
                     </div>
@@ -57,7 +60,7 @@
         <div class="container mx-auto pt-[350px] px-6 flex justify-between items-center h-[400px] bg-cover bg-center">
             <div class="text-left">
                 <h2 class="text-4xl font-bold mb-2 text-white-snow">Welcome to Our Library</h2>
-                <h3 class="text-2xl mb-8 text-gray-300">Explore a World of Knowledge</h3>
+                <h3 class="text-2xl mb-8 text-gray-100">Explore a World of Knowledge</h3>
                 <a href="#features" class="bg-blue-500 text-white py-2 px-4 rounded-full hover:bg-blue-600">Start Exploring</a>
             </div>
             <div class="flex space-x-4">
@@ -71,13 +74,13 @@
 <section>
     <div class="flex justify-center">
         <ul class="flex flex-wrap -mb-px text-sm font-medium text-center text-gray-500 dark:text-gray-400">
-            <li class="me-2">
+            {{-- <li class="me-2">
                 <a href="#" 
                    class="inline-flex items-center justify-center p-4 border-b-2 border-transparent rounded-t-lg hover:border-blue-300 dark:hover:text-blue-600 group" 
                    data-category="all">
                     New Arrivals
                 </a>
-            </li>
+            </li> --}}
             @foreach($categories as $category)
                 <li class="me-2">
                     <a href="#" 

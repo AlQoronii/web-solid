@@ -1,8 +1,7 @@
 <div class="mb-4">
     <label for="{{ $name }}" class="block text-gray-700 font-bold mb-2">{{ $label }}</label>
     <div class="flex items-center justify-center w-full">
-        <label for="{{ $name }}" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-            <div class="flex flex-col items-center justify-center pt-5 pb-6">
+        <label for="{{ $name }}" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-white hover:bg-gray-100">            <div class="flex flex-col items-center justify-center pt-5 pb-6">
                 @if ($src)
                     <img id="preview-{{ $name }}" src="{{ asset($src) }}" alt="Image Preview" class="mt-4 w-full h-48 object-cover rounded-lg">
                 @else

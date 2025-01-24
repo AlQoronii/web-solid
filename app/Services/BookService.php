@@ -76,6 +76,7 @@ class BookService
         if ($search) {
             $query->where('book_title', 'like', '%' . $search . '%')
                   ->orWhere('book_author', 'like', '%' . $search . '%')
+                  ->orWhere('book_publisher', 'like', '%' . $search . '%')
                   ->orWhereHas('category', function ($q) use ($search) {
                       $q->where('category_name', 'like', '%' . $search . '%');
                   });
@@ -83,6 +84,26 @@ class BookService
         
 
         return $query->paginate($perPage);
+    }
+
+    public function searchBook($search = null): \Illuminate\Database\Eloquent\Collection
+    {
+        $query = Book::query();
+        try {
+            if($search){
+                $query->where('book_title', 'like', '%' . $search . '%')
+                      ->orWhere('book_author', 'like', '%' . $search . '%')
+                      ->orWhere('book_publisher', 'like', '%' . $search . '%')
+                      ->orWhereHas('category', function ($q) use ($search) {
+                          $q->where('category_name', 'like', '%' . $search . '%');
+                      });
+                return $query->get();
+            }
+
+            return $query->get();
+        } catch (Exception $e) {
+            throw $e;
+        }
     }
 
     public function getLatestBooks(int $limit = 4): \Illuminate\Database\Eloquent\Collection

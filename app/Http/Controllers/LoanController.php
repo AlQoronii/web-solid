@@ -82,9 +82,13 @@ class LoanController extends Controller
 
     public function destroy(string $id)
     {
-        $loan = $this->loanService->delete($id);
-
-        $this->notificationPusher->success('Loan deleted successfully', ['loan' => $loan]);
-        return redirect()->route('loans.index')->with('success', 'Loan deleted successfully');;
+        try {
+            $loan = $this->loanService->delete($id);
+            $this->notificationPusher->success('Loan deleted successfully', ['loan' => $loan]);
+            return redirect()->route('loans.index')->with('success', 'Loan deleted successfully');
+        } catch (\Exception $e) {
+            $this->notificationPusher->error('Failed to delete loan', ['error' => $e->getMessage()]);
+            return redirect()->route('loans.index')->with('error', 'Failed to delete loan');
+        }
     }
 }

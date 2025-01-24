@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Book;
+use Exception;
 use Illuminate\Database\Eloquent\Collection;
 
 class BookRepository implements BookRepositoryInterface
@@ -70,6 +71,24 @@ class BookRepository implements BookRepositoryInterface
         });
 
         return $query->get();
+    }
+
+    public function searchBook($search = null): \Illuminate\Database\Eloquent\Collection
+    {
+        $query = Book::query();
+        try {
+            if($search){
+                $query->where('book_title', 'like', '%' . $search . '%')
+                      ->orWhere('book_author', 'like', '%' . $search . '%')
+                      ->orWhere('book_publisher', 'like', '%' . $search . '%')
+                      ->orWhereHas('category', function ($q) use ($search) {
+                          $q->where('category_name', 'like', '%' . $search . '%');
+                      });
+                return $query->get();
+            }
+        } catch (Exception $e) {
+            throw $e;
+        }
     }
 
     public function count()

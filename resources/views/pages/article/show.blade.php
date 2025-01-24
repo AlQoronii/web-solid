@@ -7,12 +7,12 @@
         </svg>
         Back
     </a>
-    <div class="container mx-auto p-4">
-        <div class="bg-white p-6 rounded-lg shadow-lg">
-            <h1 class="text-3xl font-bold mb-4">{{ $article->article_title }}</h1>
-            <p class="text-gray-700 mb-4">{{ $article->article_content }}</p>
-            <div class="text-sm text-gray-500">
-                <p>{{ $article->article_image }}</p>
+    <div class="bg-white shadow-md rounded-lg p-6">
+        <div class="flex items-center">
+            <img src="{{ asset('storage/articles/images/' . $article->article_image) }}" alt="Book Image" class="w-50 h-80 object-cover rounded-lg mr-6">
+            <div>
+                <h1 class="text-3xl font-bold mb-4">Title: {{ $article->article_title }}</h1>
+                <p class="text-gray-700 mb-4">Content: {{ $article->article_content }}</p>
             </div>
         </div>
     </div>

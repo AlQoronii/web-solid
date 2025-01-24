@@ -59,8 +59,11 @@ class DashboardController extends Controller
 
         $loanDates = Loan::selectRaw('DATE(created_at) as created_date')->groupBy('created_date')->pluck('created_date');
 
-        $loanCounts = Loan::selectRaw('COUNT(*) as count')->groupBy('created_at')->pluck('count');
+        $loanCounts = Loan::selectRaw('COUNT(*) as count')
+        ->groupByRaw('DATE(created_at)')
+        ->pluck('count');
 
+        // dd($loanCounts);
         $loanDetails = Loan::select('user_id', 'book_id', 'borrow_date', 'return_date', 'loan_status')->get();
 
     // return view('pages.dashboard', compact('booksCount', 'usersCount', 'loansCount', 'articlesCount', 'loanDates', 'loanCounts'));

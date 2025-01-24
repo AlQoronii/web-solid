@@ -18,8 +18,8 @@
         <table class="min-w-full bg-white">
             <thead class="bg-blue-100">
                 <tr>
-                    <th class="py-2 px-4 border-b text-center">User</th>
-                    <th class="py-2 px-4 border-b text-center">Book Name</th>
+                    <th class="py-2 px-10 border-b text-justify">User</th>
+                    <th class="py-2 px-4 border-b text-justify">Book Name</th>
                     <th class="py-2 px-4 border-b text-center">Borrow Date</th>
                     <th class="py-2 px-4 border-b text-center">Return Date</th>
                     <th class="py-2 px-4 border-b text-center">Loan Status</th>
@@ -29,24 +29,32 @@
             <tbody>
                 @foreach($loans as $loan)
                 <tr>
-                    <td class="py-2 px-4 border-b text-center">{{ $loan->user->username }}</td>
-                    <td class="py-2 px-4 border-b text-center">{{ $loan->book->book_title }}</td>
+                    <td class="py-2 px-10 border-b text-justify">{{ $loan->user->username }}</td>
+                    <td class="py-2 px-4 border-b text-justify">{{ $loan->book->book_title }}</td>
                     <td class="py-2 px-4 border-b text-center">{{ $loan->borrow_date }}</td>
                     <td class="py-2 px-4 border-b text-center">{{ $loan->return_date }}</td>
                     <td class="py-2 px-4 border-b text-center">{{ $loan->loan_status }}</td>
                     <td class="py-2 px-4 border-b text-center">
-                        <a href="{{ route('loans.edit', $loan->loan_id) }}" class="bg-yellow-400 text-yellow-900 px-2 py-1 rounded hover:bg-yellow-500" style="width: 60px; display: inline-block; text-align: center; font-">Edit</a>
-                        {{-- <a href="{{ route('loans.show', $loan->loan_id) }}" class="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-700" style="width: 60px; display: inline-block; text-align: center;">Show</a> --}}
+                        <div class="flex justify-center space-x-2">
+                        <a href="{{ route('loans.edit', $loan->loan_id) }}" 
+                            class="w-auto text-yellow-500 hover:text-yellow-700 px-2 py-1 rounded inline-block text-center"
+                        >
+                        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                          </svg>
+                        </a>
                         <x-validation
                             :action="route('loans.destroy', $loan->loan_id)" 
                             :method="'DELETE'" 
                             title="Delete Loan" 
                             message="Apakah Anda yakin ingin menghapus loan ini?" 
-                            button-text="Delete"
+                            {{-- button-text="Delete" --}}
+                            :svgIcon="true"
                             cancel-text="Batal"
                             confirm-text="Ya, Hapus"
                             confirmButtonClass="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600"
                         />
+                    </div>
                     </td>
                 </tr>
                 @endforeach

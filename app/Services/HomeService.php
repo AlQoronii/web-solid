@@ -9,6 +9,7 @@ use App\Repositories\ArticleRepositoryInterface;
 class HomeService
 {
     protected $bookRepository;
+    protected $bookService;
     protected $articleRepository;
 
     public function __construct(BookRepositoryInterface $bookRepository, ArticleRepositoryInterface $articleRepository)
@@ -34,6 +35,10 @@ class HomeService
 
     public function getBookbyCategory(string $category): Collection{
         return $this->bookRepository->getBookbyCategory($category);
+    }
+
+    public function searchBook($search): Collection{
+        return $this->bookService->searchBook($search);
     }
 }
 

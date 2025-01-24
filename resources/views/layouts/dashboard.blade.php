@@ -5,14 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Library Dashboard</title>
     <link rel="icon" href="{{ asset('assets/images/favicon.ico') }}" type="image/x-icon">
-    {{-- <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"> --}}
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     
     {{-- <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
     <script src="//unpkg.com/alpinejs" defer></script> --}}
     {{-- <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script> --}}
 
 
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
 
     <style>
         body {
@@ -27,10 +27,10 @@
         <div class="bg-blue-800 text-white w-64 space-y-6 py-7 px-2 fixed h-full">
             <!-- Logo -->
             <div class="text-white flex items-center space-x-2 px-4">
-                <svg class="h-8 w-8 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 1.343-3 3s1.343 3 3 3 3-1.343 3-3-1.343-3-3-3zM12 2a10 10 0 100 20 10 10 0 000-20z" />
-                </svg>
-                <span class="text-2xl font-extrabold">Library</span>
+                <svg class="w-10 h-10" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0 0 12 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75Z" />
+                  </svg>
+                <span class="text-2xl font-bold">Library</span>
             </div>
 
             <!-- Navigation -->
@@ -84,7 +84,7 @@
         <div>
             
         </div>
-        <div class="flex-1 ml-64 pr-4 py-6 rounded-lg">
+        <div class="flex-1 ml-64 pr-4 rounded-lg">
             <div class="sticky top-0 bg-gray-100 flex justify-end items-center space-x-4 p-4 shadow-md z-10">
                 {{-- <span class="text-gray-600">{{ Auth::user()->username }}</span> --}}
                 {{-- <img class="w-10 h-10 rounded-full" src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}"> --}}
@@ -92,7 +92,7 @@
                     <form method="POST" action="{{ route('logout') }}" onsubmit="event.preventDefault(); this.submit();">
                         @csrf
                         <x-validation
-                            buttonClass="bg-red-500 text-white px-4 py-2 rounded"
+                            buttonClass="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
                             :action="route('logout')" 
                             :method="'POST'" 
                             title="Logout" 
