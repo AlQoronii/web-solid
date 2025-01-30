@@ -42,8 +42,9 @@ class AuthController extends Controller
                 return back()->withErrors(['login' => $response['message']]);
             }
 
-            NotificationPusher::success($response['message'], ['token' => $response['token']]);
-            return redirect()->intended('dashboard');
+            // NotificationPusher::success($response['message'], ['token' => $response['token']]);
+            // return redirect()->intended('dashboard');
+            return response()->json($response);
         } catch (\Exception $e) {
             NotificationPusher::error('An unexpected error occurred');
             return back()->withErrors(['login' => 'An unexpected error occurred']);
@@ -58,7 +59,8 @@ class AuthController extends Controller
                 throw new AuthenticationException('Logout failed');
             }
             NotificationPusher::success('Logout success');
-            return response()->redirectTo('/');
+            // return response()->redirectTo('/');
+            return response()->json(['message' => 'Logout success']);
         } catch (\Exception $e) {
             NotificationPusher::error($e->getMessage());
             return back();

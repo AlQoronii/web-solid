@@ -4,6 +4,7 @@ use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoanController;
 use App\Http\Controllers\UserController;
 use App\Models\Category;
@@ -27,6 +28,8 @@ use Illuminate\Support\Facades\Route;
 // });
 
 // articles
+
+Route::get('dashboard', [DashboardController::class, 'index']);
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('articles', [ArticleController::class, 'index']);
     Route::get('articles/{id}', [ArticleController::class, 'show']);
