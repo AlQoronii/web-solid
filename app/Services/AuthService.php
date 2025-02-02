@@ -53,6 +53,9 @@ class AuthService
     public function logout(Request $request): bool
     {
         try {
+            if (!$request->hasSession()) {
+                $request->setLaravelSession(app('session.store'));
+            }
             Auth::guard('web')->logout();
             $request->session()->invalidate();
             $request->session()->regenerateToken();

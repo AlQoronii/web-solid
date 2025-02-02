@@ -39,7 +39,8 @@ class AuthController extends Controller
 
             if (!$response['status']) {
                 NotificationPusher::error($response['message']);
-                return back()->withErrors(['login' => $response['message']]);
+                // return back()->withErrors(['login' => $response['message']]);
+                return response()->json($response, 401);
             }
 
             // NotificationPusher::success($response['message'], ['token' => $response['token']]);
@@ -51,7 +52,7 @@ class AuthController extends Controller
         }
     }
     
-    public function logout(Request $request): JsonResponse | RedirectResponse
+    public function logout(Request $request)
     {
         try {
             $repsonse = $this->authService->logout($request);
@@ -63,7 +64,8 @@ class AuthController extends Controller
             return response()->json(['message' => 'Logout success']);
         } catch (\Exception $e) {
             NotificationPusher::error($e->getMessage());
-            return back();
+            // return back();
+            return response()->json(['message' => $e->getMessage()], 401);
         }
     }
 }

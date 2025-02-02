@@ -25,9 +25,10 @@ class UserController extends Controller
         $search = $request->get('search');
         $role = $this->userService->getAllRoles();
         $users = $this->userService->getPaginateUsers($perPage, $search);
-        response()->json($users);
-        return view('pages.user.index', compact('users', 'role', 'perPage', 'search'));
-    }
+        $user = $this->userService->getAll();
+        return response()->json($user);
+        // return view('pages.user.index', compact('users', 'role', 'perPage', 'search'));
+    }   
 
     public function create()
     {

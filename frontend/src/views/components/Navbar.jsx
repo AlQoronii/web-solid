@@ -1,15 +1,14 @@
-//import Link from react router dom
-import { Link } from "react-router-dom";
+import React, { useState } from 'react';
 
-//import routes
-import Routes from './routes/Index';
+const Navbar = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-export default function App() {
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
 
   return (
-    <>
-      <div>
-        <nav className="bg-white shadow-lg">
+<nav className="bg-white shadow-lg">
         <div className="w-full px-4 justify-between">
             <div className="flex justify-between">
                 <div className="space-x-4">
@@ -52,10 +51,7 @@ export default function App() {
         </div>
     </nav>
     
-      </div>
-      <Routes />
+  );
+};
 
-    </>
-  )
-  
-}
+export default Navbar;
