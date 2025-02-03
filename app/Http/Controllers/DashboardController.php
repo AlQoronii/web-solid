@@ -43,6 +43,13 @@ class DashboardController extends Controller
             'url' => ['/', '/dashboard']
         ];
 
+        
+    // return view('pages.dashboard', compact('booksCount', 'usersCount', 'loansCount', 'articlesCount', 'loanDates', 'loanCounts'));
+
+        return view('pages.dashboard', compact('breadcrumb'));
+    }
+
+    public function data(){
         $usersCount = $this->userService->count();
         $booksCount = $this->bookService->count();
         $categoriesCount = $this->categoryService->count();
@@ -66,9 +73,7 @@ class DashboardController extends Controller
         // dd($loanCounts);
         $loanDetails = Loan::select('user_id', 'book_id', 'borrow_date', 'return_date', 'loan_status')->get();
 
-    // return view('pages.dashboard', compact('booksCount', 'usersCount', 'loansCount', 'articlesCount', 'loanDates', 'loanCounts'));
-
-        return view('pages.dashboard', [
+        $data = [
             'usersCount' => $usersCount,
             'booksCount' => $booksCount,
             'categoriesCount' => $categoriesCount,
@@ -77,7 +82,8 @@ class DashboardController extends Controller
             'loanDates' => $loanDates,
             'loanCounts' => $loanCounts,
             'loanDetails' => $loanDetails,
-            'breadcrumb' => $breadcrumb,
-        ]);
+        ];
+
+        return response()->json($data, 200);
     }
 }

@@ -29,56 +29,26 @@ use Illuminate\Support\Facades\Route;
 
 // articles
 
-Route::get('dashboard', [DashboardController::class, 'index']);
-Route::middleware(['auth:sanctum'])->group(function () {
-    Route::get('articles', [ArticleController::class, 'index']);
-    Route::get('articles/{id}', [ArticleController::class, 'show']);
-});
+
 
 Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
-    Route::post('articles', [ArticleController::class, 'store']);
-    Route::put('articles/{id}', [ArticleController::class, 'update']);
-    Route::delete('articles/{id}', [ArticleController::class, 'destroy']);
-});
 
-// books
-Route::middleware(['auth:sanctum'])->group(function () {
-    Route::get('books', [BookController::class, 'index']);
-    Route::get('books/{id}', [BookController::class, 'show']);
-});
-
-Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
     Route::post('books', [BookController::class, 'store']);
     Route::put('books/{id}', [BookController::class, 'update']);
     Route::delete('books/{id}', [BookController::class, 'destroy']);
-});
 
-// categories
-Route::middleware(['auth:sanctum'])->group(function () {
-    Route::get('categories', [CategoryController::class, 'index']);
-    Route::get('categories/{id}', [CategoryController::class, 'show']);
-});
+    Route::post('articles', [ArticleController::class, 'store']);
+    Route::put('articles/{id}', [ArticleController::class, 'update']);
+    Route::delete('articles/{id}', [ArticleController::class, 'destroy']);
 
-Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
     Route::post('categories', [CategoryController::class, 'store']);
     Route::put('categories/{id}', [CategoryController::class, 'update']);
     Route::delete('categories/{id}', [CategoryController::class, 'destroy']);
-});
 
-// users
-Route::middleware(['auth:sanctum'])->group(function () {
-    Route::get('users', [UserController::class, 'index']);
-    Route::get('users/{id}', [UserController::class, 'show']);
-});
-
-Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
     Route::post('users', [UserController::class, 'store']);
     Route::put('users/{id}', [UserController::class, 'update']);
     Route::delete('users/{id}', [UserController::class, 'destroy']);
-});
 
-// loans
-Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('loans', [LoanController::class, 'index']);
     Route::get('loans/{id}', [LoanController::class, 'show']);
     Route::post('loans', [LoanController::class, 'store']);
@@ -86,8 +56,24 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::delete('loans/{id}', [LoanController::class, 'destroy']);
 });
 
+// users
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('dashboard', [DashboardController::class, 'data'])->name('dashboard.data');
 
-// Route::apiResource('articles', ArticleController::class);
+    Route::get('articles', [ArticleController::class, 'index']);
+    Route::get('articles/{id}', [ArticleController::class, 'show']);
 
-Route::post('/login', [AuthController::class, 'login']);
+    Route::get('books', [BookController::class, 'index']);
+    Route::get('books/{id}', [BookController::class, 'show']);
+
+    Route::get('categories', [CategoryController::class, 'index']);
+    Route::get('categories/{id}', [CategoryController::class, 'show']);
+
+    Route::get('users', [UserController::class, 'index']);
+    Route::get('users/{id}', [UserController::class, 'show']);
+});
+
+
+Route::post('login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout']);
