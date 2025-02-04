@@ -61,7 +61,7 @@ class AuthController extends Controller
             }
             NotificationPusher::success('Logout success');
             // return response()->redirectTo('/');
-            return response()->json(['message' => 'Logout success']);
+            return response()->json(['success' => true, 'message' => 'Logout success'], 200);
         } catch (\Exception $e) {
             NotificationPusher::error($e->getMessage());
             // return back();

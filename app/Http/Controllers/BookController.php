@@ -108,7 +108,8 @@ class BookController extends Controller
         $book = $this->bookService->deleteBook($id);
 
         $this->notificationPusher->success('Book deleted successfully', ['book' => $book]);
-        return redirect()->route('books.index')->with('success', 'Book deleted successfully');
+        // return redirect()->route('books.index')->with('success', 'Book deleted successfully');
+        return response()->json(['success' => true,'message' => 'Book deleted successfully', 'book' => $book]);
     }
 
 }

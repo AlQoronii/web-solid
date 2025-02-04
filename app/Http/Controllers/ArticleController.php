@@ -34,7 +34,8 @@ class ArticleController extends Controller
 
         $articles = $this->articleService->getPaginatedArticles($perPage, $search);
 
-        return view('pages.article.index', compact('articles', 'perPage', 'search'));
+        // return view('pages.article.index', compact('articles', 'perPage', 'search'));
+        return response()->json($articles);
     }
 
     public function create()
@@ -91,7 +92,8 @@ class ArticleController extends Controller
         $article = $this->articleService->updateArticle($id, $data);
 
         $this->notificationPusher->success('Article updated successfully', ['article' => $article]);
-        return redirect()->route('articles.index')->with('success', 'Article updated successfully');
+        // return redirect()->route('articles.index')->with('success', 'Article updated successfully');
+        return response()->json($article);
     }
 
     public function destroy($id)

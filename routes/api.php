@@ -58,7 +58,7 @@ Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
 
 // users
 Route::middleware(['auth:sanctum'])->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    // Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('dashboard', [DashboardController::class, 'data'])->name('dashboard.data');
 
     Route::get('articles', [ArticleController::class, 'index']);

@@ -3,12 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    
     <title>Library Dashboard</title>
     <link rel="icon" href="{{ asset('assets/images/favicon.ico') }}" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     
-    {{-- <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
-    <script src="//unpkg.com/alpinejs" defer></script> --}}
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    {{-- <script src="//unpkg.com/alpinejs" defer></script> --}}
     {{-- <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script> --}}
 
 
@@ -89,11 +91,11 @@
                 {{-- <span class="text-gray-600">{{ Auth::user()->username }}</span> --}}
                 {{-- <img class="w-10 h-10 rounded-full" src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}"> --}}
                 <div class="pr-6">
-                    <form method="POST" action="{{ route('logout') }}" onsubmit="event.preventDefault(); this.submit();">
-                        @csrf
+                    {{-- <form method="POST" action="{{ route('logout') }}" onsubmit="event.preventDefault(); this.submit();">
+                        @csrf --}}
                         <x-validation
                             buttonClass="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
-                            :action="route('logout')" 
+                            :action="'http://127.0.0.1:8000/api/logout'"
                             :method="'POST'" 
                             title="Logout" 
                             message="Apakah Anda yakin ingin logout?" 
@@ -101,8 +103,9 @@
                             cancel-text="Batal"
                             confirm-text="Ya, Logout"
                             confirmButtonClass="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600"
+                            :href="'/login'"
                         />
-                    </form>
+                    {{-- </form> --}}
                 </div>
             </div>
             <div class="p-10">
@@ -110,7 +113,7 @@
             </div>
         </div>
     </div>
-    <livewire:scripts />
+    {{-- <livewire:scripts /> --}}
     {{-- <script src="{{ asset('livewire/livewire.js') }}"></script> --}}
 
 </body>

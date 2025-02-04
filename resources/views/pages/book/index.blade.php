@@ -67,12 +67,13 @@
                         </a>
                         
                         <x-validation
-                            :action="route('books.destroy', $book->book_id)" 
+                            :action="'http://127.0.0.1:8000/api/books/' . $book->book_id" 
                             :method="'DELETE'" 
                             title="Delete Book" 
                             message="Apakah Anda yakin ingin menghapus book ini?" 
                             {{-- button-text="Delete" --}}
                             :svgIcon="true"
+                            :href="'/books'"
                             cancel-text="Batal"
                             confirm-text="Ya, Hapus"
                             confirmButtonClass="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600"
