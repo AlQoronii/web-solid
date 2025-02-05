@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Api\ApiBook;
+use App\Http\Controllers\Api\ApiCategories;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BookController;
@@ -34,7 +36,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
 
     Route::post('books', [BookController::class, 'store']);
-    Route::put('books/{id}', [BookController::class, 'update']);
+    Route::post('books/{id}', [BookController::class, 'update']);
     Route::delete('books/{id}', [BookController::class, 'destroy']);
 
     Route::post('articles', [ArticleController::class, 'store']);
@@ -72,6 +74,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('users', [UserController::class, 'index']);
     Route::get('users/{id}', [UserController::class, 'show']);
+
+    Route::get('apiBooks', [ApiBook::class, 'index']);
+    Route::get('apiBooks/{id}', [ApiBook::class, 'show']);
+    Route::get('apiCategories', [ApiCategories::class, 'index']);
+    
 });
 
 

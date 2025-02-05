@@ -10,7 +10,7 @@
     <div class="container mx-auto p-4">
         <div class="w-full bg-white p-8 rounded-lg shadow-lg">
             <h1 class="text-2xl font-bold mb-6">Create New Book</h1>
-            <form enctype="multipart/form-data">
+            <form enctype="multipart/form-data" id="createForm">
                 @csrf
                 <div class="mb-4">
                     <label for="category_id" class="block text-gray-700 font-bold mb-2">Category <span class="text-red-500">*</span></label>
@@ -51,10 +51,11 @@
                     buttonClass="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600"
                     :action="'http://127.0.0.1:8000/api/books'" 
                     :method="'POST'" 
+                    :formId="'createForm'"
                     title="Tambah Buku" 
                     message="Apakah Anda yakin ingin menambahkan buku ini?" 
                     button-text="Submit"
-                    :href="'/books.index'"
+                    :href="'/books'"
                     cancel-text="Batal"
                     confirm-text="Ya, Tambahkan"
                     confirmButtonClass="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600"

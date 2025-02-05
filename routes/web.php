@@ -51,7 +51,7 @@ Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('
 Route::get('public/book/{filename}', [StorageFileController::class, 'StorageBook'])->name('book.file');
 
 // filepath: /d:/Project/web-solid/routes/web.php
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::resource('users', UserController::class)->names([
         'index' => 'users.index',

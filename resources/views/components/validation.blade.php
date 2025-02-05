@@ -45,7 +45,7 @@
                     {{ $slot }}
 
                     <button 
-                        @click.prevent="submitForm('{{ $action ?? '#' }}', '{{ $method ?? 'POST' }}')"
+                        @click.prevent="submitForm('{{ $action ?? '#' }}', '{{ $method ?? 'POST' }}', '{{$formId ?? ''}}')"
                         type="button" 
                         class="{{ 
                             $confirmButtonClass 
@@ -64,21 +64,50 @@
 
 <!-- Script untuk Submit -->
 <script>
-    function submitForm(actionUrl, method) {
+    function submitForm(actionUrl, method, formId) {
+        const formElement = document.getElementById(formId);
+        const formData = new FormData(formElement);
+
         const token = localStorage.getItem('auth_token');
-        fetch(actionUrl, {
+        for (let [key, value] of formData.entries()) {
+            console.log(`${key}: ${value}`);
+        }
+
+        if (formId === 'editForm') {
+            fetch(actionUrl, {
+                method: method,
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                    // 'Content-Type': 'application/json'  // Tambahkan ini agar server tahu bahwa datanya dalam format JSON
+                },
+                body: formData // Hapus titik sebelum JSON.stringify
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.href = '{{ $href }}';  // Redirect jika sukses
+                } else {
+                    alert('Gagal: ' + (data.message || 'Terjadi kesalahan'));
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }else{
+            fetch(actionUrl, {
             method: method,
             headers: {
-                'Accept': 'application/json',
+                // 'Accept': 'application/json',
                 'Authorization': `Bearer ${token}`,
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
             },
-            body: JSON.stringify({})
+            body: formData
         })
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                alert('Berhasil: ' + data.message);
+                // alert('Berhasil: ' + data.message);
                 window.location.href = '{{ $href }}';
             } else {
                 alert('Gagal: ' + (data.message || 'Terjadi kesalahan'));
@@ -87,5 +116,6 @@
         .catch(error => {
             console.error('Error:', error);
         });
+        }
     }
 </script>

@@ -43,6 +43,7 @@ class BookController extends Controller
         $books = $this->bookService->getPaginatedBooks($perPage, $search);
         response()->json($books);
         return view('pages.book.index', compact('books', 'category', 'perPage', 'search', 'breadcrumb'));
+        // return view('pages.book.index');
     }
 
     public function create()
@@ -54,19 +55,27 @@ class BookController extends Controller
     public function store(BookRequest $request)
     {
         $data = $request->validated();
-        $data['book_image'] = $this->fileUploadService->uploadFile($request->file('book_image'), 'books/images');
+
+        if($request->hasFile('book_image')) {
+            $data['book_image'] = $this->fileUploadService->uploadFile($request->file('book_image'), 'books/images');
+        }else{
+            $data['book_image'] = null;
+        }
+        // $data['book_image'] = $this->fileUploadService->uploadFile($request->file('book_image'), 'books/images');
         $book = $this->bookService->createBook($data);
 
         $this->notificationPusher->success('Book created successfully', ['book' => $book]);
         session()->flash('success', 'Data berhasil disimpan!');
-        return redirect()->route('books.index')->with('success', 'Book created successfully');
+        // return redirect()->route('books.index')->with('success', 'Book created successfully');
+        return response()->json(['success' => true, 'message' => 'Book created successfully', 'book' => $book]);
     }
 
     public function edit($id)
     {
-        $book = Book::findOrFail($id);
-        $categories = Category::all();
-        return view('pages.book.edit', compact('book', 'categories'));
+        // $book = Book::findOrFail($id);
+        // $categories = Category::all();
+        // return view('pages.book.edit', compact('book', 'categories'));
+        return view('pages.book.edit', ['book' => $id]);
     }
 
     public function show($id)
@@ -90,15 +99,19 @@ class BookController extends Controller
                     $this->fileUploadService->deleteFile('books/images/' . $book->book_image);
                 }
                 $data['book_image'] = $this->fileUploadService->uploadFile($request->file('book_image'), 'books/images');
+            }else{
+                $data['book_image'] = $book->book_image;
             }
 
             $book = $this->bookService->updateBook($id, $data);
 
             $this->notificationPusher->success('Book updated successfully', ['book' => $book]);
-            return redirect()->route('books.index')->with('success', 'Book updated successfully');
+            // return redirect()->route('books.index')->with('success', 'Book updated successfully');
+            return response()->json(['success' => true, 'message' => 'Book updated successfully', 'book' => $book]);
         } catch (\Exception $e) {
             $this->notificationPusher->error('Failed to update book', ['error' => $e->getMessage()]);
-            return redirect()->back()->withErrors(['error' => 'Failed to update book: ' . $e->getMessage()]);
+            // return redirect()->back()->withErrors(['error' => 'Failed to update book: ' . $e->getMessage()]);
+            return response()->json(['success' => false, 'message' => 'Failed to update book', 'error' => $e->getMessage()]);
         }
     }
 
