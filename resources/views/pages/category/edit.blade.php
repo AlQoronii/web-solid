@@ -10,22 +10,23 @@
     <div class="container mx-auto p-4">
         <div class="w-full bg-white p-8 rounded-lg shadow-lg">
             <h1 class="text-2xl font-bold mb-6">Edit Category</h1>
-            <form action="{{ route('categories.update', ['category' => $category->category_id]) }}" method="POST">
+            <form id="editForm">
                 @csrf
-                @method('PUT')
                 <div class="mb-4">
                     <label for="category_name" class="block text-gray-700 font-bold mb-2">Category Name</label>
-                    <input type="text" id="category_name" name="category_name" value="{{ old('category_name', $category->category_name) }}" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                    <input type="text" id="category_name" name="category_name" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
                 </div>
                 <div class="mb-4">
                     <label for="category_description" class="block text-gray-700 font-bold mb-2">Category Description</label>
-                    <textarea id="category_description" name="category_description" rows="5" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>{{ old('category_description', $category->category_description) }}</textarea>
+                    <textarea id="category_description" name="category_description" rows="5" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required></textarea>
                 </div>
                 <div class="flex justify-end">
                     <x-validation
                     buttonClass="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600"
-                    :action="route('categories.update', $category->category_id)" 
-                    :method="'PUT'" 
+                    :action="'http://127.0.0.1:8000/api/categories/' . $category" 
+                    :method="'POST'" 
+                    :formId="'editForm'"
+                    :href="'/categories'"
                     title="Update Category" 
                     message="Apakah Anda yakin ingin mengupdate category ini?" 
                     button-text="Update"
@@ -38,4 +39,32 @@
         </div>
     </div>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', async ()=> {
+        const categoryId = "{{$category}}";
+        const token = localStorage.getItem('auth_token');
+
+        console.log('Category ID: ', categoryId);
+
+        try{
+            const categoryResponse = await fetch(`http://127.0.0.1:8000/api/apiCategories/${categoryId}`,{
+                headers: {
+                    'Accept': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            if(!categoryResponse.ok) throw new Error('Failed to fetch article data');
+            const category = await categoryResponse.json();
+
+            console.log('Category ID: ',category);
+
+            document.getElementById('category_name').value = category.category_name;
+            document.getElementById('category_description').value = category.category_description;
+
+        }catch(error){ 
+            console.error('Error fetching article data: ', error);
+        }
+    });
+</script>
 @endsection

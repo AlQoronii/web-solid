@@ -12,11 +12,36 @@
             <div class="flex items-center">
                 <div>
                     {{-- <p class="text-gray-700 mb-1"><strong>Category ID:</strong> {{ $category->category_id }}</p> --}}
-                    <p class="text-gray-700 mb-1"><strong>Category Name:</strong> {{ $category->category_name }}</p>
-                    <p class="text-gray-700 mb-1"><strong>Category Description:</strong> {{ $category->category_description }}</p>
+                    <p class="text-gray-700 mb-1"><strong>Category Name:</strong> <span id="category_name"></span></p>
+                    <p class="text-gray-700 mb-1"><strong>Category Description:</strong> <span id="category_description"></span></p>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', async function (){
+        try{
+            const categoryId = "{{$category}}";
+            console.log('id: ',categoryId);
+
+            const categoryResponse = await fetch(`{{url('api/apiCategories')}}/${categoryId}`,{
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json,'
+                }
+            });
+            
+            if(!categoryResponse.ok) throw new Error('Failed to fetch categories data');
+            const category = await categoryResponse.json();
+            console.log(category)
+            document.getElementById('category_name').textContent = `${category.category_name}`;
+            document.getElementById('category_description').textContent = `${category.category_name}`;
+
+        }catch(error){
+            console.log('Error fetching data: ',error)
+        }
+    });
+</script>
 @endsection

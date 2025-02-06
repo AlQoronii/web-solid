@@ -43,13 +43,13 @@ class ArticleController extends Controller
         return view('pages.article.create');
     }
 
-    public function show(string $id){
+    public function show($id){
         $article = $this->articleService->getArticleById($id);
         if (!$article) {
             return $this->notificationPusher->warning('Article Not Found', ['article' => $article]);
         }
-        return response()->json($article)->with('success', 'Article created successfully');
-        // return view('pages.article.show', ['article' => $article]);
+        // return response()->json($article)->with('success', 'Article created successfully');
+        return view('pages.article.show', ['article' => $id]);
         
     }
 

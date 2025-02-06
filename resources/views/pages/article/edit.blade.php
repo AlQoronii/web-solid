@@ -55,7 +55,7 @@
         console.log('Article ID:', articleId);
 
         try{
-            const articleResponse = await fetch ('http://127.0.0.1:8000/api/apiArticles',{
+            const articleResponse = await fetch (`http://127.0.0.1:8000/api/apiArticles/${articleId}`,{
                 headers: {
                     'Accept': 'application/json',
                     'Authorization': `Bearer ${token}`
@@ -69,9 +69,14 @@
             document.getElementById('article_title').value = article.article_title;
             document.getElementById('article_content').value = article.article_content;
             if(article.article_image){
-                const articleImageElement = document.getElementById('preview-article-image');
+                const articleImageElement = document.getElementById('preview-article_image');
                 articleImageElement.src = `${imageBaseURL}/${article.article_image}`;
                 articleImageElement.classList.remove('hidden');
+
+                const placeHolderElement = document.getElementById('placeholder-article_image');
+                if(placeHolderElement){
+                    placeHolderElement.classList.add('hidden');
+                }
             }
             console.log('Article Image:', article.article_image);
         }catch(error){
