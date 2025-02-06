@@ -87,6 +87,7 @@ class UserController extends Controller
         $user = $this->userService->delete($id);
 
         $this->notificationPusher->success('User deleted successfully', ['user' => $user]);
-        return redirect()->route('users.index')->with('success', 'User deleted successfully');
+        // return redirect()->route('users.index')->with('success', 'User deleted successfully');
+        return response()->json(['success' => true, 'message' => 'User deleted successfully', 'user' => $user]);
     }
 }

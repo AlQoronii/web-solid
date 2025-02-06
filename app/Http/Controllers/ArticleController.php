@@ -106,6 +106,6 @@ class ArticleController extends Controller
 
         $this->notificationPusher->success('Article deleted successfully');
         // return redirect()->route('articles.index')->with('success', 'Article deleted successfully');
-        return response()->json(['success' => true, 'message' => 'Article deleted successfully']);
+        return response()->json(['success' => true, 'message' => 'Article deleted successfully', ]);
     }
 }
