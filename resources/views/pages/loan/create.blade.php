@@ -10,22 +10,16 @@
     <div class="container mx-auto p-4">
         <div class="bg-white shadow-md rounded-lg p-6">
             <h1 class="text-2xl font-bold mb-4">Create Loan</h1>
-            <form action="{{ route('loans.store') }}" method="POST">
+            <form id="createForm">
                 @csrf
                 <div class="mb-4">
                     <label for="user_id" class="block text-gray-700 font-bold mb-2">User <span class="text-red-500">*</span></label>
                     <select id="user_id" name="user_id" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
-                        @foreach($users as $user)
-                            <option value="{{ $user->user_id }}">{{ $user->username }}</option>
-                        @endforeach
                     </select>
                 </div>
                 <div class="mb-4">
                     <label for="book_id" class="block text-gray-700 font-bold mb-2">Book <span class="text-red-500">*</span></label>
                     <select id="book_id" name="book_id" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
-                        @foreach($books as $book)
-                            <option value="{{ $book->book_id }}">{{ $book->book_title }}</option>
-                        @endforeach
                     </select>
                 </div>
                 <div class="mb-4">
@@ -46,11 +40,13 @@
                 <div class="flex justify-end">
                     <x-validation
                     buttonClass="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600"
-                    :action="route('loans.store')" 
+                    :action="'http://127.0.0.1:8000/api/loans'" 
                     :method="'POST'" 
+                    :formId="'createForm'"
                     title="Tambah Loan" 
                     message="Apakah Anda yakin ingin menambah peminjaman ini?" 
                     button-text="Submit"
+                    :href="'/loans'"
                     cancel-text="Batal"
                     confirm-text="Ya, Tambahkan"
                     confirmButtonClass="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600"
@@ -60,4 +56,26 @@
         </div>
     </div>
 </div>
+
+<script> 
+    document.addEventListener('DOMContentLoaded', function (){
+        const userSelect = document.getElementById('user_id');
+        const bookSelect = document.getElementById('book_id');
+        fetch(`{{ url('/api/apiUsers') }}`)
+        .then(response => response.json())
+        .then(data => {
+            data.forEach(user => {
+                userSelect.innerHTML += `<option value="${user.user_id}">${user.username}</option>`;
+            });
+        });
+
+        fetch(`{{ url('/api/apiBooks') }}`)
+        .then(response => response.json())
+        .then(data => {
+            data.forEach(book => {
+                bookSelect.innerHTML += `<option value="${book.book_id}">${book.book_title}</option>`;
+            });
+        });
+    });
+</script>
 @endsection

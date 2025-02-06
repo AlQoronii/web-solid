@@ -1,13 +1,17 @@
 <?php
 
+use App\Http\Controllers\Api\ApiArticles;
 use App\Http\Controllers\Api\ApiBook;
 use App\Http\Controllers\Api\ApiCategories;
+use App\Http\Controllers\Api\ApiLoans;
+use App\Http\Controllers\Api\ApiUsers;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoanController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Models\Category;
 use App\Models\Role;
@@ -40,7 +44,7 @@ Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
     Route::delete('books/{id}', [BookController::class, 'destroy']);
 
     Route::post('articles', [ArticleController::class, 'store']);
-    Route::put('articles/{id}', [ArticleController::class, 'update']);
+    Route::post('articles/{id}', [ArticleController::class, 'update']);
     Route::delete('articles/{id}', [ArticleController::class, 'destroy']);
 
     Route::post('categories', [CategoryController::class, 'store']);
@@ -48,13 +52,13 @@ Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
     Route::delete('categories/{id}', [CategoryController::class, 'destroy']);
 
     Route::post('users', [UserController::class, 'store']);
-    Route::put('users/{id}', [UserController::class, 'update']);
+    Route::post('users/{id}', [UserController::class, 'update']);
     Route::delete('users/{id}', [UserController::class, 'destroy']);
 
     Route::get('loans', [LoanController::class, 'index']);
     Route::get('loans/{id}', [LoanController::class, 'show']);
     Route::post('loans', [LoanController::class, 'store']);
-    Route::put('loans/{id}', [LoanController::class, 'update']);
+    Route::post('loans/{id}', [LoanController::class, 'update']);
     Route::delete('loans/{id}', [LoanController::class, 'destroy']);
 });
 
@@ -75,9 +79,18 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('users', [UserController::class, 'index']);
     Route::get('users/{id}', [UserController::class, 'show']);
 
+
+    Route::get('apiArticles', [ApiArticles::class, 'index']);
+    Route::get('apiArticles/{id}', [ApiArticles::class, 'show']);
+    Route::get(('apiLoans'), [ApiLoans::class, 'index']);
+    Route::get('apiLoans/{id}', [ApiLoans::class, 'show']);
+    Route::get('roles', [RoleController::class, 'index']);
+    Route::get('apiUsers', [ApiUsers::class, 'loadAllUsers']);
+    Route::get('apiUsers/{id}', [ApiUsers::class, 'show']);
     Route::get('apiBooks', [ApiBook::class, 'index']);
     Route::get('apiBooks/{id}', [ApiBook::class, 'show']);
     Route::get('apiCategories', [ApiCategories::class, 'index']);
+    Route::get('apiCategories/{id}', [ApiCategories::class, 'show']);
     
 });
 

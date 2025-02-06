@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Book;
 use App\Services\BookService;
 
 class ApiBook extends Controller{
@@ -16,7 +15,7 @@ class ApiBook extends Controller{
 
     public function index()
     {
-        $books = Book::with('category')->get(); // Pastikan relasi dimuat
+        $books = $this->bookService->getAllBooks(); // Pastikan relasi dimuat
         return response()->json($books);
     }
 

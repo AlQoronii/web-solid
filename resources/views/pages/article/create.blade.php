@@ -13,9 +13,7 @@
             <div x-data="{ showModal: false }">
                 <!-- Form -->
                 <form 
-                    x-ref="articleForm" 
-                    action="{{ route('articles.store') }}" 
-                    method="POST" 
+                    id="createForm"
                     enctype="multipart/form-data"
                 >
                     @csrf
@@ -48,8 +46,10 @@
                     <div class="flex justify-end">
                         <x-validation
                         buttonClass="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600"
-                        :action="route('articles.store')" 
+                        :action="'http://127.0.0.1:8000/api/articles'" 
                         :method="'POST'" 
+                        :formId="'createForm'"
+                        :href="'/articles'"
                         title="Tambah Artikel" 
                         message="Apakah Anda yakin ingin membuat artikel ini?" 
                         button-text="Submit"

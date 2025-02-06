@@ -14,12 +14,12 @@ class UserRepository implements UserRepositoryInterface
 
     public function getAll(): \Illuminate\Database\Eloquent\Collection
     {
-        return User::all();
+        return User::with('role')->get();
     }
 
     public function getById(string $id): ?User
     {
-        return User::find($id);
+        return User::with('role')->find($id);
     }
 
     public function update(string $id, array $data): bool

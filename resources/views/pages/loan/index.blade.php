@@ -11,9 +11,9 @@
         @endif
         <div class="flex justify-between mb-5">
             <a href="{{ route('loans.create') }}" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-700">Add New Loan</a>
-            <form method="GET" action="{{ route('loans.index') }}" class="flex">
+            {{-- <form method="GET" action="{{ route('loans.index') }}" class="flex">
                 <input type="text" name="search" placeholder="Search loans..." value="{{ $search }}" class="px-4 py-2 border rounded-l">
-                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-r hover:bg-blue-700">Search</button>
+                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-r hover:bg-blue-700">Search</button> --}}
         </div>
         <table class="min-w-full bg-white">
             <thead class="bg-blue-100">
@@ -26,42 +26,11 @@
                     <th class="py-2 px-4 border-b text-center">Actions</th>
                 </tr>
             </thead>
-            <tbody>
-                @foreach($loans as $loan)
-                <tr>
-                    <td class="py-2 px-10 border-b text-justify">{{ $loan->user->username }}</td>
-                    <td class="py-2 px-4 border-b text-justify">{{ $loan->book->book_title }}</td>
-                    <td class="py-2 px-4 border-b text-center">{{ $loan->borrow_date }}</td>
-                    <td class="py-2 px-4 border-b text-center">{{ $loan->return_date }}</td>
-                    <td class="py-2 px-4 border-b text-center">{{ $loan->loan_status }}</td>
-                    <td class="py-2 px-4 border-b text-center">
-                        <div class="flex justify-center space-x-2">
-                        <a href="{{ route('loans.edit', $loan->loan_id) }}" 
-                            class="w-auto text-yellow-500 hover:text-yellow-700 px-2 py-1 rounded inline-block text-center"
-                        >
-                        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
-                          </svg>
-                        </a>
-                        <x-validation
-                            :action="route('loans.destroy', $loan->loan_id)" 
-                            :method="'DELETE'" 
-                            title="Delete Loan" 
-                            message="Apakah Anda yakin ingin menghapus loan ini?" 
-                            {{-- button-text="Delete" --}}
-                            :svgIcon="true"
-                            cancel-text="Batal"
-                            confirm-text="Ya, Hapus"
-                            confirmButtonClass="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600"
-                        />
-                    </div>
-                    </td>
-                </tr>
-                @endforeach
+            <tbody id="loansTableBody">
                 
             </tbody>
         </table>
-        <div class="flex justify ">
+        {{-- <div class="flex justify ">
             <form method="GET" action="{{ route('loans.index') }}">
                 <input type="hidden" name="search" value="{{ $search }}">
                 <label for="perPage" class="mr-2">Number of rows:</label>
@@ -75,7 +44,53 @@
         </div>
         <div class="mt-4">
             {{ $loans->appends(['search' => $search, 'perPage' => $perPage])->links() }}
-        </div>
+        </div> --}}
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function (){
+            const loansTableBody = document.getElementById('loansTableBody');
+            const editRouteTemplate = "{{ route('loans.edit', ':id') }}";
+            const showRouteTemplate = "{{ route('loans.show', ':id') }}";
+            // const deleteRouteTemplate = "{{ route('loans.destroy', ':id') }}";
+
+
+            function fetchLoans(){
+                fetch(`{{ url('/api/apiLoans') }}`)    
+                .then(response => response.json())
+                .then(data => {
+                    loansTableBody.innerHTML = '';
+                    data.forEach(loan => {
+                        const editRoute = editRouteTemplate.replace(':id', loan.loan_id);
+                        const showRoute = showRouteTemplate.replace(':id', loan.loan_id);
+                        // const deleteRoute = deleteRouteTemplate.replace(':id', loan.loan_id);
+
+                        loansTableBody.innerHTML += `
+                            <tr>
+                                <td class="py-2 px-10 border-b text-justify">${ loan.user ? loan.user.username : 'N/A' }</td>
+                                <td class="py-2 px-4 border-b text-justify">${ loan.book ? loan.book.book_title : 'N/A' }</td>
+                                <td class="py-2 px-4 border-b text-center">${loan.borrow_date }</td>
+                                <td class="py-2 px-4 border-b text-center">${loan.return_date }</td>
+                                <td class="py-2 px-4 border-b text-center">${loan.loan_status }</td>
+                                <td class="py-2 px-4 border-b text-center">
+                                    <div class="flex justify-center space-x-2">
+                                    <a href="${editRoute}" 
+                                        class="w-auto text-yellow-500 hover:text-yellow-700 px-2 py-1 rounded inline-block text-center"
+                                    >
+                                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                                    </svg>
+                                    </a>
+                                </div>
+                                </td>
+                            </tr>
+                        `;
+                    });
+                })
+                .catch(error => console.error('Error fetching loans:', error));
+            }
+
+            fetchLoans();
+        });
+    </script>
 @endsection
 

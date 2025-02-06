@@ -26,8 +26,9 @@ class UserController extends Controller
         $role = $this->userService->getAllRoles();
         $users = $this->userService->getPaginateUsers($perPage, $search);
         $user = $this->userService->getAll();
-        return response()->json($user);
+        // return response()->json($user);
         // return view('pages.user.index', compact('users', 'role', 'perPage', 'search'));
+        return view('pages.user.index');
     }   
 
     public function create()
@@ -37,12 +38,12 @@ class UserController extends Controller
     }
 
     public function show(string $id){
-        $user = $this->userService->getById($id);
-        if (!$user) {
-            return $this->notificationPusher->warning('User Not Found', ['user' => $user]);
-        }
-        response()->json($user);
-        return view('pages.user.show', ['user' => $user]);  
+        // $user = $this->userService->getById($id);
+        // if (!$user) {
+        //     return $this->notificationPusher->warning('User Not Found', ['user' => $user]);
+        // }
+        // response()->json($user);
+        return view('pages.user.show', ['user' => $id]);  
     }
 
     public function store(UserRequest $request)
@@ -53,18 +54,20 @@ class UserController extends Controller
 
         // Send success notification
         $this->notificationPusher->success('User created successfully', ['user' => $user]);
-        return redirect()->route('users.index')->with('success', 'User created successfully');
+        // return redirect()->route('users.index')->with('success', 'User created successfully');
+        return response()->json(['success' => true, 'message' => 'User created successfully', 'user' => $user]);
     }
 
     public function edit($id)
     {
-        $roles = $this->userService->getAllRoles();
-        $user = $this->userService->getById($id);
-        if (!$user) {
-            return redirect()->route('users.index');
-        }
+        // $roles = $this->userService->getAllRoles();
+        // $user = $this->userService->getById($id);
+        // if (!$user) {
+        //     return redirect()->route('users.index');
+        // }
 
-        return view('pages.user.edit', compact('user', 'roles'));
+        // return view('pages.user.edit', compact('user', 'roles'));
+        return view('pages.user.edit', ['user' => $id]);
     }
 
     public function update(UserRequest $request, string $id)
@@ -74,8 +77,9 @@ class UserController extends Controller
         if(!$user){
             return redirect()->route('users.edit', $id)->with('error', 'Email already exists');
         }
-        $this->notificationPusher->success('User updated successfully', ['user' => $user]);
-        return redirect()->route('users.index')->with('success', 'User updated successfully');
+        // $this->notificationPusher->success('User updated successfully', ['user' => $user]);
+        // return redirect()->route('users.index')->with('success', 'User updated successfully');
+        return response()->json(['success' => true, 'message' => 'User updated successfully', 'user' => $user]);
     }
 
     public function destroy(string $id)

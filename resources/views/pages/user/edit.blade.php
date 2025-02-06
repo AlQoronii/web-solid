@@ -17,27 +17,23 @@
         @if(session('error'))
             <x-alert-popup type="error" :message="session('error')" />
         @endif
-            <form action="{{ route('users.update', $user->user_id) }}" method="POST">
+            <form id="editForm">
                 @csrf
-                @method('PUT')
                 <div class="mb-4">
                     <label for="role_id" class="block text-gray-700 font-bold mb-2">Role</label>
                     <select id="role_id" name="role_id" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
-                        @foreach($roles as $role)
-                            <option value="{{ $role->role_id }}" {{ $user->role_id == $role->role_id ? 'selected' : '' }}>{{ $role->name }}</option>
-                        @endforeach
                     </select>
                 </div>
                 <div class="mb-4">
                     <label for="username" class="block text-gray-700 font-bold">Username <span class="text-red-500">*</span></label>
-                    <input type="text" name="username" id="username" value="{{ $user->username }}" class="w-full p-2 border border-gray-300 rounded mt-1">
+                    <input type="text" name="username" id="username"  class="w-full p-2 border border-gray-300 rounded mt-1">
                     @if ($errors->has('username'))
                         <span class="text-red-500 text-sm">{{ $errors->first('username') }}</span>
                     @endif
                 </div>
                 <div class="mb-4">
                     <label for="email" class="block text-gray-700 font-bold">Email <span class="text-red-500">*</span></label>
-                    <input type="email" name="email" id="email" value="{{ $user->email }}" class="w-full p-2 border border-gray-300 rounded mt-1">
+                    <input type="email" name="email" id="email" " class="w-full p-2 border border-gray-300 rounded mt-1">
                     @if ($errors->has('email'))
                         <span class="text-red-500 text-sm">{{ $errors->first('email') }}</span>
                     @endif
@@ -83,11 +79,13 @@
                 <div class="flex justify-end">
                     <x-validation
                     buttonClass="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600"
-                    :action="route('users.update', $user->user_id)" 
-                    :method="'PUT'" 
+                    :action="'http://127.0.0.1:8000/api/users/' . $user" 
+                    :method="'POST'" 
+                    :formId="'editForm'"
                     title="Update User" 
                     message="Apakah Anda yakin ingin mengupdate user ini?" 
                     button-text="Update"
+                    :href="'/users'"
                     cancel-text="Batal"
                     confirm-text="Ya, Update"
                     confirmButtonClass="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600"
@@ -97,4 +95,52 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', async() => {
+        const token = localStorage.getItem('auth_token');
+        const userId = "{{$user}}";
+        console.log(userId);
+
+    try{
+        const roleResponse = await fetch("{{url('api/roles')}}", {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Accept': 'application/json'
+            }
+        });
+
+        if (!roleResponse.ok) throw new Error("Failed to fetch roles");
+        const roles = await roleResponse.json();
+        console.log(roles);
+
+        const roleSelect = document.getElementById('role_id');
+        roles.innetHTML = '';
+        roles.forEach(role => {
+            const option = document.createElement('option');
+            option.value = role.role_id;
+            option.textContent = role.name;
+            roleSelect.appendChild(option);
+        });
+        
+
+        const userResponse = await fetch(`{{url('api/apiUsers/${userId}')}}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Accept': 'application/json'
+            }
+        });
+
+        if (!userResponse.ok)  throw new Error("Failed to fetch user");
+        const user = await userResponse.json();
+        console.log(user);
+
+        document.getElementById('role_id').value = user.role_id;
+        document.getElementById('username').value = user.username;
+        document.getElementById('email').value = user.email;
+    } catch (error) {
+        console.error('Error fetching user data:', error);
+    }
+    });
+</script>
 @endsection

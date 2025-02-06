@@ -26,8 +26,7 @@ class Role extends Model
     }
 
     protected $fillable = [
-        'role_name',
-        'role_description',
+        'name',
     ];
 
     protected $hidden = [

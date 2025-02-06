@@ -15,12 +15,12 @@ class BookRepository implements BookRepositoryInterface
 
     public function getAll(): \Illuminate\Database\Eloquent\Collection
     {
-        return Book::all();
+        return Book::with('category')->get(); 
     }
 
     public function getById(string $id): ?Book
     {
-        return Book::find($id);
+        return Book::with('category')->find($id);
     }
 
     public function update(string $id, array $data): bool

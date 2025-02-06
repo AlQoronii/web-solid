@@ -98,7 +98,7 @@
             fetch(actionUrl, {
             method: method,
             headers: {
-                // 'Accept': 'application/json',
+                'Accept': 'application/json',
                 'Authorization': `Bearer ${token}`,
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
             },

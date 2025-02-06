@@ -10,14 +10,11 @@
     <div class="container mx-auto p-4">
         <div class="bg-white shadow-md rounded-lg p-6">
             <h1 class="text-2xl font-bold mb-4">Create User</h1>
-            <form action="{{ route('users.store') }}" method="POST">
+            <form id="createForm">
                 @csrf
                 <div class="mb-4">
                     <label for="role_id" class="block text-gray-700 font-bold mb-2">Role</label>
                     <select id="role_id" name="role_id" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
-                        @foreach($roles as $role)
-                            <option value="{{ $role->role_id }}" {{ $role->name == 'user' ? 'selected' : '' }}>{{ $role->name }}</option>
-                        @endforeach
                     </select>
                 </div>
                 <div class="mb-4">
@@ -75,18 +72,35 @@
                 <div class="flex justify-end">
                     <x-validation
                     buttonClass="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600"
-                    :action="route('users.store')" 
+                    :action="'http://127.0.0.1:8000/api/users'" 
                     :method="'POST'" 
+                    :formId="'createForm'"
                     title="Tambah User" 
                     message="Apakah Anda yakin ingin menambah user ini?" 
                     button-text="Submit"
+                    :href="'/users'"
                     cancel-text="Batal"
                     confirm-text="Ya, Tambahkan"
                     confirmButtonClass="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600"
                 />  
-                </div>
             </form>
         </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function (){
+            fetch('http://127.0.0.1:8000/api/roles')
+            .then(response => response.json())
+            .then(data => {
+                let select = document.getElementById('role_id');
+                data.forEach(role => {
+                    let option = document.createElement('option');
+                    option.value = role.role_id;
+                    option.text = role.name;
+                    select.appendChild(option);
+                });
+            })
+            .catch(error => console.error('Error fetching roles', error));
+        });
+    </script>
 </div>
 @endsection

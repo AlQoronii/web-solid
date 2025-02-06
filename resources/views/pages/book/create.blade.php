@@ -15,10 +15,8 @@
                 <div class="mb-4">
                     <label for="category_id" class="block text-gray-700 font-bold mb-2">Category <span class="text-red-500">*</span></label>
                     <select id="category_id" name="category_id" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
-                        @foreach($categories as $category)
-                            <option value="{{ $category->category_id }}">{{ $category->category_name }}</option>
-                        @endforeach
                     </select>
+                    
 
                     <?php
                         // dd($categories);
@@ -64,5 +62,21 @@
             </form>
         </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            fetch('http://127.0.0.1:8000/api/apiCategories')
+                .then(response => response.json())
+                .then(data => {
+                    let select = document.getElementById('category_id');
+                    data.forEach(category => {
+                        let option = document.createElement('option');
+                        option.value = category.category_id;
+                        option.text = category.category_name;
+                        select.appendChild(option);
+                    });
+                })
+                .catch(error => console.error('Error fetching categories:', error));
+        });
+    </script>
 </div>
 @endsection

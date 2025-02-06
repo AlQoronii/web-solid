@@ -15,12 +15,12 @@ class LoanRepository implements LoanRepositoryInterface
 
     public function getAll(): \Illuminate\Database\Eloquent\Collection
     {
-        return Loan::all();
+        return Loan::with('user', 'book')->get();
     }
 
     public function getById(string $id): ?Loan
     {
-        return Loan::find($id);
+        return Loan::with('user','book')->find($id);
     }
 
     public function update(string $id, array $data): bool

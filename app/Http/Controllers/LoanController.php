@@ -23,15 +23,17 @@ class LoanController extends Controller
         $perPage = $request->get('perPage', 5);
         $search = $request->get('search');
         $loans = $this->loanService->getPaginateLoan($perPage, $search);
-        response()->json($loans);
-        return view('pages.loan.index', compact('loans', 'perPage', 'search'));
+        // response()->json($loans);
+        // return view('pages.loan.index', compact('loans', 'perPage', 'search'));
+        return view('pages.loan.index');
     }
 
     public function create()
     {
         $users = $this->loanService->getAllUsers();
         $books = $this->loanService->getAllBooks();
-        return view('pages.loan.create', compact('users', 'books'));
+        // return view('pages.loan.create', compact('users', 'books'));
+        return view('pages.loan.create');
     }
 
     public function show(string $id){
@@ -42,8 +44,9 @@ class LoanController extends Controller
         if (!$loan) {
             return $this->notificationPusher->warning('Loan Not Found', ['loan' => $loan]);
         }
-        response()->json($loan);
-        return view('pages.loan.show', compact('loan', 'users', 'books'));
+        // response()->json($loan);
+        // return view('pages.loan.show', compact('loan', 'users', 'books'));
+        return view('pages.loan.show', ['loan' => $id]);
     }
 
     public function store(LoanRequest $request)
@@ -54,7 +57,9 @@ class LoanController extends Controller
 
         // Send success notification
         $this->notificationPusher->success('Loan created successfully', ['loan' => $loan]);
-        return redirect()->route('loans.index')->with('success', 'Loan created successfully');;
+        // return redirect()->route('loans.index')->with('success', 'Loan created successfully');;
+        // return view('pages.loan.index')->with('success', 'Loan created successfully');
+        return response()->json(['success' => true, 'message' => 'Loan created successfully', 'loan' => $loan]);
     }
 
     public function edit($id)
@@ -66,7 +71,8 @@ class LoanController extends Controller
             return redirect()->route('loans.index');
         }
 
-        return view('pages.loan.edit', compact('loan', 'users', 'books'));
+        // return view('pages.loan.edit', compact('loan', 'users', 'books'));
+        return view('pages.loan.edit', ['loan' => $id]);
     }
 
     public function update(LoanRequest $request, string $id)
@@ -77,7 +83,9 @@ class LoanController extends Controller
         $loan = $this->loanService->update($id, $data);
 
         $this->notificationPusher->success('Loan updated successfully', ['loan' => $loan]);
-        return redirect()->route('loans.index')->with('success', 'Loan updated successfully');;
+        // return redirect()->route('loans.index')->with('success', 'Loan updated successfully');;
+        // return view('pages.loan.index');
+        return response()->json(['success' => true, 'message' => 'Loan updated successfully', 'loan' => $loan]);
     }
 
     public function destroy(string $id)
@@ -85,10 +93,12 @@ class LoanController extends Controller
         try {
             $loan = $this->loanService->delete($id);
             $this->notificationPusher->success('Loan deleted successfully', ['loan' => $loan]);
-            return redirect()->route('loans.index')->with('success', 'Loan deleted successfully');
+            // return redirect()->route('loans.index')->with('success', 'Loan deleted successfully');
+            return view('pages.loan.index')->with('success', 'Loan deleted successfully');
         } catch (\Exception $e) {
             $this->notificationPusher->error('Failed to delete loan', ['error' => $e->getMessage()]);
-            return redirect()->route('loans.index')->with('error', 'Failed to delete loan');
+            // return redirect()->route('loans.index')->with('error', 'Failed to delete loan');
+            return view('pages.loan.index')->with('error', 'Failed to delete loan');
         }
     }
 }

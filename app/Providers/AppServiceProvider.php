@@ -12,6 +12,8 @@ use App\Repositories\CategoryRepository;
 use App\Repositories\CategoryRepositoryInterface;
 use App\Repositories\LoanRepository;
 use App\Repositories\LoanRepositoryInterface;
+use App\Repositories\RoleRepository;
+use App\Repositories\RoleRepositoryInterface;
 use App\Repositories\UserRepository;
 use App\Repositories\UserRepositoryInterface;
 use App\Services\ArticleService;
@@ -24,6 +26,7 @@ use App\Services\HomeService;
 use App\Services\Interfaces\NotificationInterface;
 use App\Services\LoanService;
 use App\Services\Notifications\NotificationPusher;
+use App\Services\RoleService;
 use App\Services\UserService;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
@@ -42,6 +45,8 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
         $this->app->bind(LoanRepositoryInterface::class, LoanRepository::class);
         $this->app->bind(AuthRepositoryInterface::class, AuthRepository::class);
+        $this->app->bind(RoleRepositoryInterface::class, RoleRepository::class);
+
 
         $this->app->bind(AuthService::class, function ($app) {
             return new AuthService($app->make(AuthRepositoryInterface::class));
@@ -54,6 +59,10 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->bind(BookService::class, function ($app) {
             return new BookService($app->make(BookRepositoryInterface::class));
+        });
+
+        $this->app->bind(RoleService::class, function ($app) {
+            return new RoleService($app->make(RoleRepositoryInterface::class));
         });
 
         $this->app->bind(CategoryService::class, function ($app) {
