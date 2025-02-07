@@ -1,6 +1,8 @@
 @extends('layouts.dashboard')
 @section('content')
-    <div class="flex-1 p-10 text-2xl font-bold">
+
+<div class="bg-blue-50 rounded-lg">
+    <div class="p-5 text-2xl font-bold">
         <nav class="text-sm font-semibold mb-4 flex justify-between items-center">
             <ol class="list-reset flex">
                 <li><a href="{{ route('dashboard') }}" class="text-gray-500 hover:text-gray-500">Home</a></li>
@@ -10,10 +12,14 @@
         </nav>  
         <h1>Welcome, {{ Auth::user()->username }}!</h1>
         <p class="mt-4 text-lg">Use the sidebar to navigate through different management sections.</p>
-        <!-- Cards Section -->
+    </div>
+</div>
+<!-- Cards Section -->
+    <div class="flex-1 text-2xl font-bold">
+        
         <section>
-            <div class="grid grid-cols-1 grid-rows-4 md:grid-rows-2 md:grid-cols-2 2xl:grid-cols-4 2xl:grid-rows-1 gap-5 mt-8">
-                <div class="flex flex-col px-5 py-7 gap-y-5 bg-white rounded-xl text-navy-night">
+            <div class="grid grid-cols-1 grid-rows-4 md:grid-rows-2 md:grid-cols-2 2xl:grid-cols-4 2xl:grid-rows-1 gap-5 mt-5">
+                <div class="flex flex-col px-5 py-7 gap-y-5 bg-blue-100 rounded-xl text-navy-night">
                     <div>
                         <div class="bg-blue-500 rounded-full p-3 w-12 h-12 flex justify-center items-center">
                             <svg class="h-6 w-6 text-white " xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
@@ -26,7 +32,7 @@
                         <h1 class="text-base/7 font-semibold" id="booksCount">Loading...</h1>
                     </div>
                 </div>
-                <div class="flex flex-col px-5 py-7 gap-y-5 bg-white rounded-xl">
+                <div class="flex flex-col px-5 py-7 gap-y-5 bg-green-100 rounded-xl">
                     <div>
                         <div class="bg-green-500 rounded-full p-3 w-12 h-12 flex justify-center items-center">
                             <svg class="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
@@ -39,7 +45,7 @@
                         <h1 class="text-base/7 font-semibold" id="usersCount">Loading...</h1>
                     </div>
                 </div>
-                <div class="flex flex-col px-5 py-7 gap-y-5 bg-white rounded-xl">
+                <div class="flex flex-col px-5 py-7 gap-y-5 bg-yellow-100 rounded-xl">
                     <div>
                         <div class="bg-yellow-500 rounded-full p-3 w-12 h-12 flex justify-center items-center">
                             <svg class="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
@@ -52,7 +58,7 @@
                         <h1 class="text-base/7 font-semibold" id="loansCount">Loading...</h1>
                     </div>
                 </div>
-                <div class="flex flex-col px-5 py-7 gap-y-5 bg-white rounded-xl">
+                <div class="flex flex-col px-5 py-7 gap-y-5 bg-red-100 rounded-xl">
                     <div>
                         <div class="bg-red-500 rounded-full p-3 w-12 h-12 flex justify-center items-center">
                             <svg class="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
@@ -66,11 +72,31 @@
                     </div>
                 </div>
             </div>
-            <section class="mt-10">
-                <h2 class="text-xl font-semibold mb-4">Loans Over Time</h2>
-                <div class="bg-white p-6 rounded-lg shadow-md">
+            <section class="mt-5">
+                {{-- <h2 class="text-xl font-semibold mb-4">Loans Over Time</h2>
+                <div class="bg-white p-6 rounded-lg shadow-md w-[500px] h-[300px] mx-auto border">
                     <canvas id="loansChart"></canvas>
+                </div> --}}
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                    <!-- Area Chart Card -->
+                    <div class="col-span-2 bg-white rounded-lg border shadow-lg dark:bg-gray-800 p-4 md:p-6">
+                        <div class="flex justify-between">
+                            <div>
+                                <p class="text-base font-bold text-gray-900 dark:text-gray-400">Loans Overtime</p>
+                            </div>
+                        </div>
+                        <canvas id="area-chart" height="150"></canvas>
+                    </div>
+                    <!-- Donut Chart Card -->
+                    <div class="bg-white rounded-lg border shadow-lg dark:bg-gray-800 p-4 md:p-6">
+                        <div class="flex justify-between mb-3">
+                            <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white">Books</h5>
+                        </div>
+                        <canvas id="donut-chart" height="150"></canvas>
+                    </div>
                 </div>
+
             </section>
         </section>
         <!-- End Cards Section -->
@@ -80,6 +106,8 @@
     <script>
         document.addEventListener('DOMContentLoaded', async () => {
             const token = localStorage.getItem('auth_token');
+
+            console.log('Token:', token);
             try {
                 const response = await fetch('http://127.0.0.1:8000/api/dashboard', {
                     headers: {
@@ -94,50 +122,100 @@
                 document.getElementById('loansCount').innerText = `${data.loansCount} Loans`;
                 document.getElementById('articlesCount').innerText = `${data.articlesCount} Articles`;
 
-                const ctx = document.getElementById('loansChart').getContext('2d');
-                const loansChart = new Chart(ctx, {
+
+                const donutChartCtx = document.getElementById('donut-chart').getContext('2d');
+                const areaChartCtx = document.getElementById('area-chart').getContext('2d');
+                // const ctx = document.getElementById('loansChart').getContext('2d');
+                // const loansChart = new Chart(ctx, {
+                //     type: 'line',
+                //     data: {
+                //         labels: data.loanDates,
+                //         datasets: [{
+                //             label: 'Loans',
+                //             data: data.loanCounts,
+                //             backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                //             borderColor: 'rgba(54, 162, 235, 1)',
+                //             borderWidth: 1,
+                //             fill: true,
+                //             tension: 0.4 // Disarankan untuk smoothing garis
+                //         }]
+                //     },
+                //     options: {
+                //         responsive: true,
+                //         scales: {
+                //             x: {
+                //                 title: {
+                //                     display: true,
+                //                     text: 'Date'
+                //                 },
+                //                 ticks: {
+                //                     autoSkip: false, // Memastikan semua label terlihat
+                //                     stepSize: 5 // Menentukan jarak antar label
+                //                 }
+                //             },
+                //             y: {
+                //                 title: {
+                //                     display: true,
+                //                     text: 'Number of Loans'
+                //                 },
+                //                 beginAtZero: true,
+                //                 ticks: {
+                //                     stepSize: 1 // Menentukan jarak antar angka di sumbu y
+                //                 }
+                //             }
+                //         }
+                //     }
+                // });
+
+                const areaChart = new Chart(areaChartCtx,{
                     type: 'line',
-                    data: {
+                    data:{
                         labels: data.loanDates,
                         datasets: [{
                             label: 'Loans',
                             data: data.loanCounts,
-                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                            borderColor: 'rgba(54, 162, 235, 1)',
-                            borderWidth: 1,
-                            fill: true,
-                            tension: 0.4 // Disarankan untuk smoothing garis
+                            borderColor: "#4F46E5",
+                            backgroundColor: "rgba(79, 70, 229, 0.2)",
+                            borderWidth: 2,
+                            fill: true
                         }]
                     },
                     options: {
                         responsive: true,
+                        maintainAspectRatio: true,
                         scales: {
-                            x: {
-                                title: {
-                                    display: true,
-                                    text: 'Date'
-                                },
-                                ticks: {
-                                    autoSkip: false, // Memastikan semua label terlihat
-                                    stepSize: 5 // Menentukan jarak antar label
-                                }
-                            },
                             y: {
-                                title: {
-                                    display: true,
-                                    text: 'Number of Loans'
-                                },
-                                beginAtZero: true,
-                                ticks: {
-                                    stepSize: 1 // Menentukan jarak antar angka di sumbu y
-                                }
+                                beginAtZero: true
                             }
                         }
                     }
                 });
+
+                const donutChart = new Chart(donutChartCtx,{
+                    type: 'doughnut',
+                    data: {
+                        labels: ["Fiction", "Non-Fiction", "Science", "History", "Others"],
+                        datasets: [{
+                            label: 'Books',
+                            data: [30, 20, 15, 25, 10],
+                            backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0", "#9966FF"]
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true
+                    }
+                    
+                });
+                
+                
             } catch (error) {
                 console.error('Error fetching dashboard data:', error);
             }
         });
+        
+
+        
     </script>
+    
 @endsection

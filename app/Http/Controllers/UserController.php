@@ -73,9 +73,10 @@ class UserController extends Controller
     public function update(UserRequest $request, string $id)
     {
         $data = $request->validated();
-        $user = $this->userService->update($id, $data);
-        if(!$user){
-            return redirect()->route('users.edit', $id)->with('error', 'Email already exists');
+        try {
+            $user = $this->userService->update($id, $data);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()]);
         }
         // $this->notificationPusher->success('User updated successfully', ['user' => $user]);
         // return redirect()->route('users.index')->with('success', 'User updated successfully');

@@ -1,36 +1,55 @@
 @extends('layouts.dashboard')
 @section('content')
+    <div class="bg-blue-50 rounded-lg">
+        <div class="p-5">
+            <h1 class="text-2xl font-medium mb-5">Users</h1>
+        <nav class="flex mb-5" aria-label="Breadcrumb">
+            <ol class="inline-flex items-center space-x-1 md:space-x-3">
+                <li class="inline-flex items-center">
+                    <a href="{{ route('dashboard') }}" class="text-gray-700 hover:text-gray-900 inline-flex items-center">
+                        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                        </svg>                          
+                        <span class="pl-4">Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <div class="flex items-center">
+                        <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"/>
+                        </svg>
+                        <a href="{{ route('users.index') }}" class="ml-1 text-sm font-medium text-gray-700 hover:text-gray-900 md:ml-2">Users</a>
+                    </div>
+                </li>
+            </ol>
+        </nav>
+        </div>
+    </div>
     <div class="container mx-auto mt-10">
-        <h1 class="text-2xl font-bold mb-5">User</h1>
-        @if(session('success'))
-            <x-alert-popup type="success" :message="session('success')" />
-        @endif
-
-        @if(session('error'))
-            <x-alert-popup type="error" :message="session('error')" />
-        @endif
-
         <div class="flex justify-between mb-5">
             <a href="{{ route('users.create') }}" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-700">Add New User</a>
-            {{-- <form method="GET" action="{{ route('users.index') }}" class="flex">
-                <input type="text" name="search" placeholder="Search users..." value="{{ $search }}" class="px-4 py-2 border rounded-l">
+            <form method="GET" action="{{ route('users.index') }}" class="flex">
+                <input type="text" name="search" placeholder="Search users..."  class="px-4 py-2 border rounded-l">
                 <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-r hover:bg-blue-700">Search</button>
-            </form> --}}
+            </form>
         </div>
 
-        <table class="min-w-full bg-white">
-            <thead class="bg-blue-100"> 
-                <tr>
-                    <th class="py-2 px-10 border-b text-left">Username</th>
-                    <th class="py-2 px-4 border-b text-left">Email</th>
-                    <th class="py-2 px-4 border-b text-left">Role</th>
-                    <th class="py-2 px-4 border-b text-center">Actions</th>
-                </tr>
-            </thead>
-            <tbody id="usersTableBody">
-                <!-- Data akan dimuat di sini melalui JavaScript -->
-            </tbody>
-        </table>
+        <div class="mt-4 bg-white p-8 rounded-lg shadow-lg border">
+            <table class="min-w-full border bg-white">
+                <thead class="bg-blue-100"> 
+                    <tr>
+                        <th class="py-2 px-10 border-b text-left">Username</th>
+                        <th class="py-2 px-4 border-b text-left">Email</th>
+                        <th class="py-2 px-4 border-b text-left">Role</th>
+                        <th class="py-2 px-4 border-b text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="usersTableBody">
+                    <!-- Data akan dimuat di sini melalui JavaScript -->
+                </tbody>
+            </table>
+        </div>
+       
     </div>
 
     <script>
@@ -122,7 +141,7 @@
                 }
             });
 
-            // Function to handle book deletion
+        // Function to handle book deletion
             function deleteUser(userId) {
                 const deleteUrl = deleteUrlTemplate.replace(':id', userId);
                 fetch(deleteUrl, {

@@ -35,6 +35,7 @@ class ArticleController extends Controller
         $articles = $this->articleService->getPaginatedArticles($perPage, $search);
 
         // return view('pages.article.index', compact('articles', 'perPage', 'search'));
+        // return response()->json($articles);
         return view('pages.article.index');
     }
 
@@ -43,14 +44,13 @@ class ArticleController extends Controller
         return view('pages.article.create');
     }
 
-    public function show($id){
+    public function show(string $id){
         $article = $this->articleService->getArticleById($id);
         if (!$article) {
             return $this->notificationPusher->warning('Article Not Found', ['article' => $article]);
         }
-        // return response()->json($article)->with('success', 'Article created successfully');
-        return view('pages.article.show', ['article' => $id]);
-        
+        response()->json($article);
+        return view('pages.article.show', ['article' => $article]);
     }
 
     public function store(ArticleRequest $request)
@@ -58,16 +58,13 @@ class ArticleController extends Controller
         $data = $request->validated();
         if($request->hasFile('article_image')) {
             $data['article_image'] = $this->fileUploadService->uploadFile($request->file('article_image'), 'articles/images');
-        }else{
-            $data['article_image'] = null;
         }
         
         $article = $this->articleService->createArticle($data);
 
         // Send success notification
         $this->notificationPusher->success('Article created successfully', ['article' => $article]);
-        // return redirect()->route('articles.index')->with('success', 'Article created successfully');
-        return response()->json(['success' => true, 'message' => 'Article created successfully', 'article' => $article]);
+        return redirect()->route('articles.index')->with('success', 'Article created successfully');
     }
 
     public function edit($id)
@@ -77,7 +74,7 @@ class ArticleController extends Controller
             return redirect()->route('articles.index');
         }
 
-        return view('pages.article.edit', ['article' => $id]);
+        return response()->view('pages.article.edit', ['article' => $article]);
     }
 
     public function update(ArticleRequest $request, $id)
@@ -97,7 +94,7 @@ class ArticleController extends Controller
 
         $this->notificationPusher->success('Article updated successfully', ['article' => $article]);
         // return redirect()->route('articles.index')->with('success', 'Article updated successfully');
-        return response()->json(['success' => true, 'message' => 'Article updated successfully', 'article' => $article]);
+        return response()->json($article);
     }
 
     public function destroy($id)
@@ -105,7 +102,6 @@ class ArticleController extends Controller
         $this->articleService->deleteArticle($id);
 
         $this->notificationPusher->success('Article deleted successfully');
-        // return redirect()->route('articles.index')->with('success', 'Article deleted successfully');
-        return response()->json(['success' => true, 'message' => 'Article deleted successfully', ]);
+        return redirect()->route('articles.index')->with('success', 'Article deleted successfully');
     }
 }

@@ -58,6 +58,8 @@ class DashboardController extends Controller
 
         $booksCount = Book::count();
 
+        
+
         $usersCount = User::count();
 
         $loansCount = Loan::count();

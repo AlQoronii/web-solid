@@ -1,35 +1,60 @@
 @extends('layouts.dashboard')
 @section('content')
-    <div class="container mx-auto mt-10">
-        <h1 class="text-2xl font-bold mb-5">Books</h1>
-        
-        @if(session('success'))
-            <x-alert-popup type="success" :message="session('success')" />
-        @endif
+    <div class="bg-blue-50 rounded-lg">
+        <div class="p-5">
+            <h1 class="text-2xl font-medium mb-5">Books</h1>
+        <nav class="flex mb-5" aria-label="Breadcrumb">
+            <ol class="inline-flex items-center space-x-1 md:space-x-3">
+                <li class="inline-flex items-center">
+                    <a href="{{ route('dashboard') }}" class="text-gray-700 hover:text-gray-900 inline-flex items-center">
+                        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                          </svg>                          
+                        <span class="pl-4">Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <div class="flex items-center">
+                        <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"/>
+                        </svg>
+                        <a href="{{ route('books.index') }}" class="ml-1 text-sm font-medium text-gray-700 hover:text-gray-900 md:ml-2">Books</a>
+                    </div>
+                </li>
+            </ol>
+        </nav>
+        </div>
+    </div>
 
-        @if(session('error'))
-            <x-alert-popup type="error" :message="session('error')" />
-        @endif
+    <div class="container mx-auto mt-10">
+        
+        
 
         <div class="flex justify-between mb-5">
             <a href="{{ route('books.create') }}" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-700">Add New Book</a>
+            <form method="GET" action="{{ route('books.index') }}" class="flex">
+                <input type="text" name="search" placeholder="Search users..." class="px-4 py-2 border rounded-l">
+                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-r hover:bg-blue-700">Search</button>
+            </form>
         </div>
-        <table class="min-w-full bg-white">
-            <thead class="bg-blue-100 text-black">
-                <tr>
-                    <th class="py-2 px-10 border-b text-justify">Category</th>
-                    <th class="py-2 px-4 border-b text-justify">Title</th>
-                    <th class="py-2 px-4 border-b text-justify">Author</th>
-                    <th class="py-2 px-4 border-b text-justify">Publisher</th>
-                    <th class="py-2 px-4 border-b text-justify">Year</th>
-                    <th class="py-2 px-4 border-b text-center">Image</th>
-                    <th class="py-2 px-4 border-b text-center">Actions</th>
-                </tr>
-            </thead>
-            <tbody id="booksTableBody">
-                <!-- Books will be dynamically inserted here -->
-            </tbody>
-        </table>
+        <div class="mt-4 bg-white p-8 rounded-lg shadow-lg border">
+            <table class="min-w-full border bg-white">
+                <thead class="bg-blue-100 text-black">
+                    <tr>
+                        <th class="py-2 px-10 border-b text-justify">Category</th>
+                        <th class="py-2 px-4 border-b text-justify">Title</th>
+                        <th class="py-2 px-4 border-b text-justify">Author</th>
+                        <th class="py-2 px-4 border-b text-justify">Publisher</th>
+                        <th class="py-2 px-4 border-b text-justify">Year</th>
+                        <th class="py-2 px-4 border-b text-center">Image</th>
+                        <th class="py-2 px-4 border-b text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="booksTableBody">
+                    <!-- Books will be dynamically inserted here -->
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <script>
@@ -144,8 +169,12 @@
             })
             .then(response => {
                 if (response.ok) {
-                    alert('Book deleted successfully');
+                    // alert('Book deleted successfully');
                     fetchBooks(); // Refresh list buku setelah dihapus
+                    // Display success message using custom alert component
+                    const successMessage = document.createElement('div');
+                    successMessage.innerHTML = `<x-alert-popup type="success" message="Book deleted successfully" />`;
+                    document.querySelector('.container').prepend(successMessage);
                     document.querySelector('.modal-container').remove(); // Hapus modal setelah delete berhasil
                 } else {
                     console.error('Failed to delete book');
