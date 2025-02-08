@@ -42,8 +42,8 @@ class BookController extends Controller
         $category = $this->categoryService->getAllCategories();
         $books = $this->bookService->getPaginatedBooks($perPage, $search);
         response()->json($books);
-        return view('pages.book.index', compact('books', 'category', 'perPage', 'search', 'breadcrumb'));
-        // return view('pages.book.index');
+        // return view('pages.book.index', compact('books', 'category', 'perPage', 'search', 'breadcrumb'));
+        return view('pages.book.index');
     }
 
     public function create()

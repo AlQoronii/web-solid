@@ -30,13 +30,7 @@
                     <label for="return_date" class="block text-gray-700">Return Date <span class="text-red-500">*</span></label>
                     <input type="date" name="return_date" id="return_date" class="w-full p-2 border-2 border-gray-300 rounded mt-1" required>
                 </div>
-                <div class="mb-4">
-                    <label for="loan_status" class="block text-gray-700">Loan Status <span class="text-red-500">*</span></label>
-                    <select id="loan_status" name="loan_status" class="w-full px-3 py-2 border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
-                        <option value="borrowed">Borrowed</option>
-                        <option value="returned">Returned</option>
-                    </select>
-                </div>
+                <input type="hidden" id="loan_status" name="loan_status" value="borrowed">
                 <div class="flex justify-end">
                     <x-validation
                     buttonClass="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600"

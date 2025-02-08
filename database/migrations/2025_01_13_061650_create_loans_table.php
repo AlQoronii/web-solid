@@ -17,7 +17,7 @@ return new class extends Migration
             $table->uuid('book_id')->index();
             $table->date('borrow_date');
             $table->date('return_date');
-            $table->enum('loan_status', ['borrowed', 'returned', 'overdue']);
+            $table->enum('loan_status', ['borrowed', 'returned', 'overdue'])->nullable();
             $table->timestamps();
         });
     }

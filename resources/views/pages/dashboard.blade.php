@@ -108,6 +108,7 @@
             const token = localStorage.getItem('auth_token');
 
             console.log('Token:', token);
+            
             try {
                 const response = await fetch('http://127.0.0.1:8000/api/dashboard', {
                     headers: {
@@ -116,7 +117,7 @@
                     }
                 });
                 const data = await response.json();
-
+                console.log('Dashboard data:', data);
                 document.getElementById('booksCount').innerText = `${data.booksCount} Books`;
                 document.getElementById('usersCount').innerText = `${data.usersCount} Users`;
                 document.getElementById('loansCount').innerText = `${data.loansCount} Loans`;
@@ -125,48 +126,6 @@
 
                 const donutChartCtx = document.getElementById('donut-chart').getContext('2d');
                 const areaChartCtx = document.getElementById('area-chart').getContext('2d');
-                // const ctx = document.getElementById('loansChart').getContext('2d');
-                // const loansChart = new Chart(ctx, {
-                //     type: 'line',
-                //     data: {
-                //         labels: data.loanDates,
-                //         datasets: [{
-                //             label: 'Loans',
-                //             data: data.loanCounts,
-                //             backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                //             borderColor: 'rgba(54, 162, 235, 1)',
-                //             borderWidth: 1,
-                //             fill: true,
-                //             tension: 0.4 // Disarankan untuk smoothing garis
-                //         }]
-                //     },
-                //     options: {
-                //         responsive: true,
-                //         scales: {
-                //             x: {
-                //                 title: {
-                //                     display: true,
-                //                     text: 'Date'
-                //                 },
-                //                 ticks: {
-                //                     autoSkip: false, // Memastikan semua label terlihat
-                //                     stepSize: 5 // Menentukan jarak antar label
-                //                 }
-                //             },
-                //             y: {
-                //                 title: {
-                //                     display: true,
-                //                     text: 'Number of Loans'
-                //                 },
-                //                 beginAtZero: true,
-                //                 ticks: {
-                //                     stepSize: 1 // Menentukan jarak antar angka di sumbu y
-                //                 }
-                //             }
-                //         }
-                //     }
-                // });
-
                 const areaChart = new Chart(areaChartCtx,{
                     type: 'line',
                     data:{
@@ -192,21 +151,23 @@
                     }
                 });
 
-                const donutChart = new Chart(donutChartCtx,{
+                const donutChart = new Chart(donutChartCtx, {
                     type: 'doughnut',
                     data: {
-                        labels: ["Fiction", "Non-Fiction", "Science", "History", "Others"],
+                        labels: Object.keys(data.booksCountByCategory),
                         datasets: [{
-                            label: 'Books',
-                            data: [30, 20, 15, 25, 10],
-                            backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0", "#9966FF"]
+                            label: 'Total',
+                            data: Object.values(data.booksCountByCategory),
+                            backgroundColor: Object.keys(data.booksCountByCategory).map(() => {
+                                const randomColor = `#${Math.floor(Math.random()*16777215).toString(16)}`;
+                                return randomColor;
+                            })
                         }]
                     },
                     options: {
                         responsive: true,
                         maintainAspectRatio: true
                     }
-                    
                 });
                 
                 

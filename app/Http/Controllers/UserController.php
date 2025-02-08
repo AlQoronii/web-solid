@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRequest;
+use App\Http\Requests\UserUpdateRequest;
 use App\Models\Role;
 use App\Services\Notifications\NotificationPusher;
 use App\Services\UserService;
@@ -70,7 +71,7 @@ class UserController extends Controller
         return view('pages.user.edit', ['user' => $id]);
     }
 
-    public function update(UserRequest $request, string $id)
+    public function update(UserUpdateRequest $request, string $id)
     {
         $data = $request->validated();
         try {

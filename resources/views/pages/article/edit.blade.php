@@ -10,7 +10,7 @@
     <div class="container mx-auto mt-10">
         <div class="w-full border bg-white p-8 rounded-lg shadow-lg">
             <h1 class="text-2xl font-bold mb-6">Edit Article</h1>
-            <form id="editForm" enctype="multipart/form-data">
+            <form id="editFileForm" enctype="multipart/form-data">
                 @csrf
                 <div class="mb-4">
                     <label for="title" class="block text-gray-700 font-bold mb-2">Title <span class="text-red-500">*</span></label>
@@ -31,7 +31,7 @@
                     buttonClass="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600"
                     :action="'http://127.0.0.1:8000/api/articles/' . $article" 
                     :method="'POST'" 
-                    :formId="'editForm'"
+                    :formId="'editFileForm'"
                     :href="'/articles'"
                     title="Update Artikel" 
                     message="Apakah Anda yakin ingin mengupdate artikel ini?" 

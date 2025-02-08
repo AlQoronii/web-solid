@@ -40,25 +40,25 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
 
     Route::post('books', [BookController::class, 'store']);
-    Route::post('books/{id}', [BookController::class, 'update']);
+    Route::put('books/{id}', [BookController::class, 'update']);
     Route::delete('books/{id}', [BookController::class, 'destroy']);
 
     Route::post('articles', [ArticleController::class, 'store']);
-    Route::post('articles/{id}', [ArticleController::class, 'update']);
+    Route::put('articles/{id}', [ArticleController::class, 'update']);
     Route::delete('articles/{id}', [ArticleController::class, 'destroy']);
 
     Route::post('categories', [CategoryController::class, 'store']);
-    Route::post('categories/{id}', [CategoryController::class, 'update']);
+    Route::put('categories/{id}', [CategoryController::class, 'update']);
     Route::delete('categories/{id}', [CategoryController::class, 'destroy']);
 
     Route::post('users', [UserController::class, 'store']);
-    Route::post('users/{id}', [UserController::class, 'update']);
+    Route::put('users/{id}', [UserController::class, 'update']);
     Route::delete('users/{id}', [UserController::class, 'destroy']);
 
     Route::get('loans', [LoanController::class, 'index']);
     Route::get('loans/{id}', [LoanController::class, 'show']);
     Route::post('loans', [LoanController::class, 'store']);
-    Route::post('loans/{id}', [LoanController::class, 'update']);
+    Route::put('loans/{id}', [LoanController::class, 'update']);
     Route::delete('loans/{id}', [LoanController::class, 'destroy']);
 });
 

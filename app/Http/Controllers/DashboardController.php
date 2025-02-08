@@ -12,6 +12,7 @@ use App\Services\CategoryService;
 use App\Services\LoanService;
 use App\Services\ArticleService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
@@ -64,6 +65,12 @@ class DashboardController extends Controller
 
         $articlesCount = Article::count();
 
+        $booksCountByCategory = Book::select('categories.category_name', DB::raw('count(*) as total'))
+            ->join('categories', 'books.category_id', '=', 'categories.category_id')
+            ->groupBy('categories.category_name')
+            ->get()
+            ->pluck('total', 'category_name');
+
         $loanDates = Loan::selectRaw('DATE(created_at) as created_date')->groupBy('created_date')->pluck('created_date');
 
         $loanCounts = Loan::selectRaw('COUNT(*) as count')
@@ -82,6 +89,7 @@ class DashboardController extends Controller
             'loanDates' => $loanDates,
             'loanCounts' => $loanCounts,
             'loanDetails' => $loanDetails,
+            'booksCountByCategory' => $booksCountByCategory
         ];
 
         return response()->json($data, 200);

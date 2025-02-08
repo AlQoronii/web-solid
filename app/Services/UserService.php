@@ -49,11 +49,19 @@ class UserService
     public function update(string $id, array $data): bool
     {
         try {
+            $user = $this->userRepository->getById($id);
+
+            if (isset($data['current_password']) && !Hash::check($data['current_password'], $user->password)) {
+                throw new Exception('Current password does not match.');
+            }
+
             if (!empty($data['password'])) {
                 $data['password'] = Hash::make($data['password']);
             } else {
                 unset($data['password']);
             }
+
+            unset($data['current_password']);
 
             return $this->userRepository->update($id, $data);
         } catch (Exception $e) {

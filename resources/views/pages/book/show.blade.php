@@ -1,6 +1,6 @@
 @extends('layouts.dashboard')
 @section('content')
-<div class="bg-gray-100">
+<div class="bg-100">
     <div class="container mx-auto p-4">
         <a href="{{ route('books.index') }}" class="text-blue-500 hover:text-blue-700">
             <svg class="w-6 h-6 inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">

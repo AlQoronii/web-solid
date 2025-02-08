@@ -72,27 +72,50 @@
         for (let [key, value] of formData.entries()) {
             console.log(`${key}: ${value}`);
         }
-
-        if (formId === 'editForm') {
+        if (formId === 'editFileForm') {
             fetch(actionUrl, {
-                method: method,
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                    // 'Content-Type': 'application/json'  // Tambahkan ini agar server tahu bahwa datanya dalam format JSON
-                },
-                body: formData // Hapus titik sebelum JSON.stringify
+            method: 'POST',
+            headers: {
+                'X-HTTP-Method-Override': 'PUT',
+                'Authorization': `Bearer ${token}`,
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                // 'Content-Type': 'application/json'
+            },
+            body: formData
             })
             .then(response => response.json())
             .then(data => {
-                if (data.success) {
-                    window.location.href = '{{ $href }}';  // Redirect jika sukses
-                } else {
-                    alert('Gagal: ' + (data.message || 'Terjadi kesalahan'));
-                }
+            if (data.success) {
+                window.location.href = '{{ $href }}';
+            } else {
+                alert('Gagal: ' + (data.message || 'Terjadi kesalahan'));
+            }
             })
             .catch(error => {
-                console.error('Error:', error);
+            console.error('Error:', error);
+            });
+        
+        }else if(formId === 'editForm'){
+            fetch(actionUrl, {
+            method: 'POST',
+            headers: {
+                'X-HTTP-Method-Override': 'PUT',
+                'Authorization': `Bearer ${token}`,
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(Object.fromEntries(formData))
+            })
+            .then(response => response.json())
+            .then(data => {
+            if (data.success) {
+                window.location.href = '{{ $href }}';
+            } else {
+                alert('Gagal: ' + (data.message || 'Terjadi kesalahan'));
+            }
+            })
+            .catch(error => {
+            console.error('Error:', error);
             });
         }else{
             fetch(actionUrl, {
@@ -109,11 +132,16 @@
             if (data.success) {
                 window.location.href = '{{ $href }}';
             } else {
-                alert('Gagal: ' + (data.message || 'Terjadi kesalahan'));
+                // alert('Gagal: ' + (data.message || 'Terjadi kesalahan'));
+                const successMessage = document.createElement('div');
+                        successMessage.innerHTML = `<x-alert-popup type="warning" message="Gagal menambahkan data" />`;
+                        document.querySelector('.container').prepend(successMessage);
+                        document.querySelector('.modal-container').remove(); // Hapus modal setelah delete berhasil
             }
         })
         .catch(error => {
             console.error('Error:', error);
+
         });
         }
     }

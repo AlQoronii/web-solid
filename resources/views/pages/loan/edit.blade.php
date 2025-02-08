@@ -114,7 +114,7 @@
             document.getElementById('return_date').value = loan.return_date;
             document.getElementById('loan_status').value = loan.loan_status;
 
-            const loanStatusOptions = ['borrowed', 'returned', 'overdue'];
+            const loanStatusOptions = ['borrowed', 'returned'];
             loanStatusSelect.innerHTML = '';
             loanStatusOptions.forEach(status => {
                 const option = document.createElement('option');

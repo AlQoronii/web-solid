@@ -13,7 +13,7 @@
         <div class="w-full bg-white p-8 border rounded-lg shadow-lg">
             <h1 class="text-2xl font-bold mb-6">Edit Book</h1>
 
-            <form id="editForm" enctype="multipart/form-data">
+            <form id="editFileForm" enctype="multipart/form-data">
                 @csrf
                 
                 <div class="mb-4">
@@ -56,7 +56,7 @@
                     buttonClass="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600"
                     :action="'http://127.0.0.1:8000/api/books/' . $book" 
                     :method="'POST'" 
-                    :formId="'editForm'"
+                    :formId="'editFileForm'"
                     title="Edit Buku" 
                     message="Apakah Anda yakin ingin mengubah buku ini?" 
                     button-text="Submit"

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Services\BookService;
+use Symfony\Component\HttpFoundation\Request;
 
 class ApiBook extends Controller{
 
@@ -16,6 +17,7 @@ class ApiBook extends Controller{
     public function index()
     {
         $books = $this->bookService->getAllBooks(); // Pastikan relasi dimuat
+        // $books = $this->bookService->getPaginatedBooks();
         return response()->json($books);
     }
 

@@ -50,7 +50,7 @@ class ArticleController extends Controller
             return $this->notificationPusher->warning('Article Not Found', ['article' => $article]);
         }
         response()->json($article);
-        return view('pages.article.show', ['article' => $article]);
+        return view('pages.article.show', ['article' => $id]);
     }
 
     public function store(ArticleRequest $request)
@@ -75,7 +75,8 @@ class ArticleController extends Controller
             return redirect()->route('articles.index');
         }
 
-        return response()->view('pages.article.edit', ['article' => $id]);
+        // return response()->view('pages.article.edit', ['article' => $id]);
+        return view('pages.article.edit', ['article' => $id]);
     }
 
     public function update(ArticleRequest $request, $id)

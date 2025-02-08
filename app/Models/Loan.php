@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Ramsey\Uuid\Rfc4122\UuidV4;
 
+use Carbon\Carbon;
+
 class Loan extends Model
 {
     use HasFactory;
@@ -14,15 +16,6 @@ class Loan extends Model
     protected $primaryKey = 'loan_id';
     protected $keyType = 'string';
     public $incrementing = false;
-
-    public static function boot()
-    {
-        parent::boot();
-
-        static::creating(function ($loans) {
-            $loans->loan_id = UuidV4::uuid4()->toString();
-        });
-    }
 
     protected $fillable = [
         'user_id',
@@ -39,8 +32,22 @@ class Loan extends Model
 
     protected $casts = [
         'created_at' => 'datetime',
-        'updated_at' => 'datetime'
+        'updated_at' => 'datetime',
     ];
+
+    // Override getter loan_status untuk otomatis deteksi overdue
+    public function getLoanStatusAttribute($value)
+    {
+        if ($value === 'returned') {
+            return 'returned';
+        }
+
+        if ($this->return_date && Carbon::now()->gt($this->return_date)) {
+            return 'overdue';
+        }
+
+        return $value;
+    }
 
     public function user()
     {
@@ -52,4 +59,13 @@ class Loan extends Model
         return $this->belongsTo(Book::class, 'book_id', 'book_id');
     }
 
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($loans) {
+            $loans->loan_id = UuidV4::uuid4()->toString();
+        });
+    }
 }
+
