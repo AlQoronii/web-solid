@@ -1,13 +1,13 @@
 @extends('layouts.dashboard')
 @section('content')
-<div class="bg-gray-100">
+<div class="bg-white">
     <a href="{{ route('articles.index') }}" class="text-blue-500 hover:text-blue-700">
         <svg class="w-6 h-6 inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
         </svg>
         Back
     </a>
-    <div class="bg-white shadow-md rounded-lg p-6">
+    <div class="bg-white shadow-md border rounded-lg p-6">
         <div class="flex items-center">
             <img src="" alt="Book Image" id="article_image" class="w-50 h-80 object-cover rounded-lg mr-6">
             <div>

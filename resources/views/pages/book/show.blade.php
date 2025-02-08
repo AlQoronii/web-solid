@@ -8,7 +8,7 @@
             </svg>
             Back
         </a>
-        <div class="bg-white shadow-md rounded-lg p-6" id="book-details">
+        <div class="bg-white shadow-md rounded-lg p-6 border" id="book-details">
             <div class="flex items-center">
                 <img id="book-image" src="" alt="Book Image" class="w-50 h-80 object-cover rounded-lg mr-6">
                 <div>
