@@ -1,6 +1,6 @@
 @extends('layouts.dashboard')
 @section('content')
-<div class="bg-gray-100">
+<div class="bg-white">
     <a href="{{ route('users.index') }}" class="text-blue-500 hover:text-blue-700">
         <svg class="w-6 h-6 inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
@@ -8,7 +8,7 @@
         Back
     </a>
     <div class="container mx-auto p-4">
-        <div class="w-full bg-white p-8 rounded-lg shadow-lg">
+        <div class="w-full border bg-white p-8 rounded-lg shadow-lg">
             <h1 class="text-2xl font-bold mb-6">Edit User</h1>
             @if(session('success'))
             <x-alert-popup type="success" :message="session('success')" />

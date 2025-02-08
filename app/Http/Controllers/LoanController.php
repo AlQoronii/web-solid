@@ -54,8 +54,8 @@ class LoanController extends Controller
 
         // Send success notification
         $this->notificationPusher->success('Loan created successfully', ['loan' => $loan]);
-        // return redirect()->route('loans.index')->with('success', 'Loan created successfully');;
-        return response()->json(['success' => true, 'message' => 'Loan created successfully', 'loan' => $loan]);
+        // return redirect()->route('loans.index')->with('success', 'Loan created successfully');
+        return response()->json(['success' => true, 'message' => 'Loan created succesfully', 'loan' => $loan]);
     }
 
     public function edit($id)
@@ -67,7 +67,8 @@ class LoanController extends Controller
             return redirect()->route('loans.index');
         }
 
-        return view('pages.loan.edit', compact('loan', 'users', 'books'));
+        // return view('pages.loan.edit', compact('loan', 'users', 'books'));
+        return view('pages.loan.edit', ['loan' => $id]);
     }
 
     public function update(LoanRequest $request, string $id)
@@ -78,8 +79,8 @@ class LoanController extends Controller
         $loan = $this->loanService->update($id, $data);
 
         $this->notificationPusher->success('Loan updated successfully', ['loan' => $loan]);
-        // return redirect()->route('loans.index')->with('success', 'Loan updated successfully');;
-        return response()->json(['success' => true, 'message' => 'Loan updated successfully', 'loan' => $loan]);
+        // return redirect()->route('loans.index')->with('success', 'Loan updated successfully');
+        return response()->json(['success' => true, 'message' => 'Loan updated successfully']);
     }
 
     public function destroy(string $id)
@@ -88,11 +89,11 @@ class LoanController extends Controller
             $loan = $this->loanService->delete($id);
             $this->notificationPusher->success('Loan deleted successfully', ['loan' => $loan]);
             // return redirect()->route('loans.index')->with('success', 'Loan deleted successfully');
-            return response()->json(['success' => true,'message' => 'Loan deleted successfully', 'loan' => $loan]);
+            return response()->json(['success' => true, 'message' => 'Loan deleted successfully' ]);
         } catch (\Exception $e) {
             $this->notificationPusher->error('Failed to delete loan', ['error' => $e->getMessage()]);
-            return redirect()->route('loans.index')->with('error', 'Failed to delete loan');
-            return response()->json(['success' => false, 'message' => 'Failed to delete loan', 'error' => $e->getMessage()]);
+            // return redirect()->route('loans.index')->with('error', 'Failed to delete loan');
+            return response()->json(['success' => false, 'message' => 'Failed to delete loan' ]);
         }
     }
 }

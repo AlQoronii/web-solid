@@ -1,6 +1,6 @@
 @extends('layouts.dashboard')
 @section('content')
-<div class="bg-gray-100">
+<div class="bg-white">
     <a href="{{ route('books.index') }}" class="text-blue-500 hover:text-blue-700">
         <svg class="w-6 h-6 inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
@@ -8,13 +8,13 @@
         Back
     </a>
     <div class="container mx-auto p-4">
-        <div class="w-full bg-white p-8 rounded-lg shadow-lg">
+        <div class="w-full bg-white p-8 rounded-lg shadow-lg border">
             <h1 class="text-2xl font-bold mb-6">Create New Book</h1>
             <form enctype="multipart/form-data" id="createForm">
                 @csrf
                 <div class="mb-4">
                     <label for="category_id" class="block text-gray-700 font-bold mb-2">Category <span class="text-red-500">*</span></label>
-                    <select id="category_id" name="category_id" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                    <select id="category_id" name="category_id" class="w-full px-3 py-2 border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
                     </select>
                     
 
@@ -22,21 +22,21 @@
                         // dd($categories);
                     ?>
                 </div>
-                <div class="mb-4">
+                <div class="mb-4" >
                     <label for="book_title" class="block text-gray-700 font-bold mb-2">Title <span class="text-red-500">*</span></label>
-                    <input type="text" id="book_title" name="book_title" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                    <input type="text" id="book_title" name="book_title" class="w-full px-3 py-2 border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
                 </div>
                 <div class="mb-4">
                     <label for="book_author" class="block text-gray-700 font-bold mb-2">Author <span class="text-red-500">*</span></label>
-                    <input type="text" id="book_author" name="book_author" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                    <input type="text" id="book_author" name="book_author" class="w-full px-3 py-2 border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
                 </div>
                 <div class="mb-4">
                     <label for="book_publisher" class="block text-gray-700 font-bold mb-2">Publisher <span class="text-red-500">*</span></label>
-                    <input type="text" id="book_publisher" name="book_publisher" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                    <input type="text" id="book_publisher" name="book_publisher" class="w-full px-3 py-2 border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
                 </div>
                 <div class="mb-4">
                     <label for="book_year" class="block text-gray-700 font-bold mb-2">Year <span class="text-red-500">*</span></label>
-                    <input type="number" id="book_year" name="book_year" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                    <input type="number" id="book_year" name="book_year" class="w-full px-3 py-2 border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
                 </div>
                 <x-input-file 
                 label="Book Image" 

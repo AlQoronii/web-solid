@@ -85,7 +85,8 @@ class BookController extends Controller
             return $this->notificationPusher->warning('Book Not Found', ['article' => $book]);
         }
         response()->json($book);
-        return view('pages.book.show', ['book' => $book]);
+        // return view('pages.book.show', ['book' => $book]);
+        return view('pages.book.show', ['book' => $id]);
     }
 
     public function update(BookRequest $request, string $id)

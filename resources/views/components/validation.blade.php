@@ -107,7 +107,6 @@
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                // alert('Berhasil: ' + data.message);
                 window.location.href = '{{ $href }}';
             } else {
                 alert('Gagal: ' + (data.message || 'Terjadi kesalahan'));

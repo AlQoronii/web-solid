@@ -170,8 +170,10 @@
                 })
                 .then(response => {
                     if (response.ok) {
-                        alert('Category deleted successfully');
                         fetchCategories(); // Refresh list buku setelah dihapus
+                        const successMessage = document.createElement('div');
+                        successMessage.innerHTML = `<x-alert-popup type="success" message="Book deleted successfully" />`;
+                        document.querySelector('.container').prepend(successMessage);
                         document.querySelector('.modal-container').remove(); // Hapus modal setelah delete berhasil
                     } else {
                         console.error('Failed to delete category');

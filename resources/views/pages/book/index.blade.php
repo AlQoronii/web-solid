@@ -38,7 +38,7 @@
             </form>
         </div>
         <div class="mt-4 bg-white p-8 rounded-lg shadow-lg border">
-            <table class="min-w-full border bg-white">
+            <table class="min-w-full border rounde bg-white">
                 <thead class="bg-blue-100 text-black">
                     <tr>
                         <th class="py-2 px-10 border-b text-justify">Category</th>
@@ -58,7 +58,7 @@
     </div>
 
     <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', async () => {
         const booksTableBody = document.getElementById('booksTableBody');
 
         // Base URLs generated using Blade

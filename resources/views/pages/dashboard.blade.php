@@ -186,6 +186,7 @@
                         scales: {
                             y: {
                                 beginAtZero: true
+                                
                             }
                         }
                     }

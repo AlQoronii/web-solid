@@ -3,12 +3,12 @@
         @csrf
 
         <div class="flex items-center justify-start">
-            <div class="w-20 md:w-24 flex items-center">
-                <em class="text-black" style="font-size: 20pt">Library</em>
+            <div class="w-max md:w-auto flex items-center">
+                <img src="{{asset('assets/images/image.png')}}" alt="" class="w-48 h-18" >
             </div>
         </div>
 
-        <div class="mt-6">
+        <div class="mt-3">
             <h1 class="font-bold text-2xl">Selamat Datang</h1>
             <p class="font-normal text-md text-gray-400">Ayo masuk Library sekarang!</p>
         </div>
