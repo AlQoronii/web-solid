@@ -59,7 +59,8 @@
                     
                     // window.location.href = '/dashboard'; // Redirect ke endpoint dashboard dari API
                     window.location.href = '/dashboard';
-                    alert(result.message);
+                    
+                    // alert(result.message);
                 } else {
                     // Jika login gagal, tampilkan pesan error
                     if (result.message.includes('Email')) {

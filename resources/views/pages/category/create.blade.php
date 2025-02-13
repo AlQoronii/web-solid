@@ -15,6 +15,7 @@
                 <div class="mb-4">
                     <label for="name" class="block text-gray-700 font-bold mb-2">Name <span class="text-red-500">*</span></label>
                     <input type="text" id="category_name" name="category_name" class="w-full px-3 py-2 border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                    <span class="text-red-500 text-sm mt-2" id="category_nameError"></span>
                 </div>
                 <div class="mb-4">
                     <label for="description" class="block text-gray-700 font-bold mb-2">Description</label>

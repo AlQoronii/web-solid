@@ -16,19 +16,23 @@
                     <label for="user_id" class="block text-gray-700 font-bold mb-2">User <span class="text-red-500">*</span></label>
                     <select id="user_id" name="user_id" class="w-full px-3 py-2 border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
                     </select>
+                    <span class="text-red-500 text-sm mt-2" id="user_idError"></span>
                 </div>
                 <div class="mb-4">
                     <label for="book_id" class="block text-gray-700 font-bold mb-2">Book <span class="text-red-500">*</span></label>
                     <select id="book_id" name="book_id" class="w-full px-3 py-2 border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
                     </select>
+                    <span class="text-red-500 text-sm mt-2" id="book_idError"></span>
                 </div>
                 <div class="mb-4">
                     <label for="borrow_date" class="block text-gray-700">Borrow Date <span class="text-red-500">*</span></label>
                     <input type="date" name="borrow_date" id="borrow_date" class="w-full p-2 border-2 border-gray-300 rounded mt-1" required>
+                    <span class="text-red-500 text-sm mt-2" id="borrow_dataError"></span>
                 </div>
                 <div class="mb-4">
                     <label for="return_date" class="block text-gray-700">Return Date <span class="text-red-500">*</span></label>
                     <input type="date" name="return_date" id="return_date" class="w-full p-2 border-2 border-gray-300 rounded mt-1" required>
+                    <span class="text-red-500 text-sm mt-2" id="return_dataError"></span>
                 </div>
                 <input type="hidden" id="loan_status" name="loan_status" value="borrowed">
                 <div class="flex justify-end">

@@ -24,6 +24,7 @@
         @livewireStyles
 </head>
 <body class="bg-white">
+    
     <div class="flex h-screen">
         <!-- Sidebar -->
         <div class="bg-white-800 text-gray-600 w-64 space-y-3 py-2 px-2 fixed h-full border">

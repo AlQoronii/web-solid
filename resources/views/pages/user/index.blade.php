@@ -157,7 +157,7 @@
                         const successMessage = document.createElement('div');
                         successMessage.innerHTML = `<x-alert-popup type="success" message="Book deleted successfully" />`;
                         document.querySelector('.container').prepend(successMessage);
-                        document.querySelector('.modal-container').remove(); // Hapus modal setelah delete berhasil
+                        document.querySelector('.modal-container').remove(); // Hapus modal setelah delete berhasilc
                     } else {
                         console.error('Failed to delete user');
                     }

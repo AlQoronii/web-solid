@@ -73,10 +73,6 @@
                 </div>
             </div>
             <section class="mt-5">
-                {{-- <h2 class="text-xl font-semibold mb-4">Loans Over Time</h2>
-                <div class="bg-white p-6 rounded-lg shadow-md w-[500px] h-[300px] mx-auto border">
-                    <canvas id="loansChart"></canvas>
-                </div> --}}
                 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
                     <!-- Area Chart Card -->

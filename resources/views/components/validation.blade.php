@@ -45,7 +45,7 @@
                     {{ $slot }}
 
                     <button 
-                        @click.prevent="submitForm('{{ $action ?? '#' }}', '{{ $method ?? 'POST' }}', '{{$formId ?? ''}}')"
+                        @click.prevent="submitForm('{{ $action ?? '#' }}', '{{ $method ?? 'POST' }}', '{{$formId ?? ''}}'); showModal = false;"
                         type="button" 
                         class="{{ 
                             $confirmButtonClass 
@@ -88,7 +88,16 @@
             if (data.success) {
                 window.location.href = '{{ $href }}';
             } else {
-                alert('Gagal: ' + (data.message || 'Terjadi kesalahan'));
+                for (let [key, value] of formData.entries()) {
+                    const errorElement = document.getElementById(`${key}Error`);
+                    if (errorElement) {
+                        if (data.errors && data.errors[key]) {
+                            errorElement.innerText = data.errors[key];
+                        } else {
+                            errorElement.innerText = '';
+                        }
+                    }
+                }
             }
             })
             .catch(error => {
@@ -96,6 +105,7 @@
             });
         
         }else if(formId === 'editForm'){
+            console.log(formId);
             fetch(actionUrl, {
             method: 'POST',
             headers: {
@@ -108,10 +118,21 @@
             })
             .then(response => response.json())
             .then(data => {
+
             if (data.success) {
                 window.location.href = '{{ $href }}';
+
             } else {
-                alert('Gagal: ' + (data.message || 'Terjadi kesalahan'));
+                for (let [key, value] of formData.entries()) {
+                    const errorElement = document.getElementById(`${key}Error`);
+                    if (errorElement) {
+                        if (data.errors && data.errors[key]) {
+                            errorElement.innerText = data.errors[key];
+                        } else {
+                            errorElement.innerText = '';
+                        }
+                    }
+                }
             }
             })
             .catch(error => {
@@ -130,13 +151,23 @@
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                window.location.href = '{{ $href }}';
-            } else {
-                // alert('Gagal: ' + (data.message || 'Terjadi kesalahan'));
                 const successMessage = document.createElement('div');
-                        successMessage.innerHTML = `<x-alert-popup type="warning" message="Gagal menambahkan data" />`;
-                        document.querySelector('.container').prepend(successMessage);
-                        document.querySelector('.modal-container').remove(); // Hapus modal setelah delete berhasil
+                    successMessage.innerHTML = `<x-alert-popup type="success" message="Create data success" />`;
+                    document.querySelector('.container').prepend(successMessage);
+                
+                    window.location.href = '{{ $href }}';    
+                
+            } else {
+                for (let [key, value] of formData.entries()) {
+                    const errorElement = document.getElementById(`${key}Error`);
+                    if (errorElement) {
+                        if (data.errors && data.errors[key]) {
+                            errorElement.innerText = data.errors[key];
+                        } else {
+                            errorElement.innerText = '';
+                        }
+                    }
+                }
             }
         })
         .catch(error => {

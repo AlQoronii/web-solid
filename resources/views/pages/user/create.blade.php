@@ -16,20 +16,17 @@
                     <label for="role_id" class="block text-gray-700 font-bold mb-2">Role</label>
                     <select id="role_id" name="role_id" class="w-full px-3 py-2 border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
                     </select>
+                    <span class="text-red-500 text-sm" id="roleError"></span>
                 </div>
                 <div class="mb-4">
                     <label for="username" class="block text-gray-700 font-bold ">Username<span class="text-red-500">*</span></label>
                     <input type="text" name="username" id="username" class="w-full p-2 border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    @if ($errors->has('username'))
-                        <span class="text-red-500 text-sm">{{ $errors->first('username') }}</span>
-                    @endif
+                        <span class="text-red-500 text-sm" id="usernameError"></span>
                 </div>
                 <div class="mb-4">
                     <label for="email" class="block text-gray-700 font-bold">Email<span class="text-red-500">*</span></label>
                     <input type="email" name="email" id="email" class="w-full p-2 border-2  rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    @if ($errors->has('email'))
-                        <span class="text-red-500 text-sm">{{ $errors->first('email') }}</span>
-                    @endif
+                        <span class="text-red-500 text-sm" id="emailError"></span>
                 </div>
                 <div x-data="{ showPassword: false }" class="mb-4">
                     <label for="password" class="block text-gray-700 font-bold">Password <span class="text-red-500">*</span></label>
@@ -46,12 +43,11 @@
                             </svg>
                         </button>
                     </div>
-                    @if ($errors->has('password'))
-                        <span class="text-red-500 text-sm">{{ $errors->first('password') }}</span>
-                    @endif
+                    <span class="text-red-500 text-sm" id="passwordError"></span>
                 </div>
                 <div x-data="{ showPassword: false }" class="mb-4">
                     <label for="password_confirmation" class="block text-gray-700 font-bold">Confirm Password <span class="text-red-500">*</span></label>
+                    <span class="text-red-500 text-sm" id="password_confirmationError"></span>
                     <div class="relative">
                         <input :type="showPassword ? 'text' : 'password'" name="password_confirmation" id="password_confirmation" class="w-full p-2 border-2  rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                         <button type="button" @click="showPassword = !showPassword" class="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5">
@@ -65,9 +61,6 @@
                             </svg>
                         </button>
                     </div>
-                    @if ($errors->has('password_confirmation'))
-                        <span class="text-red-500 text-sm">{{ $errors->first('password_confirmation') }}</span>
-                    @endif
                 </div>
                 <div class="flex justify-end">
                     <x-validation

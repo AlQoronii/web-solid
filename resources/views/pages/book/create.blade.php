@@ -16,6 +16,7 @@
                     <label for="category_id" class="block text-gray-700 font-bold mb-2">Category <span class="text-red-500">*</span></label>
                     <select id="category_id" name="category_id" class="w-full px-3 py-2 border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
                     </select>
+                    <span class="text-red-500 text-sm" id="categoryError"></span>
                     
 
                     <?php
@@ -25,18 +26,22 @@
                 <div class="mb-4" >
                     <label for="book_title" class="block text-gray-700 font-bold mb-2">Title <span class="text-red-500">*</span></label>
                     <input type="text" id="book_title" name="book_title" class="w-full px-3 py-2 border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                    <span class="text-red-500 text-sm" id="book_titleError"></span>
                 </div>
                 <div class="mb-4">
                     <label for="book_author" class="block text-gray-700 font-bold mb-2">Author <span class="text-red-500">*</span></label>
-                    <input type="text" id="book_author" name="book_author" class="w-full px-3 py-2 border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                    <input type="text"   id="book_author" name="book_author" class="w-full px-3 py-2 border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                    <span class="text-red-500 text-sm" id="book_authorError"></span>
                 </div>
                 <div class="mb-4">
                     <label for="book_publisher" class="block text-gray-700 font-bold mb-2">Publisher <span class="text-red-500">*</span></label>
                     <input type="text" id="book_publisher" name="book_publisher" class="w-full px-3 py-2 border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                    <span class="text-red-500 text-sm" id="book_publisherError"></span>
                 </div>
                 <div class="mb-4">
                     <label for="book_year" class="block text-gray-700 font-bold mb-2">Year <span class="text-red-500">*</span></label>
                     <input type="number" id="book_year" name="book_year" class="w-full px-3 py-2 border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                    <span class="text-red-500 text-sm" id="book_yearError"></span>
                 </div>
                 <x-input-file 
                 label="Book Image" 
